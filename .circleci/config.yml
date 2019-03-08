@@ -56,17 +56,17 @@ jobs:
       - setup_remote_docker
       - run:
           name: build
-          command: docker-compose build transactions-api-test
+          command: docker-compose build property-api-test
       - run:
           name: Run tests
-          command: docker-compose up transactions-api-test
+          command: docker-compose up property-api-test
 
   deploy-to-development:
     docker:
       - image: circleci/python:3.7
     steps:
       - deploy-env:
-          service-name: 'transactions-api-development'
+          service-name: 'property-api-development'
           image-name: "$AWS_ECR_HOST/$AWS_ECR_PATH:$CIRCLE_SHA1"
 
   deploy-to-staging:
@@ -74,7 +74,7 @@ jobs:
       - image: circleci/python:3.7
     steps:
       - deploy-env:
-          service-name: 'transactions-api-staging'
+          service-name: 'property-api-staging'
           image-name: "$AWS_ECR_HOST/$AWS_ECR_PATH:$CIRCLE_SHA1"
 
   deploy-to-production:
@@ -82,7 +82,7 @@ jobs:
       - image: circleci/python:3.7
     steps:
       - deploy-env:
-          service-name: 'transactions-api-production'
+          service-name: 'property-api-production'
           image-name: "$AWS_ECR_HOST/$AWS_ECR_PATH:$CIRCLE_SHA1"
 
 workflows:
@@ -91,8 +91,8 @@ workflows:
       - check
       - aws-ecr/build_and_push_image:
           name: build_and_push_image
-          dockerfile: ./transactions-api/Dockerfile
-          path: ./transactions-api
+          dockerfile: ./property-api/Dockerfile
+          path: ./property-api
           account-url: AWS_ECR_HOST
           repo: $AWS_ECR_PATH
           aws-access-key-id: AWS_ID_KEY
