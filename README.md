@@ -1,6 +1,6 @@
-# LBH Transactions API
+# LBH Property API
 
-Transactions API brings all the transaction records for citizens from Universal Housing backoffice.
+Property API brings all the transaction records for citizens from Universal Housing backoffice.
 
 ## Stack
 
