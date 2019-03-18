@@ -46,7 +46,7 @@ namespace UnitTests.V1.UseCase
         {
             //Arrange
             var expectedResponse = new Property(); 
-            expectedResponse.property_ref = _faker.Random.String(8);
+            expectedResponse.PropRef = _faker.Random.String(8);
             _gateway.Setup(method => method.GetPropertyByPropertyReference()).Returns(expectedResponse);
 
             //Act
@@ -55,7 +55,7 @@ namespace UnitTests.V1.UseCase
             //Assert
             Assert.NotNull(response);
             Assert.IsInstanceOf<Property>(response);
-            Assert.AreEqual(expectedResponse.property_ref, response.property_ref);
+            Assert.AreEqual(expectedResponse.PropRef, response.PropRef);
         }
     }
 }
