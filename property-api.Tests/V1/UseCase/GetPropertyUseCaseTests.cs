@@ -1,84 +1,61 @@
 using System;
 using NUnit.Framework;
 using Moq;
+using Bogus;
+using property_api.V1.Gateways;
+using property_api.V1.Domain;
+using property_api.V1.UseCase;
 
-namespace propertyapi.Tests.V1.UseCase
+namespace UnitTests.V1.UseCase
 {
     [TestFixture]
     public class GetPropertyUseCaseTests
     { 
+        private GetPropertyUseCase _classUnderTest;
+        private Faker _faker;
+        private Mock<IPropertyGateway> _gateway;
 
+        [SetUp]
+        public void Setup()
+        {
+            _gateway = new Mock<IPropertyGateway>();
+            _classUnderTest = new GetPropertyUseCase(_gateway.Object);
+            _faker = new Faker();
+        }
+        
         [Test]
         public void GetPropertyImplementsBoundaryInterface()
         {
-            //Arrange
-            var _classTest = new GetPropertyUseCase();
-
-            //Assert
-            Assert.True(_classTest is GetPropertyUseCase);
+            Assert.True(_classUnderTest is GetPropertyUseCase);
         }
-
 
         [Test]
         public void GetPropertyReturnsProperty()
         {
-            var useCase = new GetPropertyUseCase();
-            var respose = useCase.Execute();
-
-
-            Assert.True(respose.property_ref is string);
+            // Arrange
+            _gateway.Setup(method => method.GetPropertyByPropertyReference()).Returns(new Property());
+            // Act
+            var respose = _classUnderTest.Execute();
+            // Assert
+            Assert.IsNotNull(respose);
+            Assert.IsInstanceOf<Property>(respose);
         }
-
+        
         [Test]
         public void ExecutesGetResponseFromGateway()
         {
             //Arrange
-            var expectedResponse = "1234";
-            var useCase = new GetPropertyUseCase();
-           
+            var expectedResponse = new Property(); 
+            expectedResponse.property_ref = _faker.Random.String(8);
+            _gateway.Setup(method => method.GetPropertyByPropertyReference()).Returns(expectedResponse);
 
             //Act
-            var propertyGateway = new Mock<IPropertyGateway>();
-            propertyGateway.Setup(method => method.GetProperty()).Returns(expectedResponse);
-            var response = useCase.Execute();
+            var response = _classUnderTest.Execute();
 
             //Assert
-            Assert.AreEqual(expectedResponse, response);
-        }
-
-
-    }
-
-    public interface IPropertyGateway
-    {
-        string GetProperty();
-    }
-
-    public class PropertyGateway : IPropertyGateway
-    {
-        public string GetProperty()
-        {
-            return null;
-        }
-    }
-
-    public class Property
-    {
-        public string property_ref { get; set; }
-    }
-
-    public interface IGetPropertyUseCase
-    {
-    }
-
-    public class GetPropertyUseCase : IGetPropertyUseCase
-    {
-        public Property Execute()
-        {
-            return new Property
-            {
-                property_ref = "1234"
-            };
+            Assert.NotNull(response);
+            Assert.IsInstanceOf<Property>(response);
+            Assert.AreEqual(expectedResponse.property_ref, response.property_ref);
         }
     }
 }
