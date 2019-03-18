@@ -18,5 +18,3 @@ namespace property_api.V1.UseCase
         }
     }
 }
-
-
