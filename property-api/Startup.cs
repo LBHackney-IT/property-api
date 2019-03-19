@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using property_api.UseCase.V1;
-using property_api.V1.Boundary;
+using property_api.V1.UseCase;
 using property_api.V1.Gateways;
 using property_api.V1.Infrastructure;
+using property_api.V1.UseCase;
 
 namespace property_api
 {
@@ -43,12 +43,12 @@ namespace property_api
 
         private static void RegisterGateWays(IServiceCollection services)
         {
-            services.AddSingleton<ITransactionsGateway, TransactionsGateway>();
+            services.AddSingleton<IPropertyGateway, PropertyGateway>();
         }
 
         private static void RegisterUseCases(IServiceCollection services)
         {
-            services.AddSingleton<IListTransactions, ListTransactionsUsecase>();
+            services.AddSingleton<IGetPropertyUseCase, GetPropertyUseCase>();
         }
 
 
