@@ -33,7 +33,7 @@ namespace UnitTests.V1.UseCase
         public void GetPropertyReturnsProperty()
         {
             // Arrange
-            _gateway.Setup(method => method.GetPropertyByPropertyReference()).Returns(new Property());
+            _gateway.Setup(method => method.GetPropertyByPropertyReference("foo")).Returns(new Property());
             // Act
             var respose = _classUnderTest.Execute();
             // Assert
@@ -47,7 +47,7 @@ namespace UnitTests.V1.UseCase
             //Arrange
             var expectedResponse = new Property(); 
             expectedResponse.PropRef = _faker.Random.String(8);
-            _gateway.Setup(method => method.GetPropertyByPropertyReference()).Returns(expectedResponse);
+            _gateway.Setup(method => method.GetPropertyByPropertyReference("foo")).Returns(expectedResponse);
 
             //Act
             var response = _classUnderTest.Execute();

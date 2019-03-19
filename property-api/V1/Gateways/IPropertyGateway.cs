@@ -4,6 +4,6 @@ namespace property_api.V1.Gateways
 {
     public interface IPropertyGateway
     {
-        Property GetPropertyByPropertyReference();
+        Property GetPropertyByPropertyReference(string PropertyReference);
     }
 }

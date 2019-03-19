@@ -11,11 +11,19 @@ namespace property_api.V1.Gateways
         private readonly IUHContext _uhcontext;
         public PropertyGateway(IUHContext uhContext)
         {
-            uhContext = _uhcontext;
+            _uhcontext = uhContext;
         }
-        public Property GetPropertyByPropertyReference()
+        public Property GetPropertyByPropertyReference(string PropertyReference)
         {
-            return null; 
+            var response = _uhcontext.UHPropertys.Where(p => p.PropRef.StartsWith(PropertyReference)).FirstOrDefault<UHProperty>();
+            if (response == null)
+            {
+                return null;
+            };
+            return new Property{
+                PropRef = response.PropRef,
+                Telephone = response.Telephone
+            };
         }
     }
 }

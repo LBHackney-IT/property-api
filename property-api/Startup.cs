@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using property_api.V1.UseCase;
 using property_api.V1.Gateways;
 using property_api.V1.Infrastructure;
-using property_api.V1.UseCase;
 
 namespace property_api
 {
