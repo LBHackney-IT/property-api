@@ -44,24 +44,24 @@ namespace UnitTests.V1.Gateways
             return property;
         }
 
-        [Test]
-        public void GatewayReturnsAPropertyWhenGivenARef()
-        {
-            var expectedProperty = TestProperty().Generate();
+        // [Test]
+        // public void GatewayReturnsAPropertyWhenGivenARef()
+        // {
+        //     var expectedProperty = TestProperty().Generate();
 
-            _uhContext.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.property ON");
+        //     _uhContext.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.property ON");
             
-            _uhContext.UHPropertys.Add(new UHProperty());
+        //     _uhContext.UHPropertys.Add(new UHProperty());
 
-            _uhContext.SaveChanges();
+        //     _uhContext.SaveChanges();
 
-            var response = classUnderTest.GetPropertyByPropertyReference(expectedProperty.PropRef);
+        //     var response = classUnderTest.GetPropertyByPropertyReference(expectedProperty.PropRef);
 
-            Assert.NotNull(response);
-            Assert.IsInstanceOf<Property>(response);
-            Assert.AreEqual(expectedProperty.PropRef, response.PropRef);
-            Assert.AreEqual(expectedProperty.Telephone, response.Telephone);
-        }
+        //     Assert.NotNull(response);
+        //     Assert.IsInstanceOf<Property>(response);
+        //     Assert.AreEqual(expectedProperty.PropRef, response.PropRef);
+        //     Assert.AreEqual(expectedProperty.Telephone, response.Telephone);
+        // }
 
         // [Test]
         // public void GetawayReturnsVoid() {
