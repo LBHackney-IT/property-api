@@ -32,10 +32,10 @@ namespace property_api
 
         private static void ConfigureDbContext(IServiceCollection services)
         {
-            var connectionString = Environment.GetEnvironmentVariable("UH_URL");
+            // var connectionString = Environment.GetEnvironmentVariable("UH_URL");
 
             DbContextOptionsBuilder builder = new DbContextOptionsBuilder()
-                .UseSqlServer(connectionString);
+                .UseSqlServer("Data Source=localhost;Initial Catalog=uhsimulator;user id=sa;password=Rooty-Tooty;");
 
             services.AddSingleton<IUHContext>(s => new UhContext(builder.Options));
         }
