@@ -8,7 +8,6 @@ namespace property_api.V1.Infrastructure
         public UhContext(DbContextOptions options) : base(options)
         {
         }
-
-        public DbSet<UhTransaction> UTransactions { get; set; }
+        public DbSet<UHProperty> UHProperty { get; set; }
     }
 }
