@@ -15,7 +15,7 @@ namespace property_api.V1.Gateways
         }
         public Property GetPropertyByPropertyReference()
         {
-            return null;
+            return null; 
         }
     }
 }
