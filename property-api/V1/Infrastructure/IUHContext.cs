@@ -5,6 +5,6 @@ namespace property_api.V1.Infrastructure
 {
     public interface IUHContext
     {
-        DbSet<UhTransaction> UTransactions { get; set; }
+        DbSet<UHProperty> UHProperty { get; set; }
     }
 }
