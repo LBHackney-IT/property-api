@@ -4,7 +4,7 @@ namespace property_api.V1.UseCase
 {
     public interface IGetPropertyUseCase
     {
-        Property Execute();
+        Property Execute(string propertyReference);
     }
 }
 

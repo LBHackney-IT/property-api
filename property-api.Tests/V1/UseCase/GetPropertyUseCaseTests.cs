@@ -35,7 +35,7 @@ namespace UnitTests.V1.UseCase
             // Arrange
             _gateway.Setup(method => method.GetPropertyByPropertyReference("foo")).Returns(new Property());
             // Act
-            var respose = _classUnderTest.Execute();
+            var respose = _classUnderTest.Execute("foo");
             // Assert
             Assert.IsNotNull(respose);
             Assert.IsInstanceOf<Property>(respose);
@@ -46,11 +46,11 @@ namespace UnitTests.V1.UseCase
         {
             //Arrange
             var expectedResponse = new Property(); 
-            expectedResponse.PropRef = _faker.Random.String(8);
+            expectedResponse.PropRef = 23;
             _gateway.Setup(method => method.GetPropertyByPropertyReference("foo")).Returns(expectedResponse);
 
             //Act
-            var response = _classUnderTest.Execute();
+            var response = _classUnderTest.Execute("foo");
 
             //Assert
             Assert.NotNull(response);

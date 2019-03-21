@@ -11,7 +11,7 @@ namespace property_api.V1.UseCase
         {
             _gateway = gateway;
         }
-        public Property Execute()
+        public Property Execute(string propertyReference)
         {
             var response = _gateway.GetPropertyByPropertyReference("foo");
             return response;

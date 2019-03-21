@@ -15,7 +15,9 @@ namespace property_api.V1.Gateways
         }
         public Property GetPropertyByPropertyReference(string PropertyReference)
         {
-            var response = _uhcontext.UHPropertys.Where(p => p.PropRef.StartsWith(PropertyReference)).FirstOrDefault<UHProperty>();
+            var intReference = Int32.Parse(PropertyReference);
+            // TODO change the startswith
+            var response = _uhcontext.UHPropertys.Where(p => p.PropRef == intReference).FirstOrDefault<UHProperty>();
             if (response == null)
             {
                 return null;

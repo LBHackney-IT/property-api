@@ -11,6 +11,7 @@ namespace UnitTests.V1.Gateways
     [TestFixture]
     public class PropertyGatewayTests
     {
+        private Faker faker = new Faker();
         private PropertyGateway classUnderTest;
         private UhContext _uhContext;
     
@@ -32,44 +33,49 @@ namespace UnitTests.V1.Gateways
         [Test]
         public void GatewayIsIPropertyGateway()
         {
-            
             Assert.True(classUnderTest is IPropertyGateway);
         }
 
         private static Faker<Property> TestProperty()
         {
             var property = new Faker<Property>();
-            // property.RuleFor(u => u.PropRef, f => f.Random.Hash(length: 12));
-            // property.RuleFor(u => u.Telephone, f => f.Phone.PhoneNumber());
+            property.RuleFor(u => u.PropRef, f => f.Random.Int());
+            property.RuleFor(u => u.Telephone, f => f.Phone.PhoneNumber());
             return property;
         }
 
-        // [Test]
-        // public void GatewayReturnsAPropertyWhenGivenARef()
-        // {
-        //     var expectedProperty = TestProperty().Generate();
-
-        //     _uhContext.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.property ON");
+        [Test]
+        public void GatewayReturnsAPropertyWhenGivenARef()
+        {
+            var expectedProperty = TestProperty().Generate();
             
-        //     _uhContext.UHPropertys.Add(new UHProperty());
+            // TO BE REMOVED
+            _uhContext.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.property ON");
+            
+            var uhProperty = new UHProperty
+            {
+                PropRef = expectedProperty.PropRef,
+                Telephone = expectedProperty.Telephone,
+                Ownership = "",
+                Repairable = faker.Random.Bool(),
+                Dtstamp = DateTime.Now
+            };
 
-        //     _uhContext.SaveChanges();
+            _uhContext.UHPropertys.Add(uhProperty);
+            _uhContext.SaveChanges();
 
-        //     var response = classUnderTest.GetPropertyByPropertyReference(expectedProperty.PropRef);
+            var response = classUnderTest.GetPropertyByPropertyReference(expectedProperty.PropRef.ToString());
 
-        //     Assert.NotNull(response);
-        //     Assert.IsInstanceOf<Property>(response);
-        //     Assert.AreEqual(expectedProperty.PropRef, response.PropRef);
-        //     Assert.AreEqual(expectedProperty.Telephone, response.Telephone);
-        // }
+            Assert.NotNull(response);
+            Assert.IsInstanceOf<Property>(response);
+            Assert.AreEqual(expectedProperty.PropRef, response.PropRef);
+            Assert.AreEqual(expectedProperty.Telephone, response.Telephone);
+        }
 
-        // [Test]
-        // public void GetawayReturnsVoid() {
-        //     var response = classUnderTest.GetPropertyByPropertyReference("1212373");
-        //     var property = new Faker<Property>();
-        //     property.RuleFor(u => u.PropRef, f => f.Random.Hash(length: 12));
-        //     property.RuleFor(u => u.Telephone, f => f.Phone.PhoneNumber());
-        //     return property;
-        // }
+        [Test]
+        public void GetawayReturnsVoid() {
+            var response = classUnderTest.GetPropertyByPropertyReference("123434");
+            Assert.Null(response);
+        }
     }
 }           
