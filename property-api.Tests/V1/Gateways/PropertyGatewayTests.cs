@@ -39,7 +39,7 @@ namespace UnitTests.V1.Gateways
 
             UhProperty property = new UhProperty
             {
-                PropRef = expectedProperty.PropRef, //db will generate this automaticly
+                PropRef = expectedProperty.PropRef, //db will generate this automatically
                 Telephone = expectedProperty.Telephone,
 
                 //non null fields
