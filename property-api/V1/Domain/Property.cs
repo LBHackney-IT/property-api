@@ -6,7 +6,7 @@ namespace property_api.V1.Domain
 {
     public class Property
     {
-        public int PropRef { get; set; }
+        public string PropRef { get; set; }
         public string LevelCode { get; set; }
         public string MajorRef { get; set; }
         public string ManScheme { get; set; }
@@ -115,7 +115,7 @@ namespace property_api.V1.Domain
         public bool OnlineRepairs { get; set; }
         public string VmPropref { get; set; }
         public bool? VoidmanLive { get; set; }
-        public bool? Repairable { get; set; }
+        public bool Repairable { get; set; }
         public string Address1 { get; set; }
         public string UPropZone { get; set; }
         public string USurveyorPatch { get; set; }

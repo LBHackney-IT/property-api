@@ -6,11 +6,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace property_api.V1.Infrastructure
 {
     [Table("property")]
-    public class UHProperty
+    public class UhProperty
     {
         [Key]
+        [MaxLength(12)]
         [Column("prop_ref")]
-        public int PropRef { get; set; }
+        public string PropRef { get; set; } //this should be a string! the simulator has a bug
+
         [Column("level_code")]
         public string LevelCode { get; set; }
         [Column("major_ref")]
@@ -23,8 +25,11 @@ namespace property_api.V1.Infrastructure
         public string PostDesig { get; set; }
         [Column("short_address")]
         public string ShortAddress { get; set; }
+
+        [MaxLength(21)]
         [Column("telephone")]
         public string Telephone { get; set; }
+
         [Column("managed_property")]
         public bool ManagedProperty { get; set; }
         [Required]
@@ -143,9 +148,9 @@ namespace property_api.V1.Infrastructure
         [Column("walk_sequence")]
         public int? WalkSequence { get; set; }
 
-        // [TimeStamp]
-        // [Column("tstamp")]
-        // public byte[] Tstamp { get; set; }
+//        [TimeStamp]
+//        [Column("tstamp")]
+//        public byte[] Tstamp { get; }
 
         [Column("alinefull")]
         public string Alinefull { get; set; }
@@ -227,14 +232,14 @@ namespace property_api.V1.Infrastructure
         public short NoDoubleBeds { get; set; }
         [Required]
         [Column("online_repairs")]
-        public bool OnlineRepairs { get; set; }
+        public bool? OnlineRepairs { get; set; }
         [Column("vm_propref")]
         public string VmPropref { get; set; }
         [Column("voidman_live")]
         public bool? VoidmanLive { get; set; }
         [Required]
         [Column("repairable")]
-        public bool? Repairable { get; set; }
+        public bool Repairable { get; set; }
         [Column("address1")]
         public string Address1 { get; set; }
         [Column("u_prop_zone")]
@@ -489,8 +494,10 @@ namespace property_api.V1.Infrastructure
         public string UMktInfoOnline { get; set; }
         [Column("u_mkt_info_magazine")]
         public string UMktInfoMagazine { get; set; }
+
         [Column("dtstamp")]
         public DateTime Dtstamp { get; set; }
+
         [Column("u_hgas")]
         public int? UHgas { get; set; }
         [Column("u_access_type")]

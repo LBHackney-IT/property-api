@@ -6,7 +6,7 @@ namespace property_api.V1.Factory
 {
     public class PropertyFactory
     {
-        public Property FromUHProperty(UHProperty uhproperty) 
+        public Property FromUHProperty(UhProperty uhproperty)
         {
             AutoMapperConfig.Initialize();
             return Mapper.Map<Property>(uhproperty);
@@ -25,7 +25,7 @@ namespace property_api.V1.Factory
             lock (thisLock)
             {
                 AutoMapper.Mapper.Reset();
-                AutoMapper.Mapper.Initialize(cfg => { cfg.CreateMap<UHProperty, Property>(); });
+                AutoMapper.Mapper.Initialize(cfg => { cfg.CreateMap<UhProperty, Property>(); });
             }
         }
     }

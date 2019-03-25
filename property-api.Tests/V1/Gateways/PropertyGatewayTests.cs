@@ -1,45 +1,33 @@
 using NUnit.Framework;
-using property_api.V1.Gateways; 
-using property_api.V1.Domain; 
+using property_api.V1.Gateways;
+using property_api.V1.Domain;
 using property_api.V1.Infrastructure;
 using Bogus;
 using System;
-using Microsoft.EntityFrameworkCore;
 
 namespace UnitTests.V1.Gateways
 {
     [TestFixture]
-    public class PropertyGatewayTests
+    public class PropertyGatewayTests : DbTest
     {
-        private Faker faker = new Faker();
-        private PropertyGateway classUnderTest;
-        private UhContext _uhContext;
-    
+        private PropertyGateway _classUnderTest;
+
         [SetUp]
         public void Setup(){
-            DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
-
-            string TEST_UH_URL = Environment.GetEnvironmentVariable("TEST_UH_URL") ??
-                                 @"Server=localhost;Database=uhsimulator;User Id='sa';Password='Rooty-Tooty';";
-
-            builder.UseSqlServer(TEST_UH_URL);
-
-            _uhContext = new UhContext(builder.Options);
-            _uhContext.Database.BeginTransaction();
-
-            classUnderTest = new PropertyGateway(_uhContext);
+            _classUnderTest = new PropertyGateway(_uhContext);
         }
 
         [Test]
         public void GatewayIsIPropertyGateway()
         {
-            Assert.True(classUnderTest is IPropertyGateway);
+
+            Assert.True(_classUnderTest is IPropertyGateway);
         }
 
         private static Faker<Property> TestProperty()
         {
             var property = new Faker<Property>();
-            property.RuleFor(u => u.PropRef, f => f.Random.Int());
+            property.RuleFor(u => u.PropRef, f => f.Random.Hash(length: 12));
             property.RuleFor(u => u.Telephone, f => f.Phone.PhoneNumber());
             return property;
         }
@@ -48,23 +36,37 @@ namespace UnitTests.V1.Gateways
         public void GatewayReturnsAPropertyWhenGivenARef()
         {
             var expectedProperty = TestProperty().Generate();
-            
-            // TO BE REMOVED
-            _uhContext.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.property ON");
-            
-            var uhProperty = new UHProperty
+
+            UhProperty property = new UhProperty
             {
-                PropRef = expectedProperty.PropRef,
+                PropRef = expectedProperty.PropRef, //db will generate this automatically
                 Telephone = expectedProperty.Telephone,
-                Ownership = "",
-                Repairable = faker.Random.Bool(),
-                Dtstamp = DateTime.Now
+
+                //non null fields
+                NoSingleBeds = 1,
+                NoDoubleBeds = 1,
+                Dtstamp = DateTime.Now,
+                ManagedProperty = false,
+                Ownership = "test",
+                Letable = false,
+                Repairable = false,
+                Lounge = false,
+                Laundry = false,
+                VisitorBed = false,
+                Store = false,
+                WardenFlat = false,
+                Sheltered = false,
+                Shower = false,
+                Rtb = false,
+                CoreShared = false,
+                OnlineRepairs = false,
+                Asbestos = false
             };
 
-            _uhContext.UHPropertys.Add(uhProperty);
+            _uhContext.UhPropertys.Add(property);
             _uhContext.SaveChanges();
 
-            var response = classUnderTest.GetPropertyByPropertyReference(expectedProperty.PropRef.ToString());
+            var response = _classUnderTest.GetPropertyByPropertyReference(property.PropRef);
 
             Assert.NotNull(response);
             Assert.IsInstanceOf<Property>(response);
@@ -73,9 +75,9 @@ namespace UnitTests.V1.Gateways
         }
 
         [Test]
-        public void GetawayReturnsVoid() {
-            var response = classUnderTest.GetPropertyByPropertyReference("123434");
+        public void GetawayReturnsNullWhenNotFound() {
+            var response = _classUnderTest.GetPropertyByPropertyReference("foo");
             Assert.Null(response);
         }
     }
-}           
+}
