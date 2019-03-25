@@ -24,6 +24,12 @@ namespace property_api.V1.Controllers
             _logger = logger;
         }
 
+        // GET a property for a given property reference
+		/// <summary>
+		/// Returns a property for a given property reference
+		/// </summary>
+		/// <param name="propertyReference">The property reference for which to provide a property</param>
+		/// <returns>A a property</returns>
         [HttpGet]
         [Route("property")]
         [Produces("application/json")]
