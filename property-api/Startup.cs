@@ -8,6 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using property_api.V1.UseCase;
 using property_api.V1.Gateways;
 using property_api.V1.Infrastructure;
+using Swashbuckle.AspNetCore.Swagger;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.IO;
 
 namespace property_api
 {
@@ -24,6 +29,35 @@ namespace property_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info 
+                { 
+                    Title = $"Hackney Property API - {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}", 
+                    Version = "v1",
+                    Description = "This is the Hackney Property API which allows client applications to securely retrieve property information for a given property reference"
+                });
+
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                {
+                    { "Token", Enumerable.Empty<string>() }
+                });
+            
+                c.AddSecurityDefinition("Token",
+                  new ApiKeyScheme
+                  {
+                      In = "header",
+                      Description = "Your Hackney API Key",
+                      Name = "X-Api-Key",
+                      Type = "apiKey"
+                  }
+                );
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
 
             ConfigureDbContext(services);
             RegisterGateWays(services);
@@ -64,7 +98,14 @@ namespace property_api
                 app.UseHsts();
             }
 
+            app.UseSwagger();
+
             app.UseMvc();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Property API V1");
+            });
         }
     }
 }
