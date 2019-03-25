@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace property_api.V1.Domain
 {
@@ -111,7 +112,7 @@ namespace property_api.V1.Domain
         public string CompDisplay { get; set; }
         public short NoSingleBeds { get; set; }
         public short NoDoubleBeds { get; set; }
-        public bool? OnlineRepairs { get; set; }
+        public bool OnlineRepairs { get; set; }
         public string VmPropref { get; set; }
         public bool? VoidmanLive { get; set; }
         public bool? Repairable { get; set; }
@@ -248,7 +249,7 @@ namespace property_api.V1.Domain
         public string UStorageSpace { get; set; }
         public int? UInternalSteps { get; set; }
         public int? UExternalSteps { get; set; }
-        public bool? UFulAdaptdKitchen { get; set; }
+        public string UFulAdaptdKitchen { get; set; }
         public bool? UHoists { get; set; }
         public bool? UIntercom { get; set; }
     }

@@ -502,7 +502,7 @@ namespace property_api.V1.Infrastructure
         [Column("u_external_steps")]
         public int? UExternalSteps { get; set; }
         [Column("u_adapted_kitchen")]
-        public bool? UFulAdaptdKitchen { get; set; }
+        public string UFulAdaptdKitchen { get; set; }
         [Column("u_hoists")]
         public bool? UHoists { get; set; }
         [Column("u_intercom")]

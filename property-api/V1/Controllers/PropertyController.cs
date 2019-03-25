@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace property_api.V1.Controllers
 {
-    [Route("api/v1")]
+    [Route("api/v1/properties")]
     [ApiController]
     [Produces("application/json")]
     public class PropertyController : BaseController
@@ -24,8 +24,7 @@ namespace property_api.V1.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        [Route("property")]
+        [HttpGet("{propertyReference}")]
         [Produces("application/json")]
         public IActionResult GetByReference(string propertyReference)
         {

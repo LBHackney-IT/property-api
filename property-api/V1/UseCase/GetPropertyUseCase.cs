@@ -13,7 +13,7 @@ namespace property_api.V1.UseCase
         }
         public Property Execute(string propertyReference)
         {
-            var response = _gateway.GetPropertyByPropertyReference("foo");
+            var response = _gateway.GetPropertyByPropertyReference(propertyReference);
             return response;
         }
     }
