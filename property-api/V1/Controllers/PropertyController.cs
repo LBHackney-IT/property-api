@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 
 namespace property_api.V1.Controllers
 {
+    
+    [ApiVersion("1")]
     [Route("api/v1")]
     [ApiController]
     [Produces("application/json")]
