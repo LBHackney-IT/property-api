@@ -4,6 +4,7 @@ using property_api.V1.UseCase;
 
 namespace property_api.V1.Controllers
 {
+    [ApiVersion("1")]
     [Route("api/v1/healthcheck")]
     [ApiController]
     [Produces("application/json")]
