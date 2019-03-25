@@ -8,7 +8,6 @@ using property_api.V1.Domain;
 using Moq;
 using Bogus;
 using Newtonsoft.Json;
-using property_api.V1.Boundary;
 using Microsoft.Extensions.Logging;
 
 namespace UnitTests.V1.Controllers
@@ -56,26 +55,6 @@ namespace UnitTests.V1.Controllers
             var response = _classUnderTest.GetByReference("foo");
             Assert.NotNull(response);
             Assert.AreEqual(404, ((StatusCodeResult)response).StatusCode);
-        }
-
-        [Test]
-        public void ReturnsCorrectResponseWithInternalServerError()
-        {
-            var expectedResult = new ErrorResponse
-            {
-                DeveloperMessage = faker.Lorem.Word(),
-                UserMessage = "We had some issues processing your request"
-            };
-
-            _mockGetPropertyUseCase.Setup(m => m.Execute(It.IsAny<string>())).Throws(new Exception(expectedResult.DeveloperMessage));
-
-            _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object,_mockLogger.Object);
-
-            var response = _classUnderTest.GetByReference("foo");
-            Assert.NotNull(response);
-            Assert.AreEqual(500, ((ObjectResult)response).StatusCode);
-            Assert.AreEqual(expectedResult.UserMessage, ((ErrorResponse)((ObjectResult)response).Value).UserMessage);
-            Assert.AreEqual(expectedResult.DeveloperMessage, ((ErrorResponse)((ObjectResult)response).Value).DeveloperMessage);
         }
     }
 }

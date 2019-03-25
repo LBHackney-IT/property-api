@@ -25,7 +25,6 @@ namespace property_api.V1.Infrastructure
         public string PostDesig { get; set; }
         [Column("short_address")]
         public string ShortAddress { get; set; }
-
         [MaxLength(21)]
         [Column("telephone")]
         public string Telephone { get; set; }
