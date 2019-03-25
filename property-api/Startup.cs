@@ -41,10 +41,10 @@ namespace property_api
                     Description = "This is the Hackney Property API which allows client applications to securely retrieve property information for a given property reference"
                 });
 
-                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                var security = new Dictionary<string, IEnumerable<string>>
                 {
                     { "Token", Enumerable.Empty<string>() }
-                });
+                };
 
                 c.AddSecurityDefinition("Token",
                   new ApiKeyScheme
@@ -55,6 +55,8 @@ namespace property_api
                       Type = "apiKey"
                   }
                 );
+
+                c.AddSecurityRequirement(security);
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
