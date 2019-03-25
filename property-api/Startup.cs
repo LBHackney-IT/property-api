@@ -9,6 +9,8 @@ using property_api.V1.UseCase;
 using property_api.V1.Gateways;
 using property_api.V1.Infrastructure;
 using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -32,9 +34,9 @@ namespace property_api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info 
-                { 
-                    Title = $"Hackney Property API - {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}", 
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = $"Hackney Property API - {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}",
                     Version = "v1",
                     Description = "This is the Hackney Property API which allows client applications to securely retrieve property information for a given property reference"
                 });
@@ -43,7 +45,7 @@ namespace property_api
                 {
                     { "Token", Enumerable.Empty<string>() }
                 });
-            
+
                 c.AddSecurityDefinition("Token",
                   new ApiKeyScheme
                   {
