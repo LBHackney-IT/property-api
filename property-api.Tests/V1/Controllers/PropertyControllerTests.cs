@@ -17,9 +17,9 @@ namespace UnitTests.V1.Controllers
     public class ControllerTests
     {
         private PropertyController _classUnderTest;
-        private Mock<IGetPropertyUseCase> _mockGetPropertyUseCase; 
+        private Mock<IGetPropertyUseCase> _mockGetPropertyUseCase;
         private Mock<ILogger<PropertyController>> _mockLogger;
-        private Faker faker = new Faker("en_GB"); 
+        private Faker faker = new Faker("en_GB");
 
         [SetUp]
         public void SetUp()
@@ -33,7 +33,7 @@ namespace UnitTests.V1.Controllers
         {
             var expectedRestult = new Property
             {
-                PropRef = faker.Random.Int(),
+                PropRef = faker.Random.String(12),
                 Telephone = faker.Phone.PhoneNumber()
             };
 

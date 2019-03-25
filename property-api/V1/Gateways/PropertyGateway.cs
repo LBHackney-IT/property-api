@@ -19,7 +19,7 @@ namespace property_api.V1.Gateways
             {
                 return null;
             }
-            return new Property{
+            return new Property {
                 PropRef = response.PropRef,
                 Telephone = response.Telephone
             };

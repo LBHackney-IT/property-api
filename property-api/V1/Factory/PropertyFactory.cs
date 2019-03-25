@@ -5,7 +5,7 @@ namespace property_api.V1.Factory
 {
     public class PropertyFactory
     {
-        public Property FromUHProperty(UHProperty uhproperty) 
+        public Property FromUHProperty(UhProperty uhproperty)
         {
             return new Property();
         }
