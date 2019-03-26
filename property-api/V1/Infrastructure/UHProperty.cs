@@ -28,9 +28,10 @@ namespace property_api.V1.Infrastructure
         public string Telephone { get; set; }
         [Column("managed_property")]
         public bool ManagedProperty { get; set; }
-        [Required]
-        [Column("ownership")]
+
+        [Required,  MaxLength(10), Column("ownership")]
         public string Ownership { get; set; }
+
         [Column("agent")]
         public string Agent { get; set; }
         [Column("comments")]

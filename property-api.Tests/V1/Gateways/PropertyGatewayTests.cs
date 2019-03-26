@@ -6,6 +6,7 @@ using Bogus;
 using System;
 using AutoMapper;
 using property_api.V1.Factory;
+using UnitTests.V1.Helpers;
 
 namespace UnitTests.V1.Gateways
 {
@@ -14,6 +15,8 @@ namespace UnitTests.V1.Gateways
     {
         private PropertyGateway _classUnderTest;
         private PropertyFactory _factory;
+
+        private readonly UhPropertyHelper _uhPropertyHelper = new UhPropertyHelper();
 
         [SetUp]
         public void Setup(){
@@ -29,51 +32,15 @@ namespace UnitTests.V1.Gateways
             Assert.True(_classUnderTest is IPropertyGateway);
         }
 
-        private static Faker<Property> TestProperty()
-        {
-            var property = new Faker<Property>();
-            property.RuleFor(u => u.PropRef, f => f.Random.Hash(length: 12));
-            property.RuleFor(u => u.Telephone, f => f.Phone.PhoneNumber());
-            property.RuleFor(u => u.Address1, f => f.Random.Hash(12));
-            return property;
-        }
-
         [Test]
         public void GatewayReturnsAPropertyWhenGivenARef()
         {
-            var expectedProperty = TestProperty().Generate();
 
-            UhProperty property = new UhProperty
-            {
-                PropRef = expectedProperty.PropRef, //db will generate this automatically
-                Telephone = expectedProperty.Telephone,
-                Address1 = expectedProperty.Address1,
-
-                //non null fields
-                NoSingleBeds = 1,
-                NoDoubleBeds = 1,
-                Dtstamp = DateTime.Now,
-                ManagedProperty = false,
-                Ownership = "test",
-                Letable = false,
-                Repairable = false,
-                Lounge = false,
-                Laundry = false,
-                VisitorBed = false,
-                Store = false,
-                WardenFlat = false,
-                Sheltered = false,
-                Shower = false,
-                Rtb = false,
-                CoreShared = false,
-                OnlineRepairs = false,
-                Asbestos = false
-            };
-
-            _uhContext.UhPropertys.Add(property);
+            var expectedProperty = _uhPropertyHelper.GenerateUhProperty();
+            _uhContext.UhPropertys.Add(expectedProperty);
             _uhContext.SaveChanges();
 
-            var response = _classUnderTest.GetPropertyByPropertyReference(property.PropRef);
+            var response = _classUnderTest.GetPropertyByPropertyReference(expectedProperty.PropRef);
 
             Assert.NotNull(response);
             Assert.IsInstanceOf<Property>(response);
