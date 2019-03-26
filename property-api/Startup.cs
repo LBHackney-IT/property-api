@@ -15,6 +15,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using property_api.Versioning;
 
 namespace property_api
 {
@@ -26,21 +29,24 @@ namespace property_api
         }
 
         public IConfiguration Configuration { get; }
+        private static List<ApiVersionDescription> _apiVersions { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddSingleton<IApiVersionDescriptionProvider, DefaultApiVersionDescriptionProvider>();
+
+            services.AddApiVersioning(o =>
+            {
+                o.DefaultApiVersion = new ApiVersion(1, 0);
+                o.AssumeDefaultVersionWhenUnspecified = true; // assume that the caller wants the default version if they don't specify
+                o.ApiVersionReader = new UrlSegmentApiVersionReader(); // read the version number from the url segment header)
+            });
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info
-                {
-                    Title = $"Hackney Property API - {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}",
-                    Version = "v1",
-                    Description = "This is the Hackney Property API which allows client applications to securely retrieve property information for a given property reference"
-                });
-
                 var security = new Dictionary<string, IEnumerable<string>>
                 {
                     { "Token", Enumerable.Empty<string>() }
@@ -58,9 +64,38 @@ namespace property_api
 
                 c.AddSecurityRequirement(security);
 
+                //Looks at the APIVersionAttribute [ApiVersion("x")] on controllers and decides whether or not
+                //to include it in that version of the swagger document
+                //Controllers must have this [ApiVersion("x")] to be included in swagger documentation!!
+                c.DocInclusionPredicate((docName, apiDesc) =>
+                {
+                    var versions = apiDesc.ControllerAttributes()
+                        .OfType<ApiVersionAttribute>()
+                        .SelectMany(attr => attr.Versions).ToList();
+
+                    var any = versions.Any(v => $"{v.GetFormattedApiVersion()}" == docName);
+                    return any;
+                });
+
+                //Get every ApiVersion attribute specified and create swagger docs for them
+                foreach (var apiVersion in _apiVersions)
+                {
+                    var version = $"v{apiVersion.ApiVersion.ToString()}";
+                    c.SwaggerDoc(version, new Info
+                    {
+                        Title = $"property-api {version}",
+                        Version = version,
+                        Description = "This is the Hackney Property API which allows client applications to securely retrieve property information for a given property reference."
+                    });
+                }
+
+                c.CustomSchemaIds(x => x.FullName);
+                // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
+                if (File.Exists(xmlPath))
+                    c.IncludeXmlComments(xmlPath);
+
             });
 
             ConfigureDbContext(services);
@@ -102,14 +137,28 @@ namespace property_api
                 app.UseHsts();
             }
 
-            app.UseSwagger();
-
-            app.UseMvc();
-
+            var api = app.ApplicationServices.GetService<IApiVersionDescriptionProvider>();
+            //Get All ApiVersions,
+            _apiVersions = api.ApiVersionDescriptions.Select(s => s).ToList();
+            //Swagger ui to view the swagger.json file
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Property API V1");
+                foreach (var apiVersionDescription in _apiVersions)
+                {
+                    //Create a swagger endpoint for each swagger version
+                    c.SwaggerEndpoint($"{apiVersionDescription.GetFormattedApiVersion()}/swagger.json",
+                        $"property-api {apiVersionDescription.GetFormattedApiVersion()}");
+                }
             });
+
+            app.UseSwagger();
+
+            app.UseMvc(routes =>
+            {
+                // SwaggerGen won't find controllers that are routed via this technique.
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
+
         }
     }
 }
