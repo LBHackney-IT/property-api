@@ -2,10 +2,9 @@ using property_api.V1.Factory;
 using NUnit.Framework;
 using property_api.V1.Infrastructure;
 using property_api.V1.Domain;
-using Newtonsoft.Json;
 using AutoMapper;
 using Bogus;
-using propertyapi.Tests.V1.Helpers;
+using UnitTests.V1.Helpers;
 
 namespace UnitTests.V1.Factories
 {
@@ -13,7 +12,7 @@ namespace UnitTests.V1.Factories
     public class PropertyFactoryTests
     {
         private PropertyFactory _classUnderTest;
-        private Faker faker = new Faker();
+        private readonly UhPropertyHelper _uhPropertyHelper = new UhPropertyHelper();
 
         [SetUp]
         public void SetUp()
@@ -37,7 +36,8 @@ namespace UnitTests.V1.Factories
         [Test]
         public void ReturnsPopulatedProperty()
         {
-            var uhProperty = UhPropertyHelper.GenerateRandom();
+            var uhProperty = _uhPropertyHelper.GenerateUhProperty();
+
             var result = _classUnderTest.FromUHProperty(uhProperty);
 
             Assert.True(result is Property);
