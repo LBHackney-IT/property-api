@@ -13,10 +13,17 @@
     <PackageReference Include="Bogus" Version="25.0.4" />
     <PackageReference Include="Moq" Version="4.10.1" />
     <PackageReference Include="nunit" Version="3.11.0" />
+    <PackageReference Include="Tynamix.ObjectFiller" Version="1.5.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\property-api\property-api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="V1\Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="V1\Helpers\PropertyHelper.cs" />
+  </ItemGroup>
 </Project>

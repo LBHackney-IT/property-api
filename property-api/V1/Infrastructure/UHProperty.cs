@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,8 +10,7 @@ namespace property_api.V1.Infrastructure
         [Key]
         [MaxLength(12)]
         [Column("prop_ref")]
-        public string PropRef { get; set; } //this should be a string! the simulator has a bug
-
+        public string PropRef { get; set; } 
         [Column("level_code")]
         public string LevelCode { get; set; }
         [Column("major_ref")]
@@ -28,7 +26,6 @@ namespace property_api.V1.Infrastructure
         [MaxLength(21)]
         [Column("telephone")]
         public string Telephone { get; set; }
-
         [Column("managed_property")]
         public bool ManagedProperty { get; set; }
         [Required]

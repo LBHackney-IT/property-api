@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using property_api.V1.UseCase;
 using property_api.V1.Gateways;
 using property_api.V1.Infrastructure;
+using AutoMapper;
+using property_api.V1.Domain;
+using property_api.V1.Factory;
 
 namespace property_api
 {
@@ -24,16 +27,21 @@ namespace property_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            ConfigurePropertyFactory(services);            
             ConfigureDbContext(services);
             RegisterGateWays(services);
             RegisterUseCases(services);
         }
 
+        private static void ConfigurePropertyFactory(IServiceCollection services)
+        {
+            var mappingConfig = new MapperConfiguration(cfg => { cfg.CreateMap<UhProperty, Property>(); });
+            var propertyFactory = new PropertyFactory(mappingConfig.CreateMapper());
+            services.AddSingleton(propertyFactory);
+        }
+
         private static void ConfigureDbContext(IServiceCollection services)
         {
-            // var connectionString = Environment.GetEnvironmentVariable("UH_URL");
-
             DbContextOptionsBuilder builder = new DbContextOptionsBuilder()
                 .UseSqlServer("Data Source=localhost;Initial Catalog=uhsimulator;user id=sa;password=Rooty-Tooty;");
 
@@ -49,8 +57,6 @@ namespace property_api
         {
             services.AddSingleton<IGetPropertyUseCase, GetPropertyUseCase>();
         }
-
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

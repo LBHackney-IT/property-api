@@ -1,6 +1,8 @@
 using System.Linq;
 using property_api.V1.Infrastructure;
 using property_api.V1.Domain;
+using property_api.V1.Factory;
+using AutoMapper;
 
 namespace property_api.V1.Gateways
 {
@@ -8,9 +10,12 @@ namespace property_api.V1.Gateways
     public class PropertyGateway : IPropertyGateway
     {
         private readonly IUHContext _uhcontext;
-        public PropertyGateway(IUHContext uhContext)
+        private readonly PropertyFactory _factory;
+
+        public PropertyGateway(IUHContext uhContext, PropertyFactory factory)
         {
             _uhcontext = uhContext;
+            _factory = factory;
         }
         public Property GetPropertyByPropertyReference(string propertyReference)
         {
@@ -19,10 +24,7 @@ namespace property_api.V1.Gateways
             {
                 return null;
             }
-            return new Property {
-                PropRef = response.PropRef,
-                Telephone = response.Telephone
-            };
+            return _factory.FromUHProperty(response);
         }
     }
 }

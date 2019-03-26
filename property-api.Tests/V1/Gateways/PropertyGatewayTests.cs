@@ -4,6 +4,8 @@ using property_api.V1.Domain;
 using property_api.V1.Infrastructure;
 using Bogus;
 using System;
+using AutoMapper;
+using property_api.V1.Factory;
 
 namespace UnitTests.V1.Gateways
 {
@@ -11,10 +13,13 @@ namespace UnitTests.V1.Gateways
     public class PropertyGatewayTests : DbTest
     {
         private PropertyGateway _classUnderTest;
+        private PropertyFactory _factory;
 
         [SetUp]
         public void Setup(){
-            _classUnderTest = new PropertyGateway(_uhContext);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UhProperty, Property>());
+            _factory = new PropertyFactory(config.CreateMapper());
+            _classUnderTest = new PropertyGateway(_uhContext, _factory);
         }
 
         [Test]
@@ -29,6 +34,7 @@ namespace UnitTests.V1.Gateways
             var property = new Faker<Property>();
             property.RuleFor(u => u.PropRef, f => f.Random.Hash(length: 12));
             property.RuleFor(u => u.Telephone, f => f.Phone.PhoneNumber());
+            property.RuleFor(u => u.Address1, f => f.Random.Hash(12));
             return property;
         }
 
@@ -41,6 +47,7 @@ namespace UnitTests.V1.Gateways
             {
                 PropRef = expectedProperty.PropRef, //db will generate this automatically
                 Telephone = expectedProperty.Telephone,
+                Address1 = expectedProperty.Address1,
 
                 //non null fields
                 NoSingleBeds = 1,
@@ -72,6 +79,7 @@ namespace UnitTests.V1.Gateways
             Assert.IsInstanceOf<Property>(response);
             Assert.AreEqual(expectedProperty.PropRef, response.PropRef);
             Assert.AreEqual(expectedProperty.Telephone, response.Telephone);
+            Assert.AreEqual(expectedProperty.Address1, response.Address1);
         }
 
         [Test]
