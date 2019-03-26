@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
- namespace transactions_api.Versioning
+ namespace property_api.Versioning
 {
     public static class ApiVersionExtensions
     {
