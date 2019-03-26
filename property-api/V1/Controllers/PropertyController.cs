@@ -25,6 +25,8 @@ namespace property_api.V1.Controllers
 
         [HttpGet("{propertyReference}")]
         [Produces("application/json")]
+        [ProducesResponseType(typeof(GetPropertyUseCase.GetPropertyByRefResponse), 200)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
         public IActionResult GetByReference(string propertyReference)
         {
             _logger.LogInformation("Property information was requested for " + propertyReference);
@@ -32,7 +34,7 @@ namespace property_api.V1.Controllers
 
             if (result.Success)
             {
-                return Ok(result);
+                return Ok(result.Property);
             }
             return NotFound();
         }

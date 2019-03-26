@@ -40,9 +40,10 @@ namespace UnitTests.V1.Controllers
             _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object,_mockLogger.Object);
 
             var response = _classUnderTest.GetByReference("foo");
+
             Assert.NotNull(response);
             Assert.AreEqual(200, ((ObjectResult)response).StatusCode);
-            Assert.AreEqual(JsonConvert.SerializeObject(expectedResult),
+            Assert.AreEqual(JsonConvert.SerializeObject(expectedResult.Property),
                             JsonConvert.SerializeObject(((ObjectResult)response).Value));
         }
 
