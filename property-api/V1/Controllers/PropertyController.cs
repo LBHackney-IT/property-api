@@ -35,7 +35,7 @@ namespace property_api.V1.Controllers
         [HttpGet]
         [Route("property")]
         [Produces("application/json")]
-        public IActionResult GetByReference(string propertyReference)
+        public IActionResult GetByReference([FromQuery]string propertyReference)
         {
             try
             {
