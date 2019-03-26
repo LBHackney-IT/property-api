@@ -10,7 +10,7 @@ namespace property_api.V1.Infrastructure
         [Key]
         [MaxLength(12)]
         [Column("prop_ref")]
-        public string PropRef { get; set; } 
+        public string PropRef { get; set; }
         [Column("level_code")]
         public string LevelCode { get; set; }
         [Column("major_ref")]
@@ -145,9 +145,8 @@ namespace property_api.V1.Infrastructure
         [Column("walk_sequence")]
         public int? WalkSequence { get; set; }
 
-//        [TimeStamp]
-//        [Column("tstamp")]
-//        public byte[] Tstamp { get; }
+        [Column("tstamp")]
+        public byte[] Tstamp { get; set; }
 
         [Column("alinefull")]
         public string Alinefull { get; set; }
