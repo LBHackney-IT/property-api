@@ -28,33 +28,35 @@ namespace UnitTests.V1.Controllers
         }
 
         [Test]
-        public void ReturnsCorrectResponseWithOKStatus()
+        public void ReturnsCorrectResponseWithOkStatus()
         {
-            var expectedRestult = new Property
+            var expectedResult = new GetPropertyUseCase.GetPropertyByRefResponse(new Property
             {
                 PropRef = faker.Random.String(12),
                 Telephone = faker.Phone.PhoneNumber()
-            };
+            });
 
-            _mockGetPropertyUseCase.Setup(m => m.Execute(It.IsAny<string>())).Returns(expectedRestult);
+            _mockGetPropertyUseCase.Setup(m => m.Execute(It.IsAny<string>())).Returns(expectedResult);
             _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object,_mockLogger.Object);
 
             var response = _classUnderTest.GetByReference("foo");
             Assert.NotNull(response);
             Assert.AreEqual(200, ((ObjectResult)response).StatusCode);
-            Assert.AreEqual(JsonConvert.SerializeObject(expectedRestult),
+            Assert.AreEqual(JsonConvert.SerializeObject(expectedResult),
                             JsonConvert.SerializeObject(((ObjectResult)response).Value));
         }
 
         [Test]
-        public void ReturnsCorrectResponseWithNotFoundStatus()
+        public void ReturnsCorrectResponseWhenNotFound()
         {
-            _mockGetPropertyUseCase.Setup(m => m.Execute(It.IsAny<string>()));
+            var expectedResult = new GetPropertyUseCase.GetPropertyByRefResponse(null);
+
+            _mockGetPropertyUseCase.Setup(m => m.Execute(It.IsAny<string>())).Returns(expectedResult);
             _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object,_mockLogger.Object);
 
             var response = _classUnderTest.GetByReference("foo");
             Assert.NotNull(response);
-            Assert.AreEqual(404, ((StatusCodeResult)response).StatusCode);
+            Assert.IsInstanceOf(typeof(NotFoundResult), response);
         }
     }
 }

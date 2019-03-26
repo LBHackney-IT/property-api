@@ -38,7 +38,7 @@ namespace UnitTests.V1.UseCase
             var respose = _classUnderTest.Execute("foo");
             // Assert
             Assert.IsNotNull(respose);
-            Assert.IsInstanceOf<Property>(respose);
+            Assert.IsInstanceOf<GetPropertyUseCase.GetPropertyByRefResponse>(respose);
         }
 
         [Test]
@@ -54,8 +54,8 @@ namespace UnitTests.V1.UseCase
 
             //Assert
             Assert.NotNull(response);
-            Assert.IsInstanceOf<Property>(response);
-            Assert.AreEqual(expectedResponse.PropRef, response.PropRef);
+            Assert.IsInstanceOf<GetPropertyUseCase.GetPropertyByRefResponse>(response);
+            Assert.AreEqual(expectedResponse.PropRef, response.Property.PropRef);
         }
     }
 }

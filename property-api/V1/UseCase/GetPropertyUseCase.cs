@@ -1,4 +1,3 @@
-using System;
 using property_api.V1.Domain;
 using property_api.V1.Gateways;
 
@@ -11,10 +10,27 @@ namespace property_api.V1.UseCase
         {
             _gateway = gateway;
         }
-        public Property Execute(string propertyReference)
+        public GetPropertyByRefResponse Execute(string propertyReference)
         {
             var response = _gateway.GetPropertyByPropertyReference(propertyReference);
-            return response;
+
+            return new GetPropertyByRefResponse(response);
+        }
+
+        public class GetPropertyByRefResponse
+        {
+            public readonly bool Success;
+            public readonly Property Property;
+
+            public GetPropertyByRefResponse(Property property)
+            {
+                if (property != null)
+                {
+                    Success = true;
+                }
+                Property = property;
+            }
+
         }
     }
 }

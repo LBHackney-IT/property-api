@@ -29,11 +29,12 @@ namespace property_api.V1.Controllers
         {
             _logger.LogInformation("Property information was requested for " + propertyReference);
             var result = _getPropertyUseCase.Execute(propertyReference);
-            if (result == null)
+
+            if (result.Success)
             {
-                return NotFound();
+                return Ok(result);
             }
-            return Ok(result);
+            return NotFound();
         }
     }
 }
