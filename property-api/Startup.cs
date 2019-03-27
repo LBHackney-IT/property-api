@@ -27,7 +27,7 @@ namespace property_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            ConfigurePropertyFactory(services);            
+            ConfigurePropertyFactory(services);
             ConfigureDbContext(services);
             RegisterGateWays(services);
             RegisterUseCases(services);
@@ -42,8 +42,10 @@ namespace property_api
 
         private static void ConfigureDbContext(IServiceCollection services)
         {
+            var connectionString = Environment.GetEnvironmentVariable("UH_URL");
+
             DbContextOptionsBuilder builder = new DbContextOptionsBuilder()
-                .UseSqlServer("Data Source=localhost;Initial Catalog=uhsimulator;user id=sa;password=Rooty-Tooty;");
+                .UseSqlServer(connectionString);
 
             services.AddSingleton<IUHContext>(s => new UhContext(builder.Options));
         }
