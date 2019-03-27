@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
-using property_api.Controllers.V1;
-using property_api.UseCase.V1;
+using property_api.V1.Controllers;
+using property_api.V1.UseCase;
 
 namespace UnitTests.V1.Controllers
 {

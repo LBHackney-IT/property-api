@@ -1,5 +1,4 @@
-﻿
-namespace property_api.UseCase.V1
+namespace property_api.V1.UseCase
 {
     public class ThrowOpsErrorUsecase
     {

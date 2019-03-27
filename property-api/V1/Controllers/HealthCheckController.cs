@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using property_api.UseCase.V1;
+using property_api.V1.UseCase;
 
-namespace property_api.Controllers.V1
+namespace property_api.V1.Controllers
 {
     [Route("api/v1/healthcheck")]
     [ApiController]

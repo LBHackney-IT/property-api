@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace property_api.Controllers.V1
+namespace property_api.V1.Controllers
 {
-    public class BaseController  : Controller
+    public class BaseController : Controller
     {
         public BaseController()
         {
