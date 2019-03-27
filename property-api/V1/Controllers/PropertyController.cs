@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using property_api.V1.Domain;
 using property_api.V1.UseCase;
 using Microsoft.Extensions.Logging;
 
@@ -24,6 +20,7 @@ namespace property_api.V1.Controllers
         }
 
         [HttpGet("{propertyReference}")]
+        [Route("{propertyReference}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(GetPropertyUseCase.GetPropertyByRefResponse), 200)]
         [ProducesResponseType(typeof(NotFoundResult), 404)]
