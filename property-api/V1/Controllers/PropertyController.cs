@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace property_api.V1.Controllers
 {
-    [Route("api/v1/properties")]
+    [Route("api/v1/property")]
     [ApiController]
     [Produces("application/json")]
     public class PropertyController : BaseController
