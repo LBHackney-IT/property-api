@@ -1,6 +1,10 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using property_api.V1.UseCase;
 using Microsoft.Extensions.Logging;
+using property_api.V1.UseCase.GetPropertyChildren;
+using property_api.V1.UseCase.GetPropertyChildren.Models;
 
 
 namespace property_api.V1.Controllers
@@ -10,30 +14,28 @@ namespace property_api.V1.Controllers
     [Produces("application/json")]
     public class PropertyChildrenController : BaseController
     {
-       private IGetPropertyUseCase _getPropertyUseCase;
-       private ILogger<PropertyController> _logger;
+        private readonly IGetPropertyChildrenUseCase _getPropertyChildrenUseCase;
 
-        public PropertyController(IGetPropertyUseCase getPropertyUseCase, ILogger<PropertyController> logger)
+        public PropertyChildrenController(IGetPropertyChildrenUseCase getPropertyChildrenUseCase)
         {
-            _getPropertyUseCase = getPropertyUseCase;
-            _logger = logger;
+            _getPropertyChildrenUseCase = getPropertyChildrenUseCase;
         }
 
-        [HttpGet("{propertyReference}")]
-        [Route("{propertyReference}")]
-        [Produces("application/json")]
+        [HttpGet("{propertyReference}/children")]
+        [Route("{propertyReference}/children")]
+        [Produces("application/json", "test/csv")]
         [ProducesResponseType(typeof(GetPropertyUseCase.GetPropertyByRefResponse), 200)]
         [ProducesResponseType(typeof(NotFoundResult), 404)]
-        public IActionResult GetByReference(string propertyReference)
+        public IActionResult Get(string propertyReference)
         {
-            _logger.LogInformation("Property information was requested for " + propertyReference);
-            var result = _getPropertyUseCase.Execute(propertyReference);
-
-            if (result.Success)
+            var getPropertyChildrenRequest = new GetPropertyChildrenRequest
             {
-                return Ok(result.Property);
-            }
-            return NotFound();
+                PropertyReference = propertyReference
+            };
+
+            var response = _getPropertyChildrenUseCase.Execute(getPropertyChildrenRequest);
+
+            return Ok(response);
         }
     }
 }

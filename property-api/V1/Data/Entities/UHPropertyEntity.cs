@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace property_api.V1.Infrastructure
 {
     [Table("property")]
-    public class UhProperty
+    public class UhPropertyEntity
     {
         [Key]
         [MaxLength(12)]

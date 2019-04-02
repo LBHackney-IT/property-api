@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using property_api.V1.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace property_api.V1.Infrastructure
 {
@@ -7,6 +6,6 @@ namespace property_api.V1.Infrastructure
     {
         public UhContext(DbContextOptions options) : base(options) {}
 
-        public DbSet<UhProperty> UhPropertys { get; set; }
+        public DbSet<UhPropertyEntity> UhPropertys { get; set; }
     }
 }

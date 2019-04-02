@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +35,7 @@ namespace property_api
 
         private static void ConfigurePropertyFactory(IServiceCollection services)
         {
-            var mappingConfig = new MapperConfiguration(cfg => { cfg.CreateMap<UhProperty, Property>(); });
+            var mappingConfig = new MapperConfiguration(cfg => { cfg.CreateMap<UhPropertyEntity, Property>(); });
             var propertyFactory = new PropertyFactory(mappingConfig.CreateMapper());
             services.AddSingleton(propertyFactory);
         }

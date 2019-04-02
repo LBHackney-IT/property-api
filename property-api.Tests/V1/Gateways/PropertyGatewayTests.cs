@@ -20,7 +20,7 @@ namespace UnitTests.V1.Gateways
 
         [SetUp]
         public void Setup(){
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UhProperty, Property>());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UhPropertyEntity, Property>());
             _factory = new PropertyFactory(config.CreateMapper());
             _classUnderTest = new PropertyGateway(_uhContext, _factory);
         }

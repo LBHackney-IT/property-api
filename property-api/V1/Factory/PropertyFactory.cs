@@ -12,7 +12,7 @@ namespace property_api.V1.Factory
         {
             _mapper = mapper;
         }
-        public Property FromUHProperty(UhProperty uhproperty)
+        public Property FromUHProperty(UhPropertyEntity uhproperty)
         {
             return _mapper.Map<Property>(uhproperty);
         }

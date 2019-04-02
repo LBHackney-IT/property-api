@@ -17,7 +17,7 @@ namespace UnitTests.V1.Factories
         [SetUp]
         public void SetUp()
         {
-            var mapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<UhProperty, Property>());
+            var mapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<UhPropertyEntity, Property>());
             var mapper = mapperConfig.CreateMapper();
             _classUnderTest = new PropertyFactory(mapper);
         }
@@ -25,7 +25,7 @@ namespace UnitTests.V1.Factories
         [Test]
         public void ReturnsEmptyPropertyWhereThereIsNoMatch()
         {
-            var expectedResponse = new UhProperty();
+            var expectedResponse = new UhPropertyEntity();
             var result = _classUnderTest.FromUHProperty(expectedResponse);
 
             Assert.True(result is Property);
