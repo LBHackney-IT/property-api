@@ -8,7 +8,7 @@ namespace property_api.V1.Controllers
     [Route("api/v1/property")]
     [ApiController]
     [Produces("application/json")]
-    public class PropertyController : BaseController
+    public class PropertyChildrenController : BaseController
     {
        private IGetPropertyUseCase _getPropertyUseCase;
        private ILogger<PropertyController> _logger;
