@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using property_api.V1.Boundary;
 using property_api.V1.Domain;
 using property_api.V1.UseCase;
 using Microsoft.Extensions.Logging;
