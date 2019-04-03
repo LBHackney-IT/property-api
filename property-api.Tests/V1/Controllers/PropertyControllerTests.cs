@@ -8,7 +8,6 @@ using property_api.V1.Domain;
 using Moq;
 using Bogus;
 using Newtonsoft.Json;
-using property_api.V1.Boundary;
 using Microsoft.Extensions.Logging;
 
 namespace UnitTests.V1.Controllers
@@ -17,9 +16,9 @@ namespace UnitTests.V1.Controllers
     public class ControllerTests
     {
         private PropertyController _classUnderTest;
-        private Mock<IGetPropertyUseCase> _mockGetPropertyUseCase; 
+        private Mock<IGetPropertyUseCase> _mockGetPropertyUseCase;
         private Mock<ILogger<PropertyController>> _mockLogger;
-        private Faker faker = new Faker("en_GB"); 
+        private Faker faker = new Faker("en_GB");
 
         [SetUp]
         public void SetUp()
@@ -29,53 +28,36 @@ namespace UnitTests.V1.Controllers
         }
 
         [Test]
-        public void ReturnsCorrectResponseWithOKStatus()
+        public void ReturnsCorrectResponseWithOkStatus()
         {
-            var expectedRestult = new Property
+            var expectedResult = new GetPropertyUseCase.GetPropertyByRefResponse(new Property
             {
-                PropRef = faker.Random.Int(),
+                PropRef = faker.Random.String(12),
                 Telephone = faker.Phone.PhoneNumber()
-            };
+            });
 
-            _mockGetPropertyUseCase.Setup(m => m.Execute(It.IsAny<string>())).Returns(expectedRestult);
+            _mockGetPropertyUseCase.Setup(m => m.Execute(It.IsAny<string>())).Returns(expectedResult);
             _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object,_mockLogger.Object);
 
             var response = _classUnderTest.GetByReference("foo");
+
             Assert.NotNull(response);
             Assert.AreEqual(200, ((ObjectResult)response).StatusCode);
-            Assert.AreEqual(JsonConvert.SerializeObject(expectedRestult),
+            Assert.AreEqual(JsonConvert.SerializeObject(expectedResult.Property),
                             JsonConvert.SerializeObject(((ObjectResult)response).Value));
         }
 
         [Test]
-        public void ReturnsCorrectResponseWithNotFoundStatus()
+        public void ReturnsCorrectResponseWhenNotFound()
         {
-            _mockGetPropertyUseCase.Setup(m => m.Execute(It.IsAny<string>()));
+            var expectedResult = new GetPropertyUseCase.GetPropertyByRefResponse(null);
+
+            _mockGetPropertyUseCase.Setup(m => m.Execute(It.IsAny<string>())).Returns(expectedResult);
             _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object,_mockLogger.Object);
 
             var response = _classUnderTest.GetByReference("foo");
             Assert.NotNull(response);
-            Assert.AreEqual(404, ((StatusCodeResult)response).StatusCode);
-        }
-
-        [Test]
-        public void ReturnsCorrectResponseWithInternalServerError()
-        {
-            var expectedResult = new ErrorResponse
-            {
-                DeveloperMessage = faker.Lorem.Word(),
-                UserMessage = "We had some issues processing your request"
-            };
-
-            _mockGetPropertyUseCase.Setup(m => m.Execute(It.IsAny<string>())).Throws(new Exception(expectedResult.DeveloperMessage));
-
-            _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object,_mockLogger.Object);
-
-            var response = _classUnderTest.GetByReference("foo");
-            Assert.NotNull(response);
-            Assert.AreEqual(500, ((ObjectResult)response).StatusCode);
-            Assert.AreEqual(expectedResult.UserMessage, ((ErrorResponse)((ObjectResult)response).Value).UserMessage);
-            Assert.AreEqual(expectedResult.DeveloperMessage, ((ErrorResponse)((ObjectResult)response).Value).DeveloperMessage);
+            Assert.IsInstanceOf(typeof(NotFoundResult), response);
         }
     }
 }

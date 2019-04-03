@@ -19,4 +19,10 @@
     <ProjectReference Include="..\property-api\property-api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="V1\Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="V1\Helpers\PropertyHelper.cs" />
+  </ItemGroup>
 </Project>

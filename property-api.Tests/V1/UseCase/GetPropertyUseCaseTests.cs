@@ -10,7 +10,7 @@ namespace UnitTests.V1.UseCase
 {
     [TestFixture]
     public class GetPropertyUseCaseTests
-    { 
+    {
         private GetPropertyUseCase _classUnderTest;
         private Faker _faker;
         private Mock<IPropertyGateway> _gateway;
@@ -22,7 +22,7 @@ namespace UnitTests.V1.UseCase
             _classUnderTest = new GetPropertyUseCase(_gateway.Object);
             _faker = new Faker();
         }
-        
+
         [Test]
         public void GetPropertyImplementsBoundaryInterface()
         {
@@ -38,15 +38,15 @@ namespace UnitTests.V1.UseCase
             var respose = _classUnderTest.Execute("foo");
             // Assert
             Assert.IsNotNull(respose);
-            Assert.IsInstanceOf<Property>(respose);
+            Assert.IsInstanceOf<GetPropertyUseCase.GetPropertyByRefResponse>(respose);
         }
-        
+
         [Test]
         public void ExecutesGetResponseFromGateway()
         {
             //Arrange
-            var expectedResponse = new Property(); 
-            expectedResponse.PropRef = 23;
+            var expectedResponse = new Property();
+            expectedResponse.PropRef = _faker.Random.String(8);
             _gateway.Setup(method => method.GetPropertyByPropertyReference("foo")).Returns(expectedResponse);
 
             //Act
@@ -54,8 +54,8 @@ namespace UnitTests.V1.UseCase
 
             //Assert
             Assert.NotNull(response);
-            Assert.IsInstanceOf<Property>(response);
-            Assert.AreEqual(expectedResponse.PropRef, response.PropRef);
+            Assert.IsInstanceOf<GetPropertyUseCase.GetPropertyByRefResponse>(response);
+            Assert.AreEqual(expectedResponse.PropRef, response.Property.PropRef);
         }
     }
 }

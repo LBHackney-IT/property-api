@@ -18,6 +18,9 @@ using System.IO;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using property_api.Versioning;
+using AutoMapper;
+using property_api.V1.Domain;
+using property_api.V1.Factory;
 
 namespace property_api
 {
@@ -98,9 +101,17 @@ namespace property_api
 
             });
 
+            ConfigurePropertyFactory(services);
             ConfigureDbContext(services);
             RegisterGateWays(services);
             RegisterUseCases(services);
+        }
+
+        private static void ConfigurePropertyFactory(IServiceCollection services)
+        {
+            var mappingConfig = new MapperConfiguration(cfg => { cfg.CreateMap<UhProperty, Property>(); });
+            var propertyFactory = new PropertyFactory(mappingConfig.CreateMapper());
+            services.AddSingleton(propertyFactory);
         }
 
         private static void ConfigureDbContext(IServiceCollection services)
@@ -122,8 +133,6 @@ namespace property_api
         {
             services.AddSingleton<IGetPropertyUseCase, GetPropertyUseCase>();
         }
-
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

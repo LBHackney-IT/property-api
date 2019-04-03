@@ -1,81 +1,58 @@
 using NUnit.Framework;
-using property_api.V1.Gateways; 
-using property_api.V1.Domain; 
+using property_api.V1.Gateways;
+using property_api.V1.Domain;
 using property_api.V1.Infrastructure;
 using Bogus;
 using System;
-using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using property_api.V1.Factory;
+using UnitTests.V1.Helpers;
 
 namespace UnitTests.V1.Gateways
 {
     [TestFixture]
-    public class PropertyGatewayTests
+    public class PropertyGatewayTests : DbTest
     {
-        private Faker faker = new Faker();
-        private PropertyGateway classUnderTest;
-        private UhContext _uhContext;
-    
+        private PropertyGateway _classUnderTest;
+        private PropertyFactory _factory;
+
+        private readonly UhPropertyHelper _uhPropertyHelper = new UhPropertyHelper();
+
         [SetUp]
         public void Setup(){
-            DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
-
-            string TEST_UH_URL = Environment.GetEnvironmentVariable("TEST_UH_URL") ??
-                                 @"Server=localhost;Database=uhsimulator;User Id='sa';Password='Rooty-Tooty';";
-
-            builder.UseSqlServer(TEST_UH_URL);
-
-            _uhContext = new UhContext(builder.Options);
-            _uhContext.Database.BeginTransaction();
-
-            classUnderTest = new PropertyGateway(_uhContext);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<UhProperty, Property>());
+            _factory = new PropertyFactory(config.CreateMapper());
+            _classUnderTest = new PropertyGateway(_uhContext, _factory);
         }
 
         [Test]
         public void GatewayIsIPropertyGateway()
         {
-            Assert.True(classUnderTest is IPropertyGateway);
-        }
 
-        private static Faker<Property> TestProperty()
-        {
-            var property = new Faker<Property>();
-            property.RuleFor(u => u.PropRef, f => f.Random.Int());
-            property.RuleFor(u => u.Telephone, f => f.Phone.PhoneNumber());
-            return property;
+            Assert.True(_classUnderTest is IPropertyGateway);
         }
 
         [Test]
         public void GatewayReturnsAPropertyWhenGivenARef()
         {
-            var expectedProperty = TestProperty().Generate();
-            
-            // TO BE REMOVED
-            _uhContext.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.property ON");
-            
-            var uhProperty = new UHProperty
-            {
-                PropRef = expectedProperty.PropRef,
-                Telephone = expectedProperty.Telephone,
-                Ownership = "",
-                Repairable = faker.Random.Bool(),
-                Dtstamp = DateTime.Now
-            };
 
-            _uhContext.UHPropertys.Add(uhProperty);
+            var expectedProperty = _uhPropertyHelper.GenerateUhProperty();
+            _uhContext.UhPropertys.Add(expectedProperty);
             _uhContext.SaveChanges();
 
-            var response = classUnderTest.GetPropertyByPropertyReference(expectedProperty.PropRef.ToString());
+            var response = _classUnderTest.GetPropertyByPropertyReference(expectedProperty.PropRef);
 
             Assert.NotNull(response);
             Assert.IsInstanceOf<Property>(response);
             Assert.AreEqual(expectedProperty.PropRef, response.PropRef);
             Assert.AreEqual(expectedProperty.Telephone, response.Telephone);
+            Assert.AreEqual(expectedProperty.Address1, response.Address1);
         }
 
         [Test]
-        public void GetawayReturnsVoid() {
-            var response = classUnderTest.GetPropertyByPropertyReference("123434");
+        public void GetawayReturnsNullWhenNotFound() {
+            var response = _classUnderTest.GetPropertyByPropertyReference("foo");
             Assert.Null(response);
         }
     }
-}           
+}

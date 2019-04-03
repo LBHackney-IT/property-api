@@ -1,3 +1,4 @@
+using AutoMapper;
 using property_api.V1.Domain;
 using property_api.V1.Infrastructure;
 
@@ -5,9 +6,15 @@ namespace property_api.V1.Factory
 {
     public class PropertyFactory
     {
-        public Property FromUHProperty(UHProperty uhproperty) 
+        private readonly IMapper _mapper;
+
+        public PropertyFactory(IMapper mapper)
         {
-            return new Property();
+            _mapper = mapper;
+        }
+        public Property FromUHProperty(UhProperty uhproperty)
+        {
+            return _mapper.Map<Property>(uhproperty);
         }
     }
 }

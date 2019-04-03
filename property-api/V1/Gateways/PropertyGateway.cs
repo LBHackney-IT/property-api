@@ -1,30 +1,29 @@
-using System;
 using System.Linq;
 using property_api.V1.Infrastructure;
 using property_api.V1.Domain;
-    
+using property_api.V1.Factory;
+
 namespace property_api.V1.Gateways
 {
-    
-    public class PropertyGateway : IPropertyGateway 
+
+    public class PropertyGateway : IPropertyGateway
     {
-        private readonly IUHContext _uhcontext;
-        public PropertyGateway(IUHContext uhContext)
+        private readonly IUHContext _uhContext;
+        private readonly PropertyFactory _factory;
+
+        public PropertyGateway(IUHContext uhContext, PropertyFactory factory)
         {
-            _uhcontext = uhContext;
+            _uhContext = uhContext;
+            _factory = factory;
         }
-        public Property GetPropertyByPropertyReference(string PropertyReference)
+        public Property GetPropertyByPropertyReference(string propertyReference)
         {
-            var intReference = Int32.Parse(PropertyReference);
-            var response = _uhcontext.UHPropertys.Where(p => p.PropRef == intReference).FirstOrDefault<UHProperty>();
+            var response = _uhContext.UhPropertys.SingleOrDefault(p => p.PropRef == propertyReference);
             if (response == null)
             {
                 return null;
-            };
-            return new Property{
-                PropRef = response.PropRef,
-                Telephone = response.Telephone
-            };
+            }
+            return _factory.FromUHProperty(response);
         }
     }
 }

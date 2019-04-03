@@ -10,9 +10,8 @@ using Microsoft.Extensions.Logging;
 
 namespace property_api.V1.Controllers
 {
-    
     [ApiVersion("1")]
-    [Route("api/v1")]
+    [Route("api/v1/property")]
     [ApiController]
     [Produces("application/json")]
     public class PropertyController : BaseController
@@ -32,31 +31,21 @@ namespace property_api.V1.Controllers
 		/// </summary>
 		/// <param name="propertyReference">The property reference for which to provide a property</param>
 		/// <returns>A a property</returns>
-        [HttpGet]
-        [Route("property")]
+        [HttpGet("{propertyReference}")]
+        [Route("{propertyReference}")]
         [Produces("application/json")]
-        public IActionResult GetByReference([FromQuery]string propertyReference)
+        [ProducesResponseType(typeof(GetPropertyUseCase.GetPropertyByRefResponse), 200)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
+        public IActionResult GetByReference(string propertyReference)
         {
-            try
-            {
-                _logger.LogInformation("Property information was requested for " + propertyReference);
-                var result = _getPropertyUseCase.Execute(propertyReference);
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                var errorResponse = new ErrorResponse
-                {
-                    DeveloperMessage = ex.Message,
-                    UserMessage = "We had some issues processing your request"
-                };
+            _logger.LogInformation("Property information was requested for " + propertyReference);
+            var result = _getPropertyUseCase.Execute(propertyReference);
 
-                return StatusCode(StatusCodes.Status500InternalServerError, errorResponse); 
+            if (result.Success)
+            {
+                return Ok(result.Property);
             }
+            return NotFound();
         }
     }
 }
