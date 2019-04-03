@@ -30,7 +30,7 @@ namespace UnitTests.V1.Controllers
         [Test]
         public void ReturnsCorrectResponseWithOkStatus()
         {
-            var expectedResult = new GetPropertyUseCase.GetPropertyByRefResponse(new Property
+            var expectedResult = new GetPropertyUseCase.GetPropertyByRefResponse(new property_api.V1.Domain.Property
             {
                 PropRef = faker.Random.String(12),
                 Telephone = faker.Phone.PhoneNumber()
