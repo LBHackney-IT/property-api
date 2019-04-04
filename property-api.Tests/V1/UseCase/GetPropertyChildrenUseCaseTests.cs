@@ -57,17 +57,12 @@ namespace property_api.Tests.V1.UseCase
         }
 
         [Test]
-        public void WhenExecutingTheGatewayWithNullReturnsAListOfProperties()
+        public void When_executing_the_gateway_with_null_an_ArgumentNullException_is_thrown()
         {
             //arrange
-            _mockGateway.Setup(s => s.GetPropertyChild(It.IsAny<string>())).Returns(new List<Property>());
             //act
-            var response = _classUnderTest.Execute(null);
             //assert
-            response.Should().NotBeNull();
-            response.Should().BeOfType<GetPropertyChildrenResponse>();
-            response.Children.Should().NotBeNull();
-            response.Children.Should().BeOfType<List<Property>>();
+            Assert.Throws<ArgumentNullException>(() => _classUnderTest.Execute(null));
         }
     }
 }
