@@ -11,6 +11,8 @@ using property_api.V1.Infrastructure;
 using AutoMapper;
 using property_api.V1.Domain;
 using property_api.V1.Factory;
+using property_api.V1.UseCase.GetPropertyChildren;
+using property_api.V1.UseCase.GetPropertyChildren.Impl;
 
 namespace property_api
 {
@@ -26,6 +28,7 @@ namespace property_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+           
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             ConfigurePropertyFactory(services);
             ConfigureDbContext(services);
@@ -53,11 +56,14 @@ namespace property_api
         private static void RegisterGateWays(IServiceCollection services)
         {
             services.AddTransient<IPropertyGateway, PropertyGateway>();
+            services.AddTransient<IGetPropertyChildrenGateway, PropertyGateway>();
+
         }
 
         private static void RegisterUseCases(IServiceCollection services)
         {
             services.AddTransient<IGetPropertyUseCase, GetPropertyUseCase>();
+            services.AddTransient<IGetPropertyChildrenUseCase, GetPropertyChildrenUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
