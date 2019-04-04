@@ -128,5 +128,27 @@ namespace UnitTests.V1.Gateways
             //assert
             response.Count().Should().Be(0);
         }
+
+        [TestCase("1234")]
+        [TestCase("45677")]
+        public void GatewayReturnsOnlyChildrenWithMajorReferenceEqualToPropRef(string parentReference)
+        {
+            //arrange
+            var child1 = _uhPropertyHelper.GenerateUhProperty();
+            var child2 = _uhPropertyHelper.GenerateUhProperty();
+            //set up only child 1 to have the same parent reference
+            child1.MajorRef = parentReference;
+
+            _uhContext.UhPropertys.Add(child1);
+            _uhContext.UhPropertys.Add(child2);
+            _uhContext.SaveChanges();
+
+            //act
+            var response = _classUnderTest.GetPropertyChild(parentReference);
+
+            //assert
+            response.Count().Should().Be(1);
+            response.First().MajorRef.Should().BeEquivalentTo(parentReference);
+        }
     }
 }
