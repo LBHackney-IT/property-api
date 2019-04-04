@@ -15,8 +15,8 @@ namespace property_api.V1.Controllers
     [Produces("application/json")]
     public class PropertyController : BaseController
     {
-       private IGetPropertyUseCase _getPropertyUseCase;
-       private ILogger<PropertyController> _logger;
+        private IGetPropertyUseCase _getPropertyUseCase;
+        private ILogger<PropertyController> _logger;
 
         public PropertyController(IGetPropertyUseCase getPropertyUseCase, ILogger<PropertyController> logger)
         {
@@ -25,12 +25,12 @@ namespace property_api.V1.Controllers
         }
 
         // GET a property for a given property reference
-		/// <summary>
-		/// Returns a property for a given property reference
-		/// </summary>
-		/// <param name="propertyReference">The property reference for which to provide a property</param>
-		/// <returns>A a property</returns>
-        [HttpGet("{propertyReference}")]
+        /// <summary>
+        /// Returns a property for a given property reference
+        /// </summary>
+        /// <param name="propertyReference">The property reference for which to provide a property</param>
+        /// <returns>A a property</returns>
+        [HttpGet]
         [Route("{propertyReference}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(GetPropertyUseCase.GetPropertyByRefResponse), 200)]
