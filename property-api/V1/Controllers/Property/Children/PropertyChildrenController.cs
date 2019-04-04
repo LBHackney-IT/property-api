@@ -9,6 +9,7 @@ using property_api.V1.Domain;
 
 namespace property_api.V1.Controllers
 {
+    [ApiVersion("1")]
     [Route("api/v1/property")]
     [ApiController]
     [Produces("application/json")]
@@ -21,7 +22,7 @@ namespace property_api.V1.Controllers
             _getPropertyChildrenUseCase = getPropertyChildrenUseCase;
         }
 
-        [HttpGet("{propertyReference}/children")]
+        [HttpGet]
         [Route("{propertyReference}/children")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(GetPropertyUseCase.GetPropertyByRefResponse), 200)]
