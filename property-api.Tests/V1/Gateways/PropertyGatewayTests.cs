@@ -10,6 +10,7 @@ using UnitTests.V1.Helpers;
 
 namespace UnitTests.V1.Gateways
 {
+    
     [TestFixture]
     public class PropertyGatewayTests : DbTest
     {
@@ -24,7 +25,7 @@ namespace UnitTests.V1.Gateways
             _factory = new PropertyFactory(config.CreateMapper());
             _classUnderTest = new PropertyGateway(_uhContext, _factory);
         }
-
+        
         [Test]
         public void GatewayIsIPropertyGateway()
         {

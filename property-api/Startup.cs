@@ -47,17 +47,17 @@ namespace property_api
             DbContextOptionsBuilder builder = new DbContextOptionsBuilder()
                 .UseSqlServer(connectionString);
 
-            services.AddSingleton<IUHContext>(s => new UhContext(builder.Options));
+            services.AddTransient<IUHContext>(s => new UhContext(builder.Options));
         }
 
         private static void RegisterGateWays(IServiceCollection services)
         {
-            services.AddSingleton<IPropertyGateway, PropertyGateway>();
+            services.AddTransient<IPropertyGateway, PropertyGateway>();
         }
 
         private static void RegisterUseCases(IServiceCollection services)
         {
-            services.AddSingleton<IGetPropertyUseCase, GetPropertyUseCase>();
+            services.AddTransient<IGetPropertyUseCase, GetPropertyUseCase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

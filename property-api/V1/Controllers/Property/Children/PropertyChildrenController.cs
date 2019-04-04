@@ -5,7 +5,7 @@ using property_api.V1.UseCase;
 using Microsoft.Extensions.Logging;
 using property_api.V1.UseCase.GetPropertyChildren;
 using property_api.V1.UseCase.GetPropertyChildren.Models;
-
+using property_api.V1.Domain;
 
 namespace property_api.V1.Controllers
 {
@@ -23,11 +23,13 @@ namespace property_api.V1.Controllers
 
         [HttpGet("{propertyReference}/children")]
         [Route("{propertyReference}/children")]
-        [Produces("application/json", "test/csv")]
+        [Produces("application/json")]
         [ProducesResponseType(typeof(GetPropertyUseCase.GetPropertyByRefResponse), 200)]
         [ProducesResponseType(typeof(NotFoundResult), 404)]
         public IActionResult Get(string propertyReference)
         {
+
+            
             var getPropertyChildrenRequest = new GetPropertyChildrenRequest
             {
                 PropertyReference = propertyReference

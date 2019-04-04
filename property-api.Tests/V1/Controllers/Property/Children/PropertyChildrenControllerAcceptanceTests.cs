@@ -7,6 +7,7 @@ using NUnit.Framework;
 using property_api.V1.Controllers;
 using property_api.V1.UseCase;
 using FluentAssertions;
+using property_api.V1.UseCase.GetPropertyChildren.Models;
 
 namespace UnitTests.V1.Controller.Controllers.Property.Children
 {
@@ -16,7 +17,6 @@ namespace UnitTests.V1.Controller.Controllers.Property.Children
         private PropertyChildrenController _classUnderTest;
 
 
-        
         [SetUp]
         public void Setup()
         {
@@ -25,15 +25,15 @@ namespace UnitTests.V1.Controller.Controllers.Property.Children
 
         [TestCase("123")]
         [TestCase("456")]
-        public void WhenGettingChildPropertiesTheParentReferenceIsTheSameAsThePropertyReference(string propertyReference)
+        public void WhenGettingChildPropertiesThePropertyReferenceIsTheSameAsTheMajorReferenceOnTheChild(string propertyReference)
         {
-           //arrange
-           //act
-           var response = _classUnderTest.Get(propertyReference);
-           var okResult = (OkObjectResult) response;
-           //assert
-           okResult.Should().NotBeNull();
-           okResult.Value.Should().NotBeNull();
+            //arrange
+            //act
+            var response = _classUnderTest.Get(propertyReference);
+            var okResult = (OkObjectResult)response;
+            //assert
+            var getPropertyChildrenResponse = okResult.Value as GetPropertyChildrenResponse;
+            getPropertyChildrenResponse.Children[0].MajorRef.Should().Be(propertyReference);
         }
     }
 }

@@ -8,5 +8,6 @@ namespace property_api.V1.UseCase.GetPropertyChildren.Models
     public class GetPropertyChildrenRequest
     {
         public string PropertyReference { get; set; }
+
     }
 }
