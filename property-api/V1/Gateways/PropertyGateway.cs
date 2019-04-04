@@ -29,7 +29,9 @@ namespace property_api.V1.Gateways
 
         public IList<Property> GetPropertyChild(string propertyReference)
         {
-            throw new System.NotImplementedException();
+            var children = _uhContext.UhPropertys.Where(p => p.MajorRef == propertyReference);
+            var listChildren = children.Select(c => _factory.FromUHProperty(c)).ToList();
+            return listChildren;
         }
     }
 }
