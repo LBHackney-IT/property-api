@@ -41,6 +41,16 @@ namespace property_api
 
             services.AddSingleton<IApiVersionDescriptionProvider, DefaultApiVersionDescriptionProvider>();
 
+            
+            ConfigureApiVersioningAndSwagger(services);
+            ConfigurePropertyFactory(services);
+            ConfigureDbContext(services);
+            RegisterGateWays(services);
+            RegisterUseCases(services);
+        }
+
+        private static void ConfigureApiVersioningAndSwagger(IServiceCollection services)
+        {
             services.AddApiVersioning(o =>
             {
                 o.DefaultApiVersion = new ApiVersion(1, 0);
@@ -100,11 +110,6 @@ namespace property_api
                     c.IncludeXmlComments(xmlPath);
 
             });
-
-            ConfigurePropertyFactory(services);
-            ConfigureDbContext(services);
-            RegisterGateWays(services);
-            RegisterUseCases(services);
         }
 
         private static void ConfigurePropertyFactory(IServiceCollection services)
