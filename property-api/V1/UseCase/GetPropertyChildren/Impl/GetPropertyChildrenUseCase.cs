@@ -16,7 +16,7 @@ namespace property_api.V1.UseCase.GetPropertyChildren.Impl
         public GetPropertyChildrenResponse Execute(GetPropertyChildrenRequest request)
         {
             if (request == null)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(request));
 
             var response = _gateway.GetPropertyChild(request.PropertyReference);
 

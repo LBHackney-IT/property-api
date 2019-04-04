@@ -29,7 +29,6 @@ namespace property_api.V1.Controllers
         public IActionResult Get(string propertyReference)
         {
 
-            
             var getPropertyChildrenRequest = new GetPropertyChildrenRequest
             {
                 PropertyReference = propertyReference
