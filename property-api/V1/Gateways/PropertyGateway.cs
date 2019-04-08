@@ -27,7 +27,7 @@ namespace property_api.V1.Gateways
             return _factory.FromUHProperty(response);
         }
 
-        public IList<Property> GetPropertyChild(string propertyReference)
+        public IList<Property> GetPropertyChildren(string propertyReference)
         {
             var children = _uhContext.UhPropertys.Where(p => p.MajorRef == propertyReference);
             var listChildren = children.Select(c => _factory.FromUHProperty(c)).ToList();
