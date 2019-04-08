@@ -33,7 +33,7 @@ namespace UnitTests.V1.Controllers
             var expectedResult = new GetPropertyUseCase.GetPropertyByRefResponse(new Property
             {
                 PropRef = faker.Random.String(12),
-                Telephone = faker.Phone.PhoneNumber()
+                MajorRef = faker.Random.String(12)
             });
 
             _mockGetPropertyUseCase.Setup(m => m.Execute(It.IsAny<string>())).Returns(expectedResult);

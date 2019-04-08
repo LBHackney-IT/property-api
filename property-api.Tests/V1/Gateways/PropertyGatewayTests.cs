@@ -45,7 +45,7 @@ namespace UnitTests.V1.Gateways
             Assert.NotNull(response);
             Assert.IsInstanceOf<Property>(response);
             Assert.AreEqual(expectedProperty.PropRef, response.PropRef);
-            Assert.AreEqual(expectedProperty.Telephone, response.Telephone);
+            Assert.AreEqual(expectedProperty.MajorRef, response.MajorRef);
             Assert.AreEqual(expectedProperty.Address1, response.Address1);
         }
 
