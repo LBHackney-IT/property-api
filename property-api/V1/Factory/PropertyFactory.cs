@@ -1,6 +1,6 @@
 using AutoMapper;
 using property_api.V1.Domain;
-using property_api.V1.Infrastructure;
+using property_api.V1.Data.Entities;
 
 namespace property_api.V1.Factory
 {
@@ -12,7 +12,7 @@ namespace property_api.V1.Factory
         {
             _mapper = mapper;
         }
-        public Property FromUHProperty(UhProperty uhproperty)
+        public Property FromUHProperty(UhPropertyEntity uhproperty)
         {
             return _mapper.Map<Property>(uhproperty);
         }

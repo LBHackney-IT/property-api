@@ -1,10 +1,11 @@
 using property_api.V1.Factory;
 using NUnit.Framework;
-using property_api.V1.Infrastructure;
+using property_api.V1.Data.Entities;
 using property_api.V1.Domain;
 using AutoMapper;
 using Castle.Core.Internal;
 using UnitTests.V1.Helpers;
+using property_api.V1.Helpers;
 
 namespace UnitTests.V1.Factories
 {
@@ -12,12 +13,12 @@ namespace UnitTests.V1.Factories
     public class PropertyFactoryTests
     {
         private PropertyFactory _classUnderTest;
-        private readonly UhPropertyHelper _uhPropertyHelper = new UhPropertyHelper();
+        private readonly PropertyTestHelper _uhPropertyHelper = new PropertyTestHelper();
 
         [SetUp]
         public void SetUp()
         {
-            var mapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<UhProperty, Property>());
+            var mapperConfig = PropertyHelper.ConfigureMapper(); 
             var mapper = mapperConfig.CreateMapper();
             _classUnderTest = new PropertyFactory(mapper);
         }
@@ -25,7 +26,7 @@ namespace UnitTests.V1.Factories
         [Test]
         public void ReturnsEmptyPropertyWhereThereIsNoMatch()
         {
-            var expectedResponse = new UhProperty();
+            var expectedResponse = new UhPropertyEntity();
             var result = _classUnderTest.FromUHProperty(expectedResponse);
 
             Assert.True(result is Property);

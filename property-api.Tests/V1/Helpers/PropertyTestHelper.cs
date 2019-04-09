@@ -1,16 +1,16 @@
 using Bogus;
-using property_api.V1.Infrastructure;
+using property_api.V1.Data.Entities;
 
 namespace UnitTests.V1.Helpers
 {
-    public class UhPropertyHelper
+    public class PropertyTestHelper
     {
 
-        private readonly Faker<UhProperty> _propertyGenerator;
+        private readonly Faker<UhPropertyEntity> _propertyGenerator;
 
-        public UhPropertyHelper()
+        public PropertyTestHelper()
         {
-            _propertyGenerator = new Faker<UhProperty>("en_GB")
+            _propertyGenerator = new Faker<UhPropertyEntity>("en_GB")
                 .RuleFor(u => u.PropRef, f => f.Random.Hash(length: 12))
                 .RuleFor(u => u.Telephone, f => f.Phone.PhoneNumber())
                 .RuleFor(u => u.NoSingleBeds, f => (short)f.Random.Int(min: 0, max: 10))
@@ -33,7 +33,7 @@ namespace UnitTests.V1.Helpers
                 .RuleFor(u => u.Asbestos, f => f.Random.Bool());
         }
 
-        public UhProperty GenerateUhProperty()
+        public UhPropertyEntity GenerateUhProperty()
         {
             return _propertyGenerator.Generate();
         }

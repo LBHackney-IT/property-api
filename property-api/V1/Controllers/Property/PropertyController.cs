@@ -45,6 +45,6 @@ namespace property_api.V1.Controllers
                 return Ok(result.Property);
             }
             return NotFound();
-        }
+        }  
     }
 }
