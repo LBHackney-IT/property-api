@@ -13,8 +13,7 @@ using property_api.V1.UseCase.GetPropertyChildren.Impl;
 using UnitTests.V1.Helpers;
 using property_api.V1.Helpers;
 
-namespace UnitTests.V1.Controller.Controllers.Property.Children
-{
+namespace UnitTests.V1.Controller.AcceptanceTests { 
     [TestFixture]
     public class PropertyChildrenControllerAcceptanceTests : DbTest
     {

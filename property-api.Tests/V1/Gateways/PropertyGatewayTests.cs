@@ -90,7 +90,7 @@ namespace UnitTests.V1.Gateways
             _uhContext.UhPropertys.Add(child);
             _uhContext.SaveChanges();
             //act
-            var response = _classUnderTest.GetPropertyChild(parentReference);
+            var response = _classUnderTest.GetPropertyChildren(parentReference);
             //assert
             response.Should().BeOfType<List<Property>>();
             response.First().MajorRef.Should().BeEquivalentTo(parentReference);
@@ -111,7 +111,7 @@ namespace UnitTests.V1.Gateways
             _uhContext.UhPropertys.Add(child2);
             _uhContext.SaveChanges();
             //act
-            var response = _classUnderTest.GetPropertyChild(parentReference);
+            var response = _classUnderTest.GetPropertyChildren(parentReference);
             //assert
             response.Should().BeOfType<List<Property>>();
             response[0].MajorRef.Should().BeEquivalentTo(parentReference);
@@ -123,7 +123,7 @@ namespace UnitTests.V1.Gateways
         {
             //arrange
             //act
-            var response = _classUnderTest.GetPropertyChild("foo");
+            var response = _classUnderTest.GetPropertyChildren("foo");
             //assert
             response.Count().Should().Be(0);
         }
@@ -143,7 +143,7 @@ namespace UnitTests.V1.Gateways
             _uhContext.SaveChanges();
 
             //act
-            var response = _classUnderTest.GetPropertyChild(parentReference);
+            var response = _classUnderTest.GetPropertyChildren(parentReference);
 
             //assert
             response.Count().Should().Be(1);

@@ -39,14 +39,14 @@ namespace property_api.Tests.V1.UseCase
             //act
             var response = _classUnderTest.Execute(request);
             //assert
-            _mockGateway.Verify(v=> v.GetPropertyChild(It.Is<string>(i=> i == propReference)), Times.Once);
+            _mockGateway.Verify(v=> v.GetPropertyChildren(It.Is<string>(i=> i == propReference)), Times.Once);
         }
 
         [Test]
         public void WhenExecutingTheGatewayReturnsAListOfProperties()
         {
             //arrange
-            _mockGateway.Setup(s=> s.GetPropertyChild(It.IsAny<string>())).Returns(new List<Property>());
+            _mockGateway.Setup(s=> s.GetPropertyChildren(It.IsAny<string>())).Returns(new List<Property>());
             //act
             var response = _classUnderTest.Execute(new GetPropertyChildrenRequest());
             //assert

@@ -25,7 +25,7 @@ namespace property_api.V1.Controllers
         [HttpGet]
         [Route("{propertyReference}/children")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(GetPropertyUseCase.GetPropertyByRefResponse), 200)]
+        [ProducesResponseType(typeof(GetPropertyChildrenResponse), 200)]
         [ProducesResponseType(typeof(NotFoundResult), 404)]
         public IActionResult Get(string propertyReference)
         {
