@@ -127,7 +127,7 @@ namespace property_api
             DbContextOptionsBuilder builder = new DbContextOptionsBuilder()
                 .UseSqlServer(connectionString);
 
-            services.AddScoped<IUHContext>(s => new UhContext(builder.Options));
+            services.AddSingleton<IUHContext>(s => new UhContext(builder.Options));
         }
 
         private static void RegisterGateWays(IServiceCollection services)
