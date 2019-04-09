@@ -29,8 +29,8 @@ namespace UnitTests.V1.Factories
             var result = _classUnderTest.FromUHProperty(expectedResponse);
 
             Assert.True(result is Property);
-            Assert.IsNull(result.PropRef);
-            Assert.IsNull(result.MajorRef);
+            Assert.IsNull(result.PropertyRef);
+            Assert.IsNull(result.ParentRef);
         }
 
         [Test]
@@ -42,30 +42,26 @@ namespace UnitTests.V1.Factories
 
             Assert.True(result is Property);
 
-            Assert.AreEqual(uhProperty.PropRef, result.PropRef);
-            Assert.AreEqual(uhProperty.LevelCode, result.LevelCode);
-            Assert.AreEqual(uhProperty.MajorRef, result.MajorRef);
-            Assert.AreEqual(uhProperty.ManScheme, result.ManScheme);
+            Assert.AreEqual(uhProperty.PropertyRef, result.PropertyRef);
+            Assert.AreEqual(uhProperty.HierarchyCode, result.HierarchyCode);
+            Assert.AreEqual(uhProperty.ParentRef, result.ParentRef);
+            Assert.AreEqual(uhProperty.RepairCostCode, result.RepairCostCode);
             Assert.AreEqual(uhProperty.PostCode, result.PostCode);
-            Assert.AreEqual(uhProperty.PostDesig, result.PostDesig);
-            Assert.AreEqual(uhProperty.ShortAddress, result.ShortAddress);
             Assert.AreEqual(uhProperty.AreaOffice, result.AreaOffice);
-            Assert.AreEqual(uhProperty.SubtypCode, result.SubtypCode);
+            Assert.AreEqual(uhProperty.PropertyTypeCode, result.PropertyTypeCode);
             Assert.AreEqual(uhProperty.Letable, result.Letable);
-            Assert.AreEqual(uhProperty.CatType, result.CatType);
-            Assert.AreEqual(uhProperty.OccStat, result.OccStat);
-            Assert.AreEqual(uhProperty.Heating, result.Heating);
-            Assert.AreEqual(uhProperty.RepArea, result.RepArea);
-            Assert.AreEqual(uhProperty.PostPreamble, result.PostPreamble);
-            Assert.AreEqual(uhProperty.UNom2, result.UNom2);
-            Assert.AreEqual(uhProperty.ArrPatch, result.ArrPatch);
-            Assert.AreEqual(uhProperty.NumBedrooms, result.NumBedrooms);
-            Assert.AreEqual(uhProperty.CommLifts, result.CommLifts);
-            Assert.AreEqual(uhProperty.EntLevel, result.EntLevel);
-            Assert.AreEqual(uhProperty.CompAvail, result.CompAvail);
-            Assert.AreEqual(uhProperty.NoSingleBeds, result.NoSingleBeds);
-            Assert.AreEqual(uhProperty.NoDoubleBeds, result.NoDoubleBeds);
-            Assert.AreEqual(uhProperty.Address1, result.Address1);
+            Assert.AreEqual(uhProperty.PropertyCategoryType, result.PropertyCategoryType);
+            Assert.AreEqual(uhProperty.OccupationStatus, result.OccupationStatus);
+            Assert.AreEqual(uhProperty.HeatingType, result.HeatingType);
+            Assert.AreEqual(uhProperty.RepairArea, result.RepairArea);
+            Assert.AreEqual(uhProperty.RentCostCentre, result.RentCostCentre);
+            Assert.AreEqual(uhProperty.ArrearsPatchCode, result.ArrearsPatchCode);
+            Assert.AreEqual(uhProperty.NumberOfBedrooms, result.NumberOfBedrooms);
+            Assert.AreEqual(uhProperty.CommunalLifts, result.CommunalLifts);
+            Assert.AreEqual(uhProperty.EntranceLevel, result.EntranceLevel);
+            Assert.AreEqual(uhProperty.NumberOfSingleBedrooms, result.NumberOfSingleBedrooms);
+            Assert.AreEqual(uhProperty.NumberOfDoubleBedrooms, result.NumberOfDoubleBedrooms);
+            Assert.AreEqual(uhProperty.Address, result.Address);
         }
     }
 }

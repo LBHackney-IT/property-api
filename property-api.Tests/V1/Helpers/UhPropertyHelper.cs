@@ -11,10 +11,10 @@ namespace UnitTests.V1.Helpers
         public UhPropertyHelper()
         {
             _propertyGenerator = new Faker<UhProperty>("en_GB")
-                .RuleFor(u => u.PropRef, f => f.Random.Hash(length: 12))
+                .RuleFor(u => u.PropertyRef, f => f.Random.Hash(length: 12))
                 .RuleFor(u => u.Telephone, f => f.Phone.PhoneNumber())
-                .RuleFor(u => u.NoSingleBeds, f => (short)f.Random.Int(min: 0, max: 10))
-                .RuleFor(u => u.NoDoubleBeds, f => (short)f.Random.Int(min: 0, max: 10))
+                .RuleFor(u => u.NumberOfSingleBedrooms, f => (short)f.Random.Int(min: 0, max: 10))
+                .RuleFor(u => u.NumberOfDoubleBedrooms, f => (short)f.Random.Int(min: 0, max: 10))
                 .RuleFor(u => u.Dtstamp, f => f.Date.Past(yearsToGoBack: 100))
                 .RuleFor(u => u.Ownership, f => f.Random.String2(length: 9))
                 .RuleFor(u => u.Letable, f => f.Random.Bool())

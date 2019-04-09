@@ -18,7 +18,7 @@ namespace property_api.V1.Gateways
         }
         public Property GetPropertyByPropertyReference(string propertyReference)
         {
-            var response = _uhContext.UhPropertys.SingleOrDefault(p => p.PropRef == propertyReference);
+            var response = _uhContext.UhPropertys.SingleOrDefault(p => p.PropertyRef == propertyReference);
             if (response == null)
             {
                 return null;

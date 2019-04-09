@@ -40,13 +40,13 @@ namespace UnitTests.V1.Gateways
             _uhContext.UhPropertys.Add(expectedProperty);
             _uhContext.SaveChanges();
 
-            var response = _classUnderTest.GetPropertyByPropertyReference(expectedProperty.PropRef);
+            var response = _classUnderTest.GetPropertyByPropertyReference(expectedProperty.PropertyRef);
 
             Assert.NotNull(response);
             Assert.IsInstanceOf<Property>(response);
-            Assert.AreEqual(expectedProperty.PropRef, response.PropRef);
-            Assert.AreEqual(expectedProperty.MajorRef, response.MajorRef);
-            Assert.AreEqual(expectedProperty.Address1, response.Address1);
+            Assert.AreEqual(expectedProperty.PropertyRef, response.PropertyRef);
+            Assert.AreEqual(expectedProperty.ParentRef, response.ParentRef);
+            Assert.AreEqual(expectedProperty.Address, response.Address);
         }
 
         [Test]

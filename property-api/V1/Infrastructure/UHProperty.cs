@@ -11,13 +11,13 @@ namespace property_api.V1.Infrastructure
         [Key]
         [MaxLength(12)]
         [Column("prop_ref")]
-        public string PropRef { get; set; }
+        public string PropertyRef { get; set; }
         [Column("level_code")]
-        public string LevelCode { get; set; }
+        public string HierarchyCode { get; set; }
         [Column("major_ref")]
-        public string MajorRef { get; set; }
+        public string ParentRef { get; set; }
         [Column("man_scheme")]
-        public string ManScheme { get; set; }
+        public string RepairCostCode { get; set; }
         [Column("post_code")]
         public string PostCode { get; set; }
         [Column("post_desig")]
@@ -29,10 +29,8 @@ namespace property_api.V1.Infrastructure
         public string Telephone { get; set; }
         [Column("managed_property")]
         public bool ManagedProperty { get; set; }
-
         [Required,  MaxLength(10), Column("ownership")]
         public string Ownership { get; set; }
-
         [Column("agent")]
         public string Agent { get; set; }
         [Column("comments")]
@@ -42,7 +40,7 @@ namespace property_api.V1.Infrastructure
         [Column("area_office")]
         public string AreaOffice { get; set; }
         [Column("subtyp_code")]
-        public string SubtypCode { get; set; }
+        public string PropertyTypeCode { get; set; }
         [Column("condition_code")]
         public string ConditionCode { get; set; }
         [Column("warden_ref")]
@@ -62,7 +60,7 @@ namespace property_api.V1.Infrastructure
         [Column("handover")]
         public DateTime? Handover { get; set; }
         [Column("cat_type")]
-        public string CatType { get; set; }
+        public string PropertyCategoryType { get; set; }
         [Column("lounge")]
         public bool Lounge { get; set; }
         [Column("laundry")]
@@ -78,15 +76,15 @@ namespace property_api.V1.Infrastructure
         [Column("house_ref")]
         public string HouseRef { get; set; }
         [Column("occ_stat")]
-        public string OccStat { get; set; }
+        public string OccupationStatus { get; set; }
         [Column("cyclical_due")]
         public int? CyclicalDue { get; set; }
         [Column("shower")]
         public bool Shower { get; set; }
         [Column("heating")]
-        public string Heating { get; set; }
+        public string HeatingType { get; set; }
         [Column("rep_area")]
-        public string RepArea { get; set; }
+        public string RepairArea { get; set; }
         [Column("ac_meth")]
         public string AcMeth { get; set; }
         [Column("propsize")]
@@ -104,7 +102,7 @@ namespace property_api.V1.Infrastructure
         [Column("ins_value")]
         public int? InsValue { get; set; }
         [Column("u_nom2")]
-        public string UNom2 { get; set; }
+        public string RentCostCentre { get; set; }
         [Column("region")]
         public string Region { get; set; }
         [Column("asbestos")]
@@ -145,14 +143,12 @@ namespace property_api.V1.Infrastructure
         public int? WalkNo { get; set; }
         [Column("walk_sequence")]
         public int? WalkSequence { get; set; }
-
         [Column("tstamp")]
         public byte[] Tstamp { get; set; }
-
         [Column("alinefull")]
         public string Alinefull { get; set; }
         [Column("arr_patch")]
-        public string ArrPatch { get; set; }
+        public string ArrearsPatchCode { get; set; }
         [Column("arr_officer")]
         public string ArrOfficer { get; set; }
         [Column("dh_status")]
@@ -170,11 +166,11 @@ namespace property_api.V1.Infrastructure
         [Column("nher_rating")]
         public decimal? NherRating { get; set; }
         [Column("num_bedrooms")]
-        public int? NumBedrooms { get; set; }
+        public int? NumberOfBedrooms { get; set; }
         [Column("comm_lifts")]
-        public bool? CommLifts { get; set; }
+        public bool? CommunalLifts { get; set; }
         [Column("ent_level")]
-        public string EntLevel { get; set; }
+        public string EntranceLevel { get; set; }
         [Column("int_floors")]
         public int? IntFloors { get; set; }
         [Column("garden_type")]
@@ -224,9 +220,9 @@ namespace property_api.V1.Infrastructure
         [Column("comp_display")]
         public string CompDisplay { get; set; }
         [Column("no_single_beds")]
-        public short NoSingleBeds { get; set; }
+        public short NumberOfSingleBedrooms { get; set; }
         [Column("no_double_beds")]
-        public short NoDoubleBeds { get; set; }
+        public short NumberOfDoubleBedrooms { get; set; }
         [Required]
         [Column("online_repairs")]
         public bool? OnlineRepairs { get; set; }
@@ -238,7 +234,7 @@ namespace property_api.V1.Infrastructure
         [Column("repairable")]
         public bool Repairable { get; set; }
         [Column("address1")]
-        public string Address1 { get; set; }
+        public string Address { get; set; }
         [Column("u_prop_zone")]
         public string UPropZone { get; set; }
         [Column("u_surveyor_patch")]
@@ -491,10 +487,8 @@ namespace property_api.V1.Infrastructure
         public string UMktInfoOnline { get; set; }
         [Column("u_mkt_info_magazine")]
         public string UMktInfoMagazine { get; set; }
-
         [Column("dtstamp")]
         public DateTime Dtstamp { get; set; }
-
         [Column("u_hgas")]
         public int? UHgas { get; set; }
         [Column("u_access_type")]
