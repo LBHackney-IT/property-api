@@ -122,12 +122,12 @@ namespace property_api
 
         private static void ConfigureDbContext(IServiceCollection services)
         {
-            // var connectionString = Environment.GetEnvironmentVariable("UH_URL");
+            var connectionString = Environment.GetEnvironmentVariable("UH_URL");
 
             DbContextOptionsBuilder builder = new DbContextOptionsBuilder()
-                .UseSqlServer("Data Source=localhost;Initial Catalog=uhsimulator;user id=sa;password=Rooty-Tooty;");
+                .UseSqlServer(connectionString);
 
-            services.AddTransient<IUHContext>(s => new UhContext(builder.Options));
+            services.AddScoped<IUHContext>(s => new UhContext(builder.Options));
         }
 
         private static void RegisterGateWays(IServiceCollection services)
