@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using property_api.V1.Controllers;
 using property_api.V1.UseCase.GetPropertyChildren;
@@ -30,25 +31,27 @@ namespace UnitTests.V1.Controller.Controllers.Property.Children
         public void WhenCallingGetAndTheUseCaseReturnsAResponseThenTheControllerReturnsThatResponse(string propertyReference)
         {
             //arrange
-            _mockUseCase.Setup(s => s.Execute(It.Is<GetPropertyChildrenRequest>(i => i.PropertyReference == propertyReference))).Returns(
-                new GetPropertyChildrenResponse
-                {
-                    Children = new List<property_api.V1.Domain.Property>
+            var expectedResponse = new GetPropertyChildrenResponse
+            {
+                Children = new List<property_api.V1.Domain.Property>
                     {
                         new property_api.V1.Domain.Property
                         {
                            MajorRef = propertyReference
                         }
                     }
-                });
+            };
+
+            _mockUseCase.Setup(s => s.Execute(It.Is<GetPropertyChildrenRequest>(i => i.PropertyReference == propertyReference))).Returns(expectedResponse);
             //act
             var response = _classUnderTest.Get(propertyReference);
             var okResult = (OkObjectResult)response;
+            var resultContent = (GetPropertyChildrenResponse)okResult.Value;
             //assert
             okResult.Should().NotBeNull();
             okResult.Value.Should().NotBeNull();
-            var getPropertyChildrenResponse = okResult.Value as GetPropertyChildrenResponse;
-            getPropertyChildrenResponse.Should().NotBeNull();
+            resultContent.Should().NotBeNull();
+            JsonConvert.SerializeObject(expectedResponse).Should().BeEquivalentTo(JsonConvert.SerializeObject(resultContent));
         }
 
         [TestCase("123")]
