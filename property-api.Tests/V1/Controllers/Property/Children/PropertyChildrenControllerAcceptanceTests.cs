@@ -1,20 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using property_api.V1.Controllers;
-using property_api.V1.UseCase;
 using FluentAssertions;
 using property_api.V1.Factory;
 using property_api.V1.Gateways;
-using property_api.V1.Infrastructure;
+using property_api.V1.Data.Entities;
 using property_api.V1.UseCase.GetPropertyChildren.Models;
 using property_api.V1.UseCase.GetPropertyChildren;
 using property_api.V1.UseCase.GetPropertyChildren.Impl;
 using UnitTests.V1.Helpers;
+using property_api.V1.Helpers;
 
 namespace UnitTests.V1.Controller.Controllers.Property.Children
 {
@@ -30,7 +27,7 @@ namespace UnitTests.V1.Controller.Controllers.Property.Children
         [SetUp]
         public void Setup()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UhPropertyEntity, property_api.V1.Domain.Property>());
+            var config = PropertyHelper.ConfigureMapper();
             _factory = new PropertyFactory(config.CreateMapper());
             var _gateway = new PropertyGateway(_uhContext, _factory);
             _useCase = new GetPropertyChildrenUseCase(_gateway);

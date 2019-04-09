@@ -6,11 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using property_api.V1.UseCase;
+using property_api.V1.Data;
 using property_api.V1.Gateways;
-using property_api.V1.Infrastructure;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -18,11 +17,10 @@ using System.IO;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using property_api.Versioning;
-using AutoMapper;
-using property_api.V1.Domain;
 using property_api.V1.Factory;
 using property_api.V1.UseCase.GetPropertyChildren;
 using property_api.V1.UseCase.GetPropertyChildren.Impl;
+using property_api.V1.Helpers;
 
 namespace property_api
 {
@@ -117,7 +115,7 @@ namespace property_api
 
         private static void ConfigurePropertyFactory(IServiceCollection services)
         {
-            var mappingConfig = new MapperConfiguration(cfg => { cfg.CreateMap<UhPropertyEntity, Property>(); });
+            var mappingConfig = PropertyHelper.ConfigureMapper();
             var propertyFactory = new PropertyFactory(mappingConfig.CreateMapper());
             services.AddSingleton(propertyFactory);
         }

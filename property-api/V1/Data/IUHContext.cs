@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using property_api.V1.Domain;
+using property_api.V1.Data.Entities;
 
-namespace property_api.V1.Infrastructure
+namespace property_api.V1.Data
 {
     public interface IUHContext
     {

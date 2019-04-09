@@ -1,12 +1,11 @@
 using System.Linq;
-using property_api.V1.Infrastructure;
+using property_api.V1.Data;
 using property_api.V1.Domain;
 using property_api.V1.Factory;
 using System.Collections.Generic;
 
 namespace property_api.V1.Gateways
 {
-
     public class PropertyGateway : IPropertyGateway, IGetPropertyChildrenGateway
     {
         private readonly IUHContext _uhContext;

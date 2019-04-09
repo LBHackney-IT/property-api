@@ -1,10 +1,11 @@
 using property_api.V1.Factory;
 using NUnit.Framework;
-using property_api.V1.Infrastructure;
+using property_api.V1.Data.Entities;
 using property_api.V1.Domain;
 using AutoMapper;
 using Castle.Core.Internal;
 using UnitTests.V1.Helpers;
+using property_api.V1.Helpers;
 
 namespace UnitTests.V1.Factories
 {
@@ -17,7 +18,7 @@ namespace UnitTests.V1.Factories
         [SetUp]
         public void SetUp()
         {
-            var mapperConfig = new MapperConfiguration(cfg => cfg.CreateMap<UhPropertyEntity, Property>());
+            var mapperConfig = PropertyHelper.ConfigureMapper(); 
             var mapper = mapperConfig.CreateMapper();
             _classUnderTest = new PropertyFactory(mapper);
         }

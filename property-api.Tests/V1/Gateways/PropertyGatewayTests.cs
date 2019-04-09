@@ -1,15 +1,14 @@
 using NUnit.Framework;
 using property_api.V1.Gateways;
 using property_api.V1.Domain;
-using property_api.V1.Infrastructure;
-using Bogus;
-using System;
+using property_api.V1.Data.Entities;
 using AutoMapper;
 using property_api.V1.Factory;
 using UnitTests.V1.Helpers;
 using System.Collections.Generic;
 using FluentAssertions;
 using System.Linq;
+using property_api.V1.Helpers;
 
 namespace UnitTests.V1.Gateways
 {
@@ -23,7 +22,7 @@ namespace UnitTests.V1.Gateways
 
         [SetUp]
         public void Setup(){
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UhPropertyEntity, Property>());
+            var config = PropertyHelper.ConfigureMapper(); 
             _factory = new PropertyFactory(config.CreateMapper());
             _classUnderTest = new PropertyGateway(_uhContext, _factory);
         }
@@ -70,7 +69,7 @@ namespace UnitTests.V1.Gateways
         [SetUp]
         public void Setup()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UhPropertyEntity, Property>());
+            var config = PropertyHelper.ConfigureMapper();
             _factory = new PropertyFactory(config.CreateMapper());
             _classUnderTest = new PropertyGateway(_uhContext, _factory);
         }

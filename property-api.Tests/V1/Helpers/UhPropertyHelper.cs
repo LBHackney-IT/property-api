@@ -1,5 +1,5 @@
 using Bogus;
-using property_api.V1.Infrastructure;
+using property_api.V1.Data.Entities;
 
 namespace UnitTests.V1.Helpers
 {

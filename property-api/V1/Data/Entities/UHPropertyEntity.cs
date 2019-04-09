@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace property_api.V1.Infrastructure
+namespace property_api.V1.Data.Entities
 {
     [Table("property")]
     public class UhPropertyEntity
