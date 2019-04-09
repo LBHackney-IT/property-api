@@ -3,12 +3,12 @@ using property_api.V1.Data.Entities;
 
 namespace UnitTests.V1.Helpers
 {
-    public class UhPropertyHelper
+    public class PropertyTestHelper
     {
 
         private readonly Faker<UhPropertyEntity> _propertyGenerator;
 
-        public UhPropertyHelper()
+        public PropertyTestHelper()
         {
             _propertyGenerator = new Faker<UhPropertyEntity>("en_GB")
                 .RuleFor(u => u.PropRef, f => f.Random.Hash(length: 12))

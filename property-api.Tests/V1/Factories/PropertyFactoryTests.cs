@@ -13,7 +13,7 @@ namespace UnitTests.V1.Factories
     public class PropertyFactoryTests
     {
         private PropertyFactory _classUnderTest;
-        private readonly UhPropertyHelper _uhPropertyHelper = new UhPropertyHelper();
+        private readonly PropertyTestHelper _uhPropertyHelper = new PropertyTestHelper();
 
         [SetUp]
         public void SetUp()

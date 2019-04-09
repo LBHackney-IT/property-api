@@ -18,7 +18,7 @@ namespace UnitTests.V1.Gateways
         private PropertyGateway _classUnderTest;
         private PropertyFactory _factory;
 
-        private readonly UhPropertyHelper _uhPropertyHelper = new UhPropertyHelper();
+        private readonly PropertyTestHelper _uhPropertyHelper = new PropertyTestHelper();
 
         [SetUp]
         public void Setup(){
@@ -64,7 +64,7 @@ namespace UnitTests.V1.Gateways
         private IGetPropertyChildrenGateway _classUnderTest;
         private PropertyFactory _factory;
 
-        private readonly UhPropertyHelper _uhPropertyHelper = new UhPropertyHelper();
+        private readonly PropertyTestHelper _uhPropertyHelper = new PropertyTestHelper();
 
         [SetUp]
         public void Setup()

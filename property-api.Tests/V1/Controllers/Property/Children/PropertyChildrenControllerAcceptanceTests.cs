@@ -21,7 +21,7 @@ namespace UnitTests.V1.Controller.Controllers.Property.Children
         private PropertyChildrenController _classUnderTest;
         private IGetPropertyChildrenUseCase _useCase;
         private PropertyFactory _factory;
-        private readonly UhPropertyHelper _uhPropertyHelper = new UhPropertyHelper();
+        private readonly PropertyTestHelper _uhPropertyHelper = new PropertyTestHelper();
 
 
         [SetUp]
