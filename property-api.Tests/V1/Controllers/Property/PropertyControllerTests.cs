@@ -37,7 +37,7 @@ namespace UnitTests.V1.Controllers
             });
 
             _mockGetPropertyUseCase.Setup(m => m.Execute(It.IsAny<string>())).Returns(expectedResult);
-            _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object,_mockLogger.Object);
+            _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object,_mockLogger.Object, null);
 
             var response = _classUnderTest.GetByReference("foo");
 
@@ -53,7 +53,7 @@ namespace UnitTests.V1.Controllers
             var expectedResult = new GetPropertyUseCase.GetPropertyByRefResponse(null);
 
             _mockGetPropertyUseCase.Setup(m => m.Execute(It.IsAny<string>())).Returns(expectedResult);
-            _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object,_mockLogger.Object);
+            _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object,_mockLogger.Object, null);
 
             var response = _classUnderTest.GetByReference("foo");
             Assert.NotNull(response);

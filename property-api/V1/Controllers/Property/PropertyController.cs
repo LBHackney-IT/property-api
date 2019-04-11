@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using property_api.V1.Domain;
 using property_api.V1.UseCase;
 using Microsoft.Extensions.Logging;
-
+using property_api.V1.UseCase.GetMultipleProperties;
 
 namespace property_api.V1.Controllers
 {
@@ -17,11 +17,13 @@ namespace property_api.V1.Controllers
     {
         private IGetPropertyUseCase _getPropertyUseCase;
         private ILogger<PropertyController> _logger;
+        private IGetMultiplePropertiesUseCase _getMultiplePropertiesUseCase;
 
-        public PropertyController(IGetPropertyUseCase getPropertyUseCase, ILogger<PropertyController> logger)
+        public PropertyController(IGetPropertyUseCase getPropertyUseCase, ILogger<PropertyController> logger, IGetMultiplePropertiesUseCase getMultiplePropertiesUseCase)
         {
             _getPropertyUseCase = getPropertyUseCase;
             _logger = logger;
+            _getMultiplePropertiesUseCase = getMultiplePropertiesUseCase;
         }
 
         // GET a property for a given property reference
@@ -45,6 +47,21 @@ namespace property_api.V1.Controllers
                 return Ok(result.Property);
             }
             return NotFound();
-        }  
+        }
+
+        
+        [HttpGet]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(GetPropertyUseCase.GetPropertyByRefResponse), 200)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
+        public IActionResult GetMultipleByReference(IList<string> propertyReferences)
+        {
+            var request = new GetMultiplePropertiesUseCaseRequest
+            {
+                PropertyRefs = propertyReferences
+            };
+            _getMultiplePropertiesUseCase.Execute(request);
+            return null;
+        }
     }
 }
