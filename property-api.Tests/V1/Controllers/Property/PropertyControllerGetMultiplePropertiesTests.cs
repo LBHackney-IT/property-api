@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
@@ -6,8 +5,6 @@ using property_api.V1.Controllers;
 using property_api.V1.UseCase;
 using property_api.V1.Domain;
 using Moq;
-using Bogus;
-using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
 using FluentAssertions;
 using property_api.V1.UseCase.GetMultipleProperties;
