@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
 using property_api.V1.UseCase.GetMultipleProperties;
 using FluentAssertions;
+using property_api.V1.Validation;
 
 namespace UnitTests.V1.Controllers
 {
@@ -20,13 +21,15 @@ namespace UnitTests.V1.Controllers
         private PropertyController _classUnderTest;
         private Mock<ILogger<PropertyController>> _mockLogger;
         private IGetMultiplePropertiesUseCase _getMultiplePropertiesUseCase;
+        private IGetMultiplePropertiesValidator _getMultiplePropertiesValidator;
 
         [SetUp]
         public void SetUp()
         {
             _mockLogger = new Mock<ILogger<PropertyController>>();
+            _getMultiplePropertiesValidator = new GetMultiplePropertiesValidator();
             //_getMultiplePropertiesUseCase = new GetMultiplePropertiesUseCase();
-            _classUnderTest = new PropertyController(null, _mockLogger.Object, _getMultiplePropertiesUseCase);
+            _classUnderTest = new PropertyController(null, _mockLogger.Object, _getMultiplePropertiesUseCase, _getMultiplePropertiesValidator);
         }
 
         [TestCase("1", "2")]

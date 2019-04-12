@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
 using FluentAssertions;
 using property_api.V1.UseCase.GetMultipleProperties;
+using property_api.V1.Validation;
 
 namespace UnitTests.V1.Controllers
 {
@@ -21,15 +22,16 @@ namespace UnitTests.V1.Controllers
         private Mock<IGetPropertyUseCase> _mockGetPropertyUseCase;
         private Mock<IGetMultiplePropertiesUseCase> _mockGetMultiplePropertiesUseCase;
         private Mock<ILogger<PropertyController>> _mockLogger;
-        private Faker faker = new Faker("en_GB");
+        private IGetMultiplePropertiesValidator _getMultiplePropertiesValidator;
 
         [SetUp]
         public void SetUp()
         {
+            _getMultiplePropertiesValidator = new GetMultiplePropertiesValidator();
             _mockGetPropertyUseCase = new Mock<IGetPropertyUseCase>();
             _mockLogger = new Mock<ILogger<PropertyController>>();
             _mockGetMultiplePropertiesUseCase = new Mock<IGetMultiplePropertiesUseCase>();
-            _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object, _mockLogger.Object, _mockGetMultiplePropertiesUseCase.Object);
+            _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object, _mockLogger.Object, _mockGetMultiplePropertiesUseCase.Object, _getMultiplePropertiesValidator);
         }
 
         [TestCase("1", "2")]
@@ -83,14 +85,19 @@ namespace UnitTests.V1.Controllers
             Assert.AreSame(propertyRef2, response.Properties[1].PropRef);
         }
 
-        [TestCase("", "")]
-        public void GivenAnInvalidListOfMultiplePropertyRefsItShouldReturnNotFound(string propertyRef, string propertyRef2)
+        [TestCase(" ", "10")]
+        [TestCase("", "7")]
+        [TestCase("3", null)]
+        public void GivenAnInvalidListOfMultiplePropertyRefsItShouldReturnBadInput(string propertyRef, string propertyRef2)
         {
             //arrange
-
+            List<string> list = new List<string> { propertyRef, propertyRef2 };
             //act
-
+            var actionResult = _classUnderTest.GetMultipleByReference(list);
             //assert
+            actionResult.Should().BeOfType<BadRequestResult>();
         }
+
+        //TO DO: valid 
     }
 }

@@ -19,7 +19,7 @@ namespace property_api.Tests.V1.Validation
         }
 
         [TestCase(" ", "1")]
-        [TestCase("2","")]
+        [TestCase("2", "")]
         [TestCase(null, "3")]
         public void GivenAInvalidListofPropertyRefsTheValidatorShouldReturnFalse(string propertyRef, string propertyRef2)
         {
@@ -30,5 +30,7 @@ namespace property_api.Tests.V1.Validation
             //assert
             Assert.False(validationResult);
         }
+
+
     }
 }
