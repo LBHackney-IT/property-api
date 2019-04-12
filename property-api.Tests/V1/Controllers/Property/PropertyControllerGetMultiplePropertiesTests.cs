@@ -44,16 +44,12 @@ namespace UnitTests.V1.Controllers
             _mockGetMultiplePropertiesUseCase.Verify(v=> v.Execute(It.Is<GetMultiplePropertiesUseCaseRequest>(i=> i.PropertyRefs[0] == propertyRef && i.PropertyRefs[1] == propertyRef2)),Times.Once);
         }
 
-        [TestCase("1", "2")]
-        [TestCase("3", "4")]
-        public void GivenAListOfMultiplePropertiesWhenIExecuteThenTheUseCaseReturnsGetMultiplePropertiesUseCaseResponse(string propertyRef, string propertyRef2)
+        [TestCase("65", "57")]
+        [TestCase("8", "9")]
+        public void GivenAValidListOfMultipleProperyRefsWhenIExecuteThenTheUseCaseReturnsGetMultiplePropertiesUseCaseResponse(string propertyRef, string propertyRef2)
         {
             //arrange
-            var list = new List<string> { propertyRef, propertyRef2 };
-
-            _mockGetMultiplePropertiesUseCase.Setup(v => v.Execute(It.Is<GetMultiplePropertiesUseCaseRequest>(i => i.PropertyRefs[0] == propertyRef && i.PropertyRefs[1] == propertyRef2)))
-                .Returns(new GetMultiplePropertiesUseCaseResponse{
-                    Properties = new List<Property>
+            IList<Property> properties = new List<Property>
                     {
                         new Property
                         {
@@ -63,15 +59,38 @@ namespace UnitTests.V1.Controllers
                         {
                             PropRef = propertyRef2
                         }
-                    }
-                    });
+                    };
+
+            _mockGetMultiplePropertiesUseCase
+                .Setup(v => v.Execute(It.Is<GetMultiplePropertiesUseCaseRequest>(i => i.PropertyRefs[0] == propertyRef && i.PropertyRefs[1] == propertyRef2)))
+                .Returns(new GetMultiplePropertiesUseCaseResponse
+                {
+                    Properties = properties
+                });
+
+            IList<string> list = new List<string> { propertyRef, propertyRef2 };
             //act
-            var response = _classUnderTest.GetMultipleByReference(list);
+            var actionResult = _classUnderTest.GetMultipleByReference(list);
             //assert
+            actionResult.Should().NotBeNull();
+            var okObjectResult = (OkObjectResult)actionResult;
+            var response = (GetMultiplePropertiesUseCaseResponse)okObjectResult.Value;
             response.Should().NotBeNull();
-            
-            response.pro.Should().NotBeNull();
-            response.Should().BeOfType<GetMultiplePropertiesUseCaseResponse>();
+            response.Properties.Should().NotBeNullOrEmpty();
+
+            response.Properties.Should().BeOfType<List<Property>>();
+            Assert.AreSame(propertyRef, response.Properties[0].PropRef);
+            Assert.AreSame(propertyRef2, response.Properties[1].PropRef);
+        }
+
+        [TestCase("", "")]
+        public void GivenAnInvalidListOfMultiplePropertyRefsItShouldReturnNotFound(string propertyRef, string propertyRef2)
+        {
+            //arrange
+
+            //act
+
+            //assert
         }
     }
 }

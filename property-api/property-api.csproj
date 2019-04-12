@@ -11,6 +11,14 @@
     <NoWarn>$(NoWarn);1591</NoWarn>
 </PropertyGroup>
 
+
+ <ItemGroup>
+   <Compile Remove="V1\NewFolder\**" />
+   <Content Remove="V1\NewFolder\**" />
+   <EmbeddedResource Remove="V1\NewFolder\**" />
+   <None Remove="V1\NewFolder\**" />
+ </ItemGroup>
+
   
 
   <ItemGroup>

@@ -60,8 +60,9 @@ namespace property_api.V1.Controllers
             {
                 PropertyRefs = propertyReferences
             };
-            _getMultiplePropertiesUseCase.Execute(request);
-            return null;
+            var usecaseResp = _getMultiplePropertiesUseCase.Execute(request);
+
+            return Ok(usecaseResp);
         }
     }
 }
