@@ -8,7 +8,8 @@ namespace property_api.V1.Validation
     {
         public bool Validate(IList<string> PropertyRefs)
         {
-            
+            if(PropertyRefs == null) { return false; }
+
             foreach (string propRef in PropertyRefs)
             {
 

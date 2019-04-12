@@ -31,6 +31,15 @@ namespace property_api.Tests.V1.Validation
             Assert.False(validationResult);
         }
 
-
+        [Test]
+        public void GivenANullListTheValidatorShouldReturnFalse()
+        {
+            //arrange
+            List<string> list = null;
+            //act
+            bool validationResult = _classUnderTest.Validate(list);
+            //assert
+            Assert.False(validationResult);
+        }
     }
 }
