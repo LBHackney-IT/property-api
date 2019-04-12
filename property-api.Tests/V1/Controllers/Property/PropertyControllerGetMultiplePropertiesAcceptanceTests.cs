@@ -9,6 +9,8 @@ using Moq;
 using Bogus;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
+using property_api.V1.UseCase.GetMultipleProperties;
+using FluentAssertions;
 
 namespace UnitTests.V1.Controllers
 {
@@ -16,17 +18,35 @@ namespace UnitTests.V1.Controllers
     public class PropertyControllerGetMultiplePropertiesAcceptanceTests
     {
         private PropertyController _classUnderTest;
-        private Mock<IGetPropertyUseCase> _mockGetPropertyUseCase;
         private Mock<ILogger<PropertyController>> _mockLogger;
-        private Faker faker = new Faker("en_GB");
+        private IGetMultiplePropertiesUseCase _getMultiplePropertiesUseCase;
 
         [SetUp]
         public void SetUp()
         {
-            _mockGetPropertyUseCase = new Mock<IGetPropertyUseCase>();
             _mockLogger = new Mock<ILogger<PropertyController>>();
+            //_getMultiplePropertiesUseCase = new GetMultiplePropertiesUseCase();
+            _classUnderTest = new PropertyController(null, _mockLogger.Object, _getMultiplePropertiesUseCase);
         }
 
-        
+        [TestCase("1", "2")]
+        [TestCase("3", "4")]
+        public void GivenMultiplePropRefsAreProvidedItShouldReturnTheMultiplePropertiesSpecified(string propRef1, string propRef2)
+        {
+            //arrange
+            List<string> propRefs = new List<string> { propRef1, propRef2 };
+            //act
+            var actual = _classUnderTest.GetMultipleByReference(propRefs);
+            //assert
+            actual.Should().NotBeNull();
+            var okObjectResult = (OkObjectResult)actual;
+            var response = (GetMultiplePropertiesUseCaseResponse)okObjectResult.Value;
+            response.Should().NotBeNull();
+            response.Properties.Should().NotBeNullOrEmpty();
+
+            response.Properties.Should().BeOfType<IList<Property>>();
+            Assert.AreSame(propRef1, response.Properties[0].PropRef);
+            Assert.AreSame(propRef2, response.Properties[1].PropRef);
+        }
     }
 }
