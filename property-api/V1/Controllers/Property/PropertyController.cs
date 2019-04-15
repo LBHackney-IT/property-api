@@ -52,7 +52,13 @@ namespace property_api.V1.Controllers
             return NotFound();
         }
 
-        
+
+        /// <summary>
+        /// Returns a list of properties for a given property references.
+        /// If propertyReferences are not found then empty list of properties is returned with 200
+        /// </summary>
+        /// <param name="propertyReferences"></param>
+        /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(typeof(GetMultiplePropertiesUseCaseResponse), 200)]
