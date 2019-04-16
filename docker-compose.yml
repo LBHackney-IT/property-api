@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: property-api.Tests/Dockerfile
     environment:
-      - TEST_UH_URL=Server=stub-test-db;Dataproperty=uhsimulator;User Id='sa';Password='Rooty-Tooty';
+      - TEST_UH_URL=Server=stub-test-db;Database=uhsimulator;User Id='sa';Password='Rooty-Tooty';
     links:
       - stub-test-db
   stub-test-db:
