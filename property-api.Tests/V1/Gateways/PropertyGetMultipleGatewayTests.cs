@@ -54,5 +54,29 @@ namespace property_api.Tests.V1.Gateways
             Assert.AreEqual(list[0], propList[0].PropRef);
             Assert.AreEqual(list[1], propList[1].PropRef);
         }
+
+        [TestCase("4","7")]
+        [TestCase("5","3")]
+        public void GivenAListOfNonexistentPropRefs_WhenItIsExecuted_ThenItShouldReturnAnEmptyListOfProperties(string propertyRef, string propertyRef2)
+        {
+            //arrange
+            var list = new List<string> { propertyRef, propertyRef2 };
+            //act
+            List<Property> propList = _classUnderTest.GetMultiplePropertiesByPropertyListOfReferences(list);
+            //assert
+            propList.Should().BeEmpty();
+            propList.Should().BeOfType<List<Property>>();
+        }
+
+        [Test]
+        public void GivenANullPropRefsList_WhenItIsExecuted_ThenItShouldReturnNull()
+        {
+            //arrange
+            List<string> list = null;
+            //act
+            List<Property> propList = _classUnderTest.GetMultiplePropertiesByPropertyListOfReferences(list);
+            //assert
+            propList.Should().BeNull();
+        }
     }
 }

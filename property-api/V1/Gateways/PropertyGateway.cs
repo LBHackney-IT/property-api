@@ -37,6 +37,7 @@ namespace property_api.V1.Gateways
 
         public List<Property> GetMultiplePropertiesByPropertyListOfReferences(IList<string> propertyRefs)
         {
+            if(propertyRefs == null) { return null; }
             var properties = _uhContext.UhPropertys.Where(prop => propertyRefs.Contains(prop.PropRef));
             List<Property> listProperties = properties.Select(prop => _factory.FromUHProperty(prop)).ToList();
             return listProperties;
