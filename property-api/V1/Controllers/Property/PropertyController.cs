@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using property_api.V1.UseCase.GetMultipleProperties;
 using property_api.V1.Validation;
 using System.Linq;
+using property_api.V1.UseCase.GetMultipleProperties.Boundaries;
 
 namespace property_api.V1.Controllers
 {

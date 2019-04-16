@@ -24,6 +24,7 @@ using property_api.V1.Helpers;
 using property_api.V1.Gateways.GetMultipleProperties;
 using property_api.V1.UseCase.GetMultipleProperties;
 using property_api.V1.Validation;
+using property_api.V1.UseCase.GetMultipleProperties.Impl;
 
 namespace property_api
 {

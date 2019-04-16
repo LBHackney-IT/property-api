@@ -4,6 +4,8 @@ using NUnit.Framework;
 using property_api.V1.Domain;
 using property_api.V1.Gateways.GetMultipleProperties;
 using property_api.V1.UseCase.GetMultipleProperties;
+using property_api.V1.UseCase.GetMultipleProperties.Boundaries;
+using property_api.V1.UseCase.GetMultipleProperties.Impl;
 using System;
 using System.Collections.Generic;
 using System.Linq;

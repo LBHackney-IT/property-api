@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using FluentAssertions;
 using property_api.V1.UseCase.GetMultipleProperties;
 using property_api.V1.Validation;
+using property_api.V1.UseCase.GetMultipleProperties.Boundaries;
 
 namespace UnitTests.V1.Controllers
 {

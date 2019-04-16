@@ -17,6 +17,8 @@ using property_api.V1.Factory;
 using property_api.V1.Helpers;
 using property_api.V1.Gateways;
 using UnitTests.V1.Helpers;
+using property_api.V1.UseCase.GetMultipleProperties.Impl;
+using property_api.V1.UseCase.GetMultipleProperties.Boundaries;
 
 namespace UnitTests.V1.Controllers
 {
