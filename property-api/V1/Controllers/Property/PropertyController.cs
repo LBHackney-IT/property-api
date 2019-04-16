@@ -7,6 +7,7 @@ using property_api.V1.UseCase;
 using Microsoft.Extensions.Logging;
 using property_api.V1.UseCase.GetMultipleProperties;
 using property_api.V1.Validation;
+using System.Linq;
 
 namespace property_api.V1.Controllers
 {
@@ -63,8 +64,10 @@ namespace property_api.V1.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(GetMultiplePropertiesUseCaseResponse), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 400)]
-        public IActionResult GetMultipleByReference(IList<string> propertyReferences)
+        public IActionResult GetMultipleByReference([FromQuery]IList<string> propertyReferences)
         {
+            _logger.LogInformation("Multiple Property information was requested for " + propertyReferences?.Select(s => s + " ").ToList());
+
             if (!_getMultiplePropertiesValidator.Validate(propertyReferences))
             {
                 return BadRequest();
