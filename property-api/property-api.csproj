@@ -17,15 +17,6 @@
  </PropertyGroup>
 
 
- <ItemGroup>
-   <Compile Remove="V1\NewFolder\**" />
-   <Content Remove="V1\NewFolder\**" />
-   <EmbeddedResource Remove="V1\NewFolder\**" />
-   <None Remove="V1\NewFolder\**" />
- </ItemGroup>
-
-  
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.HealthChecks" Version="1.0.0" />
