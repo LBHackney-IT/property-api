@@ -98,7 +98,5 @@ namespace UnitTests.V1.Controllers
             //assert
             actionResult.Should().BeOfType<BadRequestResult>();
         }
-
-        //TO DO: valid 
     }
 }
