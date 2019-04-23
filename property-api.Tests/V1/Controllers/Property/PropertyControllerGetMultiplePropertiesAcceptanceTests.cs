@@ -62,9 +62,9 @@ namespace UnitTests.V1.Controllers
             _uhContext.UhPropertys.Add(prop2);
             _uhContext.SaveChanges();
 
-            List<string> propRefs = new List<string> { propertyRef, propertyRef2 };
+            List<string> propertyReferences = new List<string> { propertyRef, propertyRef2 };
             //act
-            var actual = _classUnderTest.GetMultipleByReference(propRefs);
+            var actual = _classUnderTest.GetMultipleByReference(propertyReferences);
             //assert
             actual.Should().NotBeNull();
             var okObjectResult = (OkObjectResult)actual;

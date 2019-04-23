@@ -24,9 +24,9 @@ namespace property_api.Tests.V1.Validation
         public void GivenAInvalidListofPropertyRefsTheValidatorShouldReturnFalse(string propertyRef, string propertyRef2)
         {
             //arrange
-            List<string> propList = new List<string> { propertyRef, propertyRef2 };
+            List<string> propertyReferences = new List<string> { propertyRef, propertyRef2 };
             //act
-            bool validationResult = _classUnderTest.Validate(propList);
+            bool validationResult = _classUnderTest.Validate(propertyReferences);
             //assert
             Assert.False(validationResult);
         }
@@ -35,9 +35,9 @@ namespace property_api.Tests.V1.Validation
         public void GivenANullListTheValidatorShouldReturnFalse()
         {
             //arrange
-            List<string> list = null;
+            List<string> propertyReferences = null;
             //act
-            bool validationResult = _classUnderTest.Validate(list);
+            bool validationResult = _classUnderTest.Validate(propertyReferences);
             //assert
             Assert.False(validationResult);
         }

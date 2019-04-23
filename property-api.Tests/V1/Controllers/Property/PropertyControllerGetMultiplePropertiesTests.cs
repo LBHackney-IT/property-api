@@ -71,9 +71,9 @@ namespace UnitTests.V1.Controllers
                     Properties = properties
                 });
 
-            IList<string> list = new List<string> { propertyRef, propertyRef2 };
+            IList<string> propertyReferences = new List<string> { propertyRef, propertyRef2 };
             //act
-            var actionResult = _classUnderTest.GetMultipleByReference(list);
+            var actionResult = _classUnderTest.GetMultipleByReference(propertyReferences);
             //assert
             actionResult.Should().NotBeNull();
             var okObjectResult = (OkObjectResult)actionResult;
@@ -92,9 +92,9 @@ namespace UnitTests.V1.Controllers
         public void GivenAnInvalidListOfMultiplePropertyRefsItShouldReturnBadInput(string propertyRef, string propertyRef2)
         {
             //arrange
-            List<string> list = new List<string> { propertyRef, propertyRef2 };
+            List<string> propertyReferences = new List<string> { propertyRef, propertyRef2 };
             //act
-            var actionResult = _classUnderTest.GetMultipleByReference(list);
+            var actionResult = _classUnderTest.GetMultipleByReference(propertyReferences);
             //assert
             actionResult.Should().BeOfType<BadRequestResult>();
         }

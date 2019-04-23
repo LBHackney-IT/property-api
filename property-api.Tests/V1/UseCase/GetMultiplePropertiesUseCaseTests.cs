@@ -30,12 +30,12 @@ namespace property_api.Tests.V1.UseCase
         public void GivenARequestContainingAListOfPropRefs_WhenIExecuteTheUseCase_ThenTheListOfPropRefsGetsPassedIntoTheGateway(string propertyRef, string propertyRef2)
         {
             //arrange
-            var list = new List<string> { propertyRef, propertyRef2 };
-            var request = new GetMultiplePropertiesUseCaseRequest { PropertyRefs = list };
+            var propertyReferences = new List<string> { propertyRef, propertyRef2 };
+            var request = new GetMultiplePropertiesUseCaseRequest { PropertyRefs = propertyReferences };
             //act
             _classUnderTest.Execute(request);
             //assert
-            _mockGetMultiplePropertiesGateway.Verify(g => g.GetMultiplePropertiesByPropertyListOfReferences(It.Is<List<string>>(arg => arg[0] == list[0] && arg[1] == list[1])), Times.Once);
+            _mockGetMultiplePropertiesGateway.Verify(g => g.GetMultiplePropertiesByPropertyListOfReferences(It.Is<List<string>>(arg => arg[0] == propertyReferences[0] && arg[1] == propertyReferences[1])), Times.Once);
 
         }
 
@@ -44,13 +44,13 @@ namespace property_api.Tests.V1.UseCase
         public void GivenARequestContainingAListOfPropRefs_WhenIExecuteTheUseCase_ThenIGetAResponseObjectContainingListOfPropertiesBack(string propertyRef, string propertyRef2)
         {
             //arrange
-            var list = new List<string> { propertyRef, propertyRef2 };
-            var request = new GetMultiplePropertiesUseCaseRequest { PropertyRefs = list };
+            var propertyReferences = new List<string> { propertyRef, propertyRef2 };
+            var request = new GetMultiplePropertiesUseCaseRequest { PropertyRefs = propertyReferences };
 
             var listOfProperties = new List<Property> { new Property { PropRef = propertyRef }, new Property { PropRef = propertyRef2 } };
 
             _mockGetMultiplePropertiesGateway
-                .Setup(g => g.GetMultiplePropertiesByPropertyListOfReferences(It.Is<List<string>>(arg => arg[0] == list[0] && arg[1] == list[1])))
+                .Setup(g => g.GetMultiplePropertiesByPropertyListOfReferences(It.Is<List<string>>(arg => arg[0] == propertyReferences[0] && arg[1] == propertyReferences[1])))
                 .Returns( listOfProperties );
 
             //act
@@ -62,8 +62,8 @@ namespace property_api.Tests.V1.UseCase
             response.Properties.Should().NotBeNull();
             response.Properties.Should().BeOfType<List<Property>>();
 
-            Assert.AreSame(list[0], response.Properties[0].PropRef);
-            Assert.AreSame(list[1], response.Properties[1].PropRef);
+            Assert.AreSame(propertyReferences[0], response.Properties[0].PropRef);
+            Assert.AreSame(propertyReferences[1], response.Properties[1].PropRef);
         }
     }
 }
