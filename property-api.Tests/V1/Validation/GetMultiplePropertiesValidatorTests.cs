@@ -18,6 +18,18 @@ namespace property_api.Tests.V1.Validation
             _classUnderTest = new GetMultiplePropertiesValidator();
         }
 
+        [TestCase("5","8")]
+        [TestCase("00002303","00001234")]
+        public void GivenAValidListofPropertyRefs_TheValidatorShouldReturnTrue(string propertyRef, string propertyRef2)
+        {
+            //arrange
+            List<string> propertyReferences = new List<string> { propertyRef, propertyRef2 };
+            //act
+            bool validationResult = _classUnderTest.Validate(propertyReferences);
+            //assert
+            Assert.True(validationResult);
+        }
+
         [TestCase(" ", "1")]
         [TestCase("2", "")]
         [TestCase(null, "3")]
