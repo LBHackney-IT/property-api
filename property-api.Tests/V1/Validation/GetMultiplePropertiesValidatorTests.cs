@@ -20,10 +20,10 @@ namespace property_api.Tests.V1.Validation
 
         [TestCase("5","8")]
         [TestCase("00002303","00001234")]
-        public void GivenAValidListofPropertyRefs_TheValidatorShouldReturnTrue(string propertyRef, string propertyRef2)
+        public void GivenAValidListofPropertyRefs_TheValidatorShouldReturnTrue(string propertyReference, string propertyReference2)
         {
             //arrange
-            List<string> propertyReferences = new List<string> { propertyRef, propertyRef2 };
+            List<string> propertyReferences = new List<string> { propertyReference, propertyReference2 };
             //act
             bool validationResult = _classUnderTest.Validate(propertyReferences);
             //assert
@@ -33,10 +33,10 @@ namespace property_api.Tests.V1.Validation
         [TestCase(" ", "1")]
         [TestCase("2", "")]
         [TestCase(null, "3")]
-        public void GivenAInvalidListofPropertyRefsTheValidatorShouldReturnFalse(string propertyRef, string propertyRef2)
+        public void GivenAInvalidListofPropertyRefsTheValidatorShouldReturnFalse(string propertyReference, string propertyReference2)
         {
             //arrange
-            List<string> propertyReferences = new List<string> { propertyRef, propertyRef2 };
+            List<string> propertyReferences = new List<string> { propertyReference, propertyReference2 };
             //act
             bool validationResult = _classUnderTest.Validate(propertyReferences);
             //assert

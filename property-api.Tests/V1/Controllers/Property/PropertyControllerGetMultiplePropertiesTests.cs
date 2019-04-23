@@ -37,41 +37,41 @@ namespace UnitTests.V1.Controllers
 
         [TestCase("1", "2")]
         [TestCase("3", "4")]
-        public void GivenAListOfMultiplePropertiesWhenIExecuteThenParametersArePassesIntoTheUseCase(string propertyRef, string propertyRef2)
+        public void GivenAListOfMultiplePropertiesWhenIExecuteThenParametersArePassesIntoTheUseCase(string propertyReference, string propertyReference2)
         {
             //arrange
-            var list = new List<string> { propertyRef, propertyRef2};
+            var propertyReferences = new List<string> { propertyReference, propertyReference2};
             //act
-            _classUnderTest.GetMultipleByReference(list);
+            _classUnderTest.GetMultipleByReference(propertyReferences);
             //assert
-            _mockGetMultiplePropertiesUseCase.Verify(v=> v.Execute(It.Is<GetMultiplePropertiesUseCaseRequest>(i=> i.PropertyRefs[0] == propertyRef && i.PropertyRefs[1] == propertyRef2)),Times.Once);
+            _mockGetMultiplePropertiesUseCase.Verify(v=> v.Execute(It.Is<GetMultiplePropertiesUseCaseRequest>(i=> i.PropertyReferences[0] == propertyReference && i.PropertyReferences[1] == propertyReference2)), Times.Once);
         }
 
         [TestCase("65", "57")]
         [TestCase("8", "9")]
-        public void GivenAValidListOfMultipleProperyRefsWhenIExecuteThenTheUseCaseReturnsGetMultiplePropertiesUseCaseResponse(string propertyRef, string propertyRef2)
+        public void GivenAValidListOfMultipleProperyRefsWhenIExecuteThenTheUseCaseReturnsGetMultiplePropertiesUseCaseResponse(string propertyReference, string propertyReference2)
         {
             //arrange
             IList<Property> properties = new List<Property>
                     {
                         new Property
                         {
-                            PropRef = propertyRef
+                            PropRef = propertyReference
                         },
                         new Property
                         {
-                            PropRef = propertyRef2
+                            PropRef = propertyReference2
                         }
                     };
 
             _mockGetMultiplePropertiesUseCase
-                .Setup(v => v.Execute(It.Is<GetMultiplePropertiesUseCaseRequest>(i => i.PropertyRefs[0] == propertyRef && i.PropertyRefs[1] == propertyRef2)))
+                .Setup(v => v.Execute(It.Is<GetMultiplePropertiesUseCaseRequest>(i => i.PropertyReferences[0] == propertyReference && i.PropertyReferences[1] == propertyReference2)))
                 .Returns(new GetMultiplePropertiesUseCaseResponse
                 {
                     Properties = properties
                 });
 
-            IList<string> propertyReferences = new List<string> { propertyRef, propertyRef2 };
+            IList<string> propertyReferences = new List<string> { propertyReference, propertyReference2 };
             //act
             var actionResult = _classUnderTest.GetMultipleByReference(propertyReferences);
             //assert
@@ -82,17 +82,17 @@ namespace UnitTests.V1.Controllers
             response.Properties.Should().NotBeNullOrEmpty();
 
             response.Properties.Should().BeOfType<List<Property>>();
-            Assert.AreSame(propertyRef, response.Properties[0].PropRef);
-            Assert.AreSame(propertyRef2, response.Properties[1].PropRef);
+            Assert.AreSame(propertyReference, response.Properties[0].PropRef);
+            Assert.AreSame(propertyReference2, response.Properties[1].PropRef);
         }
 
         [TestCase(" ", "10")]
         [TestCase("", "7")]
         [TestCase("3", null)]
-        public void GivenAnInvalidListOfMultiplePropertyRefsItShouldReturnBadInput(string propertyRef, string propertyRef2)
+        public void GivenAnInvalidListOfMultiplePropertyRefsItShouldReturnBadInput(string propertyReference, string propertyReference2)
         {
             //arrange
-            List<string> propertyReferences = new List<string> { propertyRef, propertyRef2 };
+            List<string> propertyReferences = new List<string> { propertyReference, propertyReference2 };
             //act
             var actionResult = _classUnderTest.GetMultipleByReference(propertyReferences);
             //assert

@@ -27,11 +27,11 @@ namespace property_api.Tests.V1.UseCase
 
         [TestCase("1","2")]
         [TestCase("3","4")]
-        public void GivenARequestContainingAListOfPropRefs_WhenIExecuteTheUseCase_ThenTheListOfPropRefsGetsPassedIntoTheGateway(string propertyRef, string propertyRef2)
+        public void GivenARequestContainingAListOfPropRefs_WhenIExecuteTheUseCase_ThenTheListOfPropRefsGetsPassedIntoTheGateway(string propertyReference, string propertyReference2)
         {
             //arrange
-            var propertyReferences = new List<string> { propertyRef, propertyRef2 };
-            var request = new GetMultiplePropertiesUseCaseRequest { PropertyRefs = propertyReferences };
+            var propertyReferences = new List<string> { propertyReference, propertyReference2 };
+            var request = new GetMultiplePropertiesUseCaseRequest { PropertyReferences = propertyReferences };
             //act
             _classUnderTest.Execute(request);
             //assert
@@ -41,13 +41,13 @@ namespace property_api.Tests.V1.UseCase
 
         [TestCase("1","2")]
         [TestCase("3","4")]
-        public void GivenARequestContainingAListOfPropRefs_WhenIExecuteTheUseCase_ThenIGetAResponseObjectContainingListOfPropertiesBack(string propertyRef, string propertyRef2)
+        public void GivenARequestContainingAListOfPropRefs_WhenIExecuteTheUseCase_ThenIGetAResponseObjectContainingListOfPropertiesBack(string propertyReference, string propertyReference2)
         {
             //arrange
-            var propertyReferences = new List<string> { propertyRef, propertyRef2 };
-            var request = new GetMultiplePropertiesUseCaseRequest { PropertyRefs = propertyReferences };
+            var propertyReferences = new List<string> { propertyReference, propertyReference2 };
+            var request = new GetMultiplePropertiesUseCaseRequest { PropertyReferences = propertyReferences };
 
-            var listOfProperties = new List<Property> { new Property { PropRef = propertyRef }, new Property { PropRef = propertyRef2 } };
+            var listOfProperties = new List<Property> { new Property { PropRef = propertyReference }, new Property { PropRef = propertyReference2 } };
 
             _mockGetMultiplePropertiesGateway
                 .Setup(g => g.GetMultiplePropertiesByPropertyListOfReferences(It.Is<List<string>>(arg => arg[0] == propertyReferences[0] && arg[1] == propertyReferences[1])))

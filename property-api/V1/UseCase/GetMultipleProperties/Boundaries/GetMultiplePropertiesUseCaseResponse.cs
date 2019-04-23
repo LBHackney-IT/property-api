@@ -8,6 +8,6 @@ namespace property_api.V1.UseCase.GetMultipleProperties.Boundaries
 {
     public class GetMultiplePropertiesUseCaseResponse
     {
-        public IList<Property> Properties { get;set;}
+        public IList<Property> Properties { get; set;}
     }
 }

@@ -6,20 +6,21 @@ namespace property_api.V1.Validation
 {
     public class GetMultiplePropertiesValidator : IGetMultiplePropertiesValidator
     {
-        public bool Validate(IList<string> PropertyRefs)
+        public bool Validate(IList<string> PropertyReferences)
         {
-            if(PropertyRefs == null) { return false; }
-
-            foreach (string propRef in PropertyRefs)
+            if(PropertyReferences == null)
             {
+                return false;
+            }
 
-                if (string.IsNullOrEmpty(propRef) || string.IsNullOrWhiteSpace(propRef))
+            foreach (string propertyReference in PropertyReferences)
+            {
+                if (string.IsNullOrEmpty(propertyReference) || string.IsNullOrWhiteSpace(propertyReference))
                 {
                     return false;
                 }
             }
             return true;
         }
-
     }
 }

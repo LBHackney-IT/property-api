@@ -32,40 +32,40 @@ namespace property_api.Tests.V1.Gateways
 
         [TestCase("1","2")]
         [TestCase("3","4")]
-        public void GivenAListOfPropRefs_WhenItIsExecuted_ThenItReturnsAListOfSpecifiedPropertyObjects(string propertyRef, string propertyRef2)
+        public void GivenAListOfPropRefs_WhenItIsExecuted_ThenItReturnsAListOfSpecifiedPropertyObjects(string propertyReference, string propertyReference2)
         {
             //arrange
-            var prop1 = _uhPropertyHelper.GenerateUhProperty();
-            prop1.PropRef = propertyRef;
-            var prop2 = _uhPropertyHelper.GenerateUhProperty();
-            prop2.PropRef = propertyRef2;
+            var property1 = _uhPropertyHelper.GenerateUhProperty();
+            property1.PropRef = propertyReference;
+            var property2 = _uhPropertyHelper.GenerateUhProperty();
+            property2.PropRef = propertyReference2;
 
-            _uhContext.UhPropertys.Add(prop1);
-            _uhContext.UhPropertys.Add(prop2);
+            _uhContext.UhPropertys.Add(property1);
+            _uhContext.UhPropertys.Add(property2);
             _uhContext.SaveChanges();
 
-            var propertyReferences = new List<string> { propertyRef, propertyRef2 };
+            var propertyReferences = new List<string> { propertyReference, propertyReference2 };
             //act
-            List<Property> propList = _classUnderTest.GetMultiplePropertiesByPropertyListOfReferences(propertyReferences);
+            List<Property> propertiesList = _classUnderTest.GetMultiplePropertiesByPropertyListOfReferences(propertyReferences);
             //assert
-            propList.Should().NotBeNull();
-            propList.Should().BeOfType<List<Property>>();
+            propertiesList.Should().NotBeNull();
+            propertiesList.Should().BeOfType<List<Property>>();
 
-            Assert.AreEqual(propertyReferences[0], propList[0].PropRef);
-            Assert.AreEqual(propertyReferences[1], propList[1].PropRef);
+            Assert.AreEqual(propertyReferences[0], propertiesList[0].PropRef);
+            Assert.AreEqual(propertyReferences[1], propertiesList[1].PropRef);
         }
 
         [TestCase("4","7")]
         [TestCase("5","3")]
-        public void GivenAListOfNonexistentPropRefs_WhenItIsExecuted_ThenItShouldReturnAnEmptyListOfProperties(string propertyRef, string propertyRef2)
+        public void GivenAListOfNonexistentPropRefs_WhenItIsExecuted_ThenItShouldReturnAnEmptyListOfProperties(string propertyReference, string propertyReference2)
         {
             //arrange
-            var propertyReferences = new List<string> { propertyRef, propertyRef2 };
+            var propertyReferences = new List<string> { propertyReference, propertyReference2 };
             //act
-            List<Property> propList = _classUnderTest.GetMultiplePropertiesByPropertyListOfReferences(propertyReferences);
+            List<Property> propertiesList = _classUnderTest.GetMultiplePropertiesByPropertyListOfReferences(propertyReferences);
             //assert
-            propList.Should().BeEmpty();
-            propList.Should().BeOfType<List<Property>>();
+            propertiesList.Should().BeEmpty();
+            propertiesList.Should().BeOfType<List<Property>>();
         }
 
         [Test]
@@ -74,9 +74,9 @@ namespace property_api.Tests.V1.Gateways
             //arrange
             List<string> propertyReferences = null;
             //act
-            List<Property> propList = _classUnderTest.GetMultiplePropertiesByPropertyListOfReferences(propertyReferences);
+            List<Property> propertiesList = _classUnderTest.GetMultiplePropertiesByPropertyListOfReferences(propertyReferences);
             //assert
-            propList.Should().BeNull();
+            propertiesList.Should().BeNull();
         }
     }
 }

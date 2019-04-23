@@ -35,10 +35,13 @@ namespace property_api.V1.Gateways
             return listChildren;
         }
 
-        public List<Property> GetMultiplePropertiesByPropertyListOfReferences(IList<string> propertyRefs)
+        public List<Property> GetMultiplePropertiesByPropertyListOfReferences(IList<string> propertyReferences)
         {
-            if(propertyRefs == null) { return null; }
-            var properties = _uhContext.UhPropertys.Where(prop => propertyRefs.Contains(prop.PropRef));
+            if(propertyReferences == null)
+            {
+                return null;
+            }
+            var properties = _uhContext.UhPropertys.Where(prop => propertyReferences.Contains(prop.PropRef));
             List<Property> listProperties = properties.Select(prop => _factory.FromUHProperty(prop)).ToList();
             return listProperties;
         }

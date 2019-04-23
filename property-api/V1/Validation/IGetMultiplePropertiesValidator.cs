@@ -5,6 +5,6 @@ namespace property_api.V1.Validation
 {
     public interface IGetMultiplePropertiesValidator
     {
-        bool Validate(IList<string> PropertyRefs);
+        bool Validate(IList<string> PropertyReferences);
     }
 }

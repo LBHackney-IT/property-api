@@ -5,6 +5,6 @@ namespace property_api.V1.Gateways.GetMultipleProperties
 {
     public interface IGetMultiplePropertiesGateway
     {
-        List<Property> GetMultiplePropertiesByPropertyListOfReferences(IList<string> propertyRefs);
+        List<Property> GetMultiplePropertiesByPropertyListOfReferences(IList<string> propertyReferences);
     }
 }

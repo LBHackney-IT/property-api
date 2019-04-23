@@ -19,9 +19,9 @@ namespace property_api.V1.UseCase.GetMultipleProperties.Impl
 
         public GetMultiplePropertiesUseCaseResponse Execute(GetMultiplePropertiesUseCaseRequest request)
         {
-            IList<string> propertyRefs = request.PropertyRefs;
+            IList<string> propertyReferences = request.PropertyReferences;
 
-            List<Property> properties = _getMultiplePropertiesGateway.GetMultiplePropertiesByPropertyListOfReferences(propertyRefs);
+            List<Property> properties = _getMultiplePropertiesGateway.GetMultiplePropertiesByPropertyListOfReferences(propertyReferences);
 
             return new GetMultiplePropertiesUseCaseResponse { Properties = properties };
         }

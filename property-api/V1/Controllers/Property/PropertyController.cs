@@ -76,11 +76,11 @@ namespace property_api.V1.Controllers
 
             var request = new GetMultiplePropertiesUseCaseRequest
             {
-                PropertyRefs = propertyReferences
+                PropertyReferences = propertyReferences
             };
-            var usecaseResp = _getMultiplePropertiesUseCase.Execute(request);
+            var useCaseResponse = _getMultiplePropertiesUseCase.Execute(request);
 
-            return Ok(usecaseResp);
+            return Ok(useCaseResponse);
         }
     }
 }

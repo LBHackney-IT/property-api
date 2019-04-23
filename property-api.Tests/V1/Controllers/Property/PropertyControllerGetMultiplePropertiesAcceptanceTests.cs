@@ -50,19 +50,19 @@ namespace UnitTests.V1.Controllers
 
         [TestCase("1", "2")]
         [TestCase("3", "4")]
-        public void GivenListOfPropRefsAreProvided_WhenEndpointIsCalled_ThenItShouldReturnTheMultiplePropertiesSpecified(string propertyRef, string propertyRef2)
+        public void GivenListOfPropRefsAreProvided_WhenEndpointIsCalled_ThenItShouldReturnTheMultiplePropertiesSpecified(string propertyReference, string propertyReference2)
         {
             //arrange
-            var prop1 = _uhPropertyHelper.GenerateUhProperty();
-            prop1.PropRef = propertyRef;
-            var prop2 = _uhPropertyHelper.GenerateUhProperty();
-            prop2.PropRef = propertyRef2;
+            var property1 = _uhPropertyHelper.GenerateUhProperty();
+            property1.PropRef = propertyReference;
+            var property2 = _uhPropertyHelper.GenerateUhProperty();
+            property2.PropRef = propertyReference2;
 
-            _uhContext.UhPropertys.Add(prop1);
-            _uhContext.UhPropertys.Add(prop2);
+            _uhContext.UhPropertys.Add(property1);
+            _uhContext.UhPropertys.Add(property2);
             _uhContext.SaveChanges();
 
-            List<string> propertyReferences = new List<string> { propertyRef, propertyRef2 };
+            List<string> propertyReferences = new List<string> { propertyReference, propertyReference2 };
             //act
             var actual = _classUnderTest.GetMultipleByReference(propertyReferences);
             //assert
@@ -73,8 +73,8 @@ namespace UnitTests.V1.Controllers
             response.Properties.Should().NotBeNullOrEmpty();
 
             response.Properties.Should().BeOfType<List<Property>>();
-            Assert.AreSame(propertyRef, response.Properties[0].PropRef);
-            Assert.AreSame(propertyRef2, response.Properties[1].PropRef);
+            Assert.AreSame(propertyReference, response.Properties[0].PropRef);
+            Assert.AreSame(propertyReference2, response.Properties[1].PropRef);
         }
     }
 }
