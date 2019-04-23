@@ -37,6 +37,7 @@ commands:
             --cluster $CLUSTER_NAME \
             --service-name << parameters.service-name >> \
             --image << parameters.image-name >> \
+            --role arn:aws:iam::775052747630:role/ecsTaskExecutionRole
             --timeout 104400 \
             --use-latest-task-def
           no_output_timeout: 30m
