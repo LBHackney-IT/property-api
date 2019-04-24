@@ -17,9 +17,7 @@ namespace property_api.Tests.V1.Gateways
     public class PropertyGetMultipleGatewayTests : DbTest
     {
         private IGetMultiplePropertiesGateway _classUnderTest;
-
         private PropertyFactory _factory;
-
         private readonly PropertyTestHelper _uhPropertyHelper = new PropertyTestHelper();
 
         [SetUp]

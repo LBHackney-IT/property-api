@@ -36,7 +36,6 @@ namespace property_api.Tests.V1.UseCase
             _classUnderTest.Execute(request);
             //assert
             _mockGetMultiplePropertiesGateway.Verify(g => g.GetMultiplePropertiesByPropertyListOfReferences(It.Is<List<string>>(arg => arg[0] == propertyReferences[0] && arg[1] == propertyReferences[1])), Times.Once);
-
         }
 
         [TestCase("1","2")]

@@ -37,7 +37,7 @@ namespace property_api.V1.Gateways
 
         public List<Property> GetMultiplePropertiesByPropertyListOfReferences(IList<string> propertyReferences)
         {
-            if(propertyReferences == null)
+            if (propertyReferences == null)
             {
                 return null;
             }
@@ -45,6 +45,5 @@ namespace property_api.V1.Gateways
             List<Property> listProperties = properties.Select(prop => _factory.FromUHProperty(prop)).ToList();
             return listProperties;
         }
-
     }
 }

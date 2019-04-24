@@ -8,7 +8,7 @@ namespace property_api.V1.Validation
     {
         public bool Validate(IList<string> PropertyReferences)
         {
-            if(PropertyReferences == null)
+            if (PropertyReferences == null)
             {
                 return false;
             }

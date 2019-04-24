@@ -31,7 +31,6 @@ namespace UnitTests.V1.Controllers
         private IGetMultiplePropertiesValidator _getMultiplePropertiesValidator;
         private PropertyFactory _factory;
         private IGetMultiplePropertiesGateway _getMultiplePropertiesGateway;
-
         private readonly PropertyTestHelper _uhPropertyHelper = new PropertyTestHelper();
 
         [SetUp]
