@@ -66,7 +66,7 @@ jobs:
     steps:
       - deploy-env:
           service-name: 'property-api-development'
-          image-name: "$AWS_ECR_HOST/$AWS_ECR_PATH:$CIRCLE_SHA1"
+          image-tag: "$CIRCLE_SHA1"
 
   deploy-to-staging:
     docker:
@@ -82,12 +82,12 @@ jobs:
     steps:
       - deploy-env:
           service-name: 'property-api-production'
-          image-name: "$AWS_ECR_HOST/$AWS_ECR_PATH:$CIRCLE_SHA1"
+          image-tag: "$CIRCLE_SHA1"
 
 workflows:
   build-and-deploy:
       jobs:
-#      - check
+      - check
       - aws-ecr/build_and_push_image:
           name: build_and_push_image
           dockerfile: ./property-api/Dockerfile
@@ -100,44 +100,42 @@ workflows:
           tag: "${CIRCLE_SHA1}"
           filters:
             branches:
-#              only: master
-              only: replace-ecs-deploy-tool
+              only: master
 
-      - deploy-to-staging:
+      - deploy-to-development:
           requires:
-#            - check
+            - check
             - build_and_push_image
           filters:
             branches:
-#              only: master
-              only: replace-ecs-deploy-tool
+              only: master
 
-#      - permit-staging-release:
-#          type: approval
-#          requires:
-#            - deploy-to-development
-#          filters:
-#            branches:
-#              only: master
-#
-#      - deploy-to-staging:
-#          requires:
-#            - permit-staging-release
-#          filters:
-#            branches:
-#              only: master
-#
-#      - permit-production-release:
-#          type: approval
-#          requires:
-#            - deploy-to-staging
-#          filters:
-#            branches:
-#              only: master
-#
-#      - deploy-to-production:
-#          requires:
-#            - permit-production-release
-#          filters:
-#            branches:
-#              only: master
+      - permit-staging-release:
+          type: approval
+          requires:
+            - deploy-to-development
+          filters:
+            branches:
+              only: master
+
+      - deploy-to-staging:
+          requires:
+            - permit-staging-release
+          filters:
+            branches:
+              only: master
+
+      - permit-production-release:
+          type: approval
+          requires:
+            - deploy-to-staging
+          filters:
+            branches:
+              only: master
+
+      - deploy-to-production:
+          requires:
+            - permit-production-release
+          filters:
+            branches:
+              only: master
