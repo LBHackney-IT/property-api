@@ -10,7 +10,7 @@ commands:
     parameters:
       service-name:
         type: string
-      image-name:
+      image-tag:
         type: string
     steps:
       - aws-cli/install
@@ -35,7 +35,7 @@ commands:
             --secret-access-key $AWS_SECRET_KEY \
             --timeout 1800 \
             --region $AWS_REGION \
-            --image << parameters.image-name >> \
+            --image << parameters.image-tag >> \
             $CLUSTER_NAME << parameters.service-name >>
           no_output_timeout: 30m
 
@@ -73,7 +73,7 @@ jobs:
     steps:
       - deploy-env:
           service-name: 'property-api-staging'
-          image-name: "$AWS_ECR_HOST/$AWS_ECR_PATH:$CIRCLE_SHA1"
+          image-tag: "$CIRCLE_SHA1"
 
   deploy-to-production:
     docker:
