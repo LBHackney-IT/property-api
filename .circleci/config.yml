@@ -86,10 +86,6 @@ jobs:
 
 workflows:
   build-and-deploy:
-eam origin replace-ecs-deploy-tool
-
-lace-ecs-deploy-tool) ✗ 
-
       jobs:
 #      - check
       - aws-ecr/build_and_push_image:
