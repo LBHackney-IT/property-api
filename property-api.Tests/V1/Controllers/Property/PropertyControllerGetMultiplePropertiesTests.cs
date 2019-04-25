@@ -89,7 +89,7 @@ namespace UnitTests.V1.Controllers
         [TestCase(" ", "10")]
         [TestCase("", "7")]
         [TestCase("3", null)]
-        public void GivenAnInvalidListOfMultiplePropertyRefsItShouldReturnBadInput(string propertyReference, string propertyReference2)
+        public void GivenAnInvalidListOfMultiplePropertyRefs_ItShouldReturnBadInput(string propertyReference, string propertyReference2)
         {
             //arrange
             List<string> propertyReferences = new List<string> { propertyReference, propertyReference2 };
