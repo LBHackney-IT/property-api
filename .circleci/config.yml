@@ -26,19 +26,18 @@ commands:
       - run:
           name: Install ecs deploy
           command: |
-              curl https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy | sudo tee /usr/bin/ecs-deploy
-              sudo chmod +x /usr/bin/ecs-deploy
+            pip install ecs-deploy
       - run:
           name: Premote target image
           command: |
-            ecs-deploy \
-            --timeout 104400 \
+            ecs deploy \
+            --access-key-id $AWS_ID_KEY \
+            --secret-access-key $AWS_SECRET_KEY \
+            --timeout 1800 \
             --region $AWS_REGION \
-            --cluster $CLUSTER_NAME \
-            --service-name << parameters.service-name >> \
             --image << parameters.image-name >> \
-            --timeout 104400 \
-            --use-latest-task-def
+            $CLUSTER_NAME \
+            << parameters.service-name >> \
           no_output_timeout: 30m
 
 jobs:
@@ -103,40 +102,41 @@ workflows:
             branches:
               only: master
 
-      - deploy-to-development:
+      - deploy-to-staging:
           requires:
             - check
             - build_and_push_image
           filters:
             branches:
-              only: master
+#              only: master
+              only: replace-ecs-deploy-tool
 
-      - permit-staging-release:
-          type: approval
-          requires:
-            - deploy-to-development
-          filters:
-            branches:
-              only: master
-
-      - deploy-to-staging:
-          requires:
-            - permit-staging-release
-          filters:
-            branches:
-              only: master
-
-      - permit-production-release:
-          type: approval
-          requires:
-            - deploy-to-staging
-          filters:
-            branches:
-              only: master
-
-      - deploy-to-production:
-          requires:
-            - permit-production-release
-          filters:
-            branches:
-              only: master
+#      - permit-staging-release:
+#          type: approval
+#          requires:
+#            - deploy-to-development
+#          filters:
+#            branches:
+#              only: master
+#
+#      - deploy-to-staging:
+#          requires:
+#            - permit-staging-release
+#          filters:
+#            branches:
+#              only: master
+#
+#      - permit-production-release:
+#          type: approval
+#          requires:
+#            - deploy-to-staging
+#          filters:
+#            branches:
+#              only: master
+#
+#      - deploy-to-production:
+#          requires:
+#            - permit-production-release
+#          filters:
+#            branches:
+#              only: master
