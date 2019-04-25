@@ -35,8 +35,9 @@ commands:
             --secret-access-key $AWS_SECRET_KEY \
             --timeout 1800 \
             --region $AWS_REGION \
-            --image << parameters.image-tag >> \
-            $CLUSTER_NAME << parameters.service-name >>
+            $CLUSTER_NAME \
+            << parameters.service-name >> \
+            -t << parameters.image-tag >>
           no_output_timeout: 30m
 
 jobs:
