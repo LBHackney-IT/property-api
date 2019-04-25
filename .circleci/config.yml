@@ -26,7 +26,7 @@ commands:
       - run:
           name: Install ecs deploy
           command: |
-            pip install ecs-deploy
+            sudo pip install ecs-deploy
       - run:
           name: Premote target image
           command: |
@@ -86,8 +86,12 @@ jobs:
 
 workflows:
   build-and-deploy:
+eam origin replace-ecs-deploy-tool
+
+lace-ecs-deploy-tool) ✗ 
+
       jobs:
-      - check
+#      - check
       - aws-ecr/build_and_push_image:
           name: build_and_push_image
           dockerfile: ./property-api/Dockerfile
@@ -100,11 +104,12 @@ workflows:
           tag: "${CIRCLE_SHA1}"
           filters:
             branches:
-              only: master
+#              only: master
+              only: replace-ecs-deploy-tool
 
       - deploy-to-staging:
           requires:
-            - check
+#            - check
             - build_and_push_image
           filters:
             branches:
