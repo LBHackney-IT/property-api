@@ -36,8 +36,7 @@ commands:
             --timeout 1800 \
             --region $AWS_REGION \
             --image << parameters.image-name >> \
-            $CLUSTER_NAME \
-            << parameters.service-name >>
+            $CLUSTER_NAME << parameters.service-name >>
           no_output_timeout: 30m
 
 jobs:
