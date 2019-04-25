@@ -33,7 +33,7 @@ namespace property_api.Tests.V1.Validation
         [TestCase(" ", "1")]
         [TestCase("2", "")]
         [TestCase(null, "3")]
-        public void GivenAInvalidListofPropertyRefsTheValidatorShouldReturnFalse(string propertyReference, string propertyReference2)
+        public void GivenAnInvalidListofPropertyRefs_TheValidatorShouldReturnFalse(string propertyReference, string propertyReference2)
         {
             //arrange
             List<string> propertyReferences = new List<string> { propertyReference, propertyReference2 };
@@ -44,7 +44,7 @@ namespace property_api.Tests.V1.Validation
         }
 
         [Test]
-        public void GivenANullListTheValidatorShouldReturnFalse()
+        public void GivenANullList_TheValidatorShouldReturnFalse()
         {
             //arrange
             List<string> propertyReferences = null;

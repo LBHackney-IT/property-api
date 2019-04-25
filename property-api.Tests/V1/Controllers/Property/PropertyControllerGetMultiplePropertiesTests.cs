@@ -37,7 +37,7 @@ namespace UnitTests.V1.Controllers
 
         [TestCase("1", "2")]
         [TestCase("3", "4")]
-        public void GivenAListOfMultiplePropertiesWhenIExecuteThenParametersArePassesIntoTheUseCase(string propertyReference, string propertyReference2)
+        public void GivenAListOfMultipleProperties_WhenIExecute_ThenParametersArePassedIntoTheUseCase(string propertyReference, string propertyReference2)
         {
             //arrange
             var propertyReferences = new List<string> { propertyReference, propertyReference2};
@@ -49,7 +49,7 @@ namespace UnitTests.V1.Controllers
 
         [TestCase("65", "57")]
         [TestCase("8", "9")]
-        public void GivenAValidListOfMultipleProperyRefsWhenIExecuteThenTheUseCaseReturnsGetMultiplePropertiesUseCaseResponse(string propertyReference, string propertyReference2)
+        public void GivenAValidListOfMultipleProperyRefs_WhenIExecute_ThenTheUseCaseReturnsGetMultiplePropertiesUseCaseResponse(string propertyReference, string propertyReference2)
         {
             //arrange
             IList<Property> properties = new List<Property>
