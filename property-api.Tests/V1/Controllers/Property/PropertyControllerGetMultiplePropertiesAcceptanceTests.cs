@@ -19,6 +19,7 @@ using property_api.V1.Gateways;
 using UnitTests.V1.Helpers;
 using property_api.V1.UseCase.GetMultipleProperties.Impl;
 using property_api.V1.UseCase.GetMultipleProperties.Boundaries;
+using Newtonsoft.Json;
 
 namespace UnitTests.V1.Controllers
 {
@@ -62,6 +63,17 @@ namespace UnitTests.V1.Controllers
             _uhContext.SaveChanges();
 
             List<string> propertyReferences = new List<string> { propertyReference, propertyReference2 };
+
+            var expectedJson = JsonConvert.SerializeObject(
+                new GetMultiplePropertiesUseCaseResponse
+                {
+                    Properties = new List<Property>
+                    {
+                        _factory.FromUHProperty(property1),
+                        _factory.FromUHProperty(property2)
+                    }
+                }
+            );
             //act
             var actual = _classUnderTest.GetMultipleByReference(propertyReferences);
             //assert
@@ -74,6 +86,9 @@ namespace UnitTests.V1.Controllers
             response.Properties.Should().BeOfType<List<Property>>();
             Assert.AreSame(propertyReference, response.Properties[0].PropRef);
             Assert.AreSame(propertyReference2, response.Properties[1].PropRef);
+
+            var actualJson = JsonConvert.SerializeObject(response);
+            expectedJson.Should().BeEquivalentTo(actualJson);
         }
     }
 }
