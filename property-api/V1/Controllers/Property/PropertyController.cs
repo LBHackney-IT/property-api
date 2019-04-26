@@ -13,7 +13,7 @@ using property_api.V1.UseCase.GetMultipleProperties.Boundaries;
 namespace property_api.V1.Controllers
 {
     [ApiVersion("1")]
-    [Route("api/v1/property")]
+    [Route("api/v1/properties")]
     [ApiController]
     [Produces("application/json")]
     public class PropertyController : BaseController
