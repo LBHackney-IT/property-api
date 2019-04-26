@@ -10,7 +10,7 @@ commands:
     parameters:
       service-name:
         type: string
-      image-name:
+      image-tag:
         type: string
     steps:
       - aws-cli/install
@@ -26,19 +26,18 @@ commands:
       - run:
           name: Install ecs deploy
           command: |
-              curl https://raw.githubusercontent.com/silinternational/ecs-deploy/master/ecs-deploy | sudo tee /usr/bin/ecs-deploy
-              sudo chmod +x /usr/bin/ecs-deploy
+            sudo pip install ecs-deploy
       - run:
           name: Premote target image
           command: |
-            ecs-deploy \
-            --timeout 104400 \
+            ecs deploy \
+            --access-key-id $AWS_ID_KEY \
+            --secret-access-key $AWS_SECRET_KEY \
+            --timeout 1800 \
             --region $AWS_REGION \
-            --cluster $CLUSTER_NAME \
-            --service-name << parameters.service-name >> \
-            --image << parameters.image-name >> \
-            --timeout 104400 \
-            --use-latest-task-def
+            $CLUSTER_NAME \
+            << parameters.service-name >> \
+            -t << parameters.image-tag >>
           no_output_timeout: 30m
 
 jobs:
@@ -67,7 +66,7 @@ jobs:
     steps:
       - deploy-env:
           service-name: 'property-api-development'
-          image-name: "$AWS_ECR_HOST/$AWS_ECR_PATH:$CIRCLE_SHA1"
+          image-tag: "$CIRCLE_SHA1"
 
   deploy-to-staging:
     docker:
@@ -75,7 +74,7 @@ jobs:
     steps:
       - deploy-env:
           service-name: 'property-api-staging'
-          image-name: "$AWS_ECR_HOST/$AWS_ECR_PATH:$CIRCLE_SHA1"
+          image-tag: "$CIRCLE_SHA1"
 
   deploy-to-production:
     docker:
@@ -83,7 +82,7 @@ jobs:
     steps:
       - deploy-env:
           service-name: 'property-api-production'
-          image-name: "$AWS_ECR_HOST/$AWS_ECR_PATH:$CIRCLE_SHA1"
+          image-tag: "$CIRCLE_SHA1"
 
 workflows:
   build-and-deploy:
