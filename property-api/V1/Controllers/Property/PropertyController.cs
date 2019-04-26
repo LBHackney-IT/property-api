@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using property_api.V1.Domain;
 using property_api.V1.UseCase;
 using Microsoft.Extensions.Logging;
 
@@ -10,7 +6,7 @@ using Microsoft.Extensions.Logging;
 namespace property_api.V1.Controllers
 {
     [ApiVersion("1")]
-    [Route("api/v1/property")]
+    [Route("api/v1/properties")]
     [ApiController]
     [Produces("application/json")]
     public class PropertyController : BaseController
@@ -45,6 +41,6 @@ namespace property_api.V1.Controllers
                 return Ok(result.Property);
             }
             return NotFound();
-        }  
+        }
     }
 }
