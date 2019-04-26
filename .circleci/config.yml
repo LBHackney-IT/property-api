@@ -6,23 +6,13 @@ orbs:
 
 commands:
   deploy-env:
-    description: "Sets up aws cli and ecs-deploy to update a service with a target docker image"
+    description: "Sets ecs-deploy to update a service with a target docker image"
     parameters:
       service-name:
         type: string
       image-tag:
         type: string
     steps:
-      - aws-cli/install
-      - aws-cli/configure:
-          aws-access-key-id: AWS_ID_KEY
-          aws-secret-access-key: AWS_SECRET_KEY
-          aws-region: AWS_REGION
-      - run:
-          name: Install jq
-          command: |
-            sudo apt update
-            sudo apt install jq
       - run:
           name: Install ecs deploy
           command: |
