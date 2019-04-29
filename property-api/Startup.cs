@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.IO;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using property_api.Versioning;
@@ -21,6 +22,11 @@ using property_api.V1.Factory;
 using property_api.V1.UseCase.GetPropertyChildren;
 using property_api.V1.UseCase.GetPropertyChildren.Impl;
 using property_api.V1.Helpers;
+using property_api.V1.Gateways.GetMultipleProperties;
+using property_api.V1.UseCase.GetMultipleProperties;
+using property_api.V1.UseCase.GetMultipleProperties.Boundaries;
+using property_api.V1.Validation;
+using property_api.V1.UseCase.GetMultipleProperties.Impl;
 
 namespace property_api
 {
@@ -48,6 +54,7 @@ namespace property_api
             ConfigureDbContext(services);
             RegisterGateWays(services);
             RegisterUseCases(services);
+            RegisterValidators(services);
         }
 
         private static void ConfigureApiVersioningAndSwagger(IServiceCollection services)
@@ -134,13 +141,19 @@ namespace property_api
         {
             services.AddTransient<IPropertyGateway, PropertyGateway>();
             services.AddTransient<IGetPropertyChildrenGateway, PropertyGateway>();
-
+            services.AddTransient<IGetMultiplePropertiesGateway, PropertyGateway>();
         }
 
         private static void RegisterUseCases(IServiceCollection services)
         {
             services.AddTransient<IGetPropertyUseCase, GetPropertyUseCase>();
             services.AddTransient<IGetPropertyChildrenUseCase, GetPropertyChildrenUseCase>();
+            services.AddTransient<IGetMultiplePropertiesUseCase, GetMultiplePropertiesUseCase>();
+        }
+
+        private static void RegisterValidators(IServiceCollection services)
+        {
+            services.AddTransient<AbstractValidator<GetMultiplePropertiesUseCaseRequest>, GetMultiplePropertiesValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
