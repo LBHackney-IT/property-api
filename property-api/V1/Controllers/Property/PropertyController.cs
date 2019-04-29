@@ -21,14 +21,14 @@ namespace property_api.V1.Controllers
         private IGetPropertyUseCase _getPropertyUseCase;
         private ILogger<PropertyController> _logger;
         private IGetMultiplePropertiesUseCase _getMultiplePropertiesUseCase;
-        private IGetMultiplePropertiesValidator _getMultiplePropertiesValidator;
+        private GetMultiplePropertiesValidator _getMultiplePropertiesValidator;
 
-        public PropertyController(IGetPropertyUseCase getPropertyUseCase, ILogger<PropertyController> logger, IGetMultiplePropertiesUseCase getMultiplePropertiesUseCase, IGetMultiplePropertiesValidator getMultiplePropertiesValidator)
+        public PropertyController(IGetPropertyUseCase getPropertyUseCase, ILogger<PropertyController> logger, IGetMultiplePropertiesUseCase getMultiplePropertiesUseCase)
         {
             _getPropertyUseCase = getPropertyUseCase;
             _logger = logger;
             _getMultiplePropertiesUseCase = getMultiplePropertiesUseCase;
-            _getMultiplePropertiesValidator = getMultiplePropertiesValidator;
+            _getMultiplePropertiesValidator = new GetMultiplePropertiesValidator();
         }
 
         // GET a property for a given property reference
@@ -57,28 +57,25 @@ namespace property_api.V1.Controllers
 
         /// <summary>
         /// Returns a list of properties for a given property references.
+        /// Up to 200 properties can be requested at once
         /// If propertyReferences are not found then empty list of properties is returned with 200
         /// </summary>
-        /// <param name="propertyReferences"></param>
+        /// <param name="propertyReferencesRequest"></param>
         /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(typeof(GetMultiplePropertiesUseCaseResponse), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 400)]
-        public IActionResult GetMultipleByReference([FromQuery]IList<string> propertyReferences)
+        public IActionResult GetMultipleByReference([FromQuery]GetMultiplePropertiesUseCaseRequest propertyReferencesRequest)
         {
-            _logger.LogInformation("Multiple Property information was requested for " + propertyReferences?.Select(s => s + " ").ToList());
+            _logger.LogInformation("Multiple Property information was requested for " + propertyReferencesRequest.PropertyReferences?.Select(s => s + " ").ToList());
 
-            if (!_getMultiplePropertiesValidator.Validate(propertyReferences))
+            var validationResult = _getMultiplePropertiesValidator.Validate(propertyReferencesRequest);
+            if (!validationResult.IsValid)
             {
-                return BadRequest();
+                return BadRequest(new GetMultiplePropertiesUseCaseResponse(validationResult));
             }
-
-            var request = new GetMultiplePropertiesUseCaseRequest
-            {
-                PropertyReferences = propertyReferences
-            };
-            var useCaseResponse = _getMultiplePropertiesUseCase.Execute(request);
+            var useCaseResponse = _getMultiplePropertiesUseCase.Execute(propertyReferencesRequest);
 
             return Ok(useCaseResponse);
         }

@@ -1,25 +1,21 @@
-using System;
 using System.Collections.Generic;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Moq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using property_api.V1.Controllers;
-using property_api.V1.UseCase;
 using property_api.V1.Domain;
-using Moq;
-using Bogus;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Logging;
-using property_api.V1.UseCase.GetMultipleProperties;
-using FluentAssertions;
-using property_api.V1.Validation;
-using property_api.V1.Gateways.GetMultipleProperties;
 using property_api.V1.Factory;
-using property_api.V1.Helpers;
 using property_api.V1.Gateways;
-using UnitTests.V1.Helpers;
-using property_api.V1.UseCase.GetMultipleProperties.Impl;
+using property_api.V1.Gateways.GetMultipleProperties;
+using property_api.V1.Helpers;
+using property_api.V1.UseCase.GetMultipleProperties;
 using property_api.V1.UseCase.GetMultipleProperties.Boundaries;
-using Newtonsoft.Json;
+using property_api.V1.UseCase.GetMultipleProperties.Impl;
+using property_api.V1.Validation;
+using UnitTests.V1.Helpers;
 
 namespace UnitTests.V1.Controllers
 {
@@ -29,7 +25,6 @@ namespace UnitTests.V1.Controllers
         private PropertyController _classUnderTest;
         private Mock<ILogger<PropertyController>> _mockLogger;
         private IGetMultiplePropertiesUseCase _getMultiplePropertiesUseCase;
-        private IGetMultiplePropertiesValidator _getMultiplePropertiesValidator;
         private PropertyFactory _factory;
         private IGetMultiplePropertiesGateway _getMultiplePropertiesGateway;
         private readonly PropertyTestHelper _uhPropertyHelper = new PropertyTestHelper();
@@ -41,11 +36,10 @@ namespace UnitTests.V1.Controllers
             _factory = new PropertyFactory(config.CreateMapper());
 
             _mockLogger = new Mock<ILogger<PropertyController>>();
-            _getMultiplePropertiesValidator = new GetMultiplePropertiesValidator();
 
             _getMultiplePropertiesGateway = new PropertyGateway(_uhContext, _factory);
             _getMultiplePropertiesUseCase = new GetMultiplePropertiesUseCase(_getMultiplePropertiesGateway);
-            _classUnderTest = new PropertyController(null, _mockLogger.Object, _getMultiplePropertiesUseCase, _getMultiplePropertiesValidator);
+            _classUnderTest = new PropertyController(null, _mockLogger.Object, _getMultiplePropertiesUseCase);
         }
 
         [TestCase("1", "2")]
@@ -62,17 +56,13 @@ namespace UnitTests.V1.Controllers
             _uhContext.UhPropertys.Add(property2);
             _uhContext.SaveChanges();
 
-            List<string> propertyReferences = new List<string> { propertyReference, propertyReference2 };
+            var propertyReferences = new GetMultiplePropertiesUseCaseRequest(new List<string> { propertyReference, propertyReference2 });
 
             var expectedJson = JsonConvert.SerializeObject(
-                new GetMultiplePropertiesUseCaseResponse
-                {
-                    Properties = new List<Property>
-                    {
-                        _factory.FromUHProperty(property1),
-                        _factory.FromUHProperty(property2)
-                    }
-                }
+                new GetMultiplePropertiesUseCaseResponse(new List<Property> {
+                    _factory.FromUHProperty(property1),
+                    _factory.FromUHProperty(property2)
+                })
             );
             //act
             var actual = _classUnderTest.GetMultipleByReference(propertyReferences);

@@ -23,7 +23,7 @@ namespace property_api.V1.UseCase.GetMultipleProperties.Impl
 
             List<Property> properties = _getMultiplePropertiesGateway.GetMultiplePropertiesByPropertyListOfReferences(propertyReferences);
 
-            return new GetMultiplePropertiesUseCaseResponse { Properties = properties };
+            return new GetMultiplePropertiesUseCaseResponse(properties);
         }
     }
 

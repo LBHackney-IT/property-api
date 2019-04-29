@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using NUnit;
 using NUnit.Framework;
+using property_api.V1.UseCase.GetMultipleProperties.Boundaries;
 using property_api.V1.Validation;
 
 namespace property_api.Tests.V1.Validation
 {
     public class GetMultiplePropertiesValidatorTests
     {
-        private IGetMultiplePropertiesValidator _classUnderTest;
-        
+        private GetMultiplePropertiesValidator _classUnderTest;
+
         [SetUp]
         public void Setup()
         {
@@ -23,9 +21,9 @@ namespace property_api.Tests.V1.Validation
         public void GivenAValidListofPropertyRefs_TheValidatorShouldReturnTrue(string propertyReference, string propertyReference2)
         {
             //arrange
-            List<string> propertyReferences = new List<string> { propertyReference, propertyReference2 };
+            var propertiesUseCaseRequest = new GetMultiplePropertiesUseCaseRequest(new List<string> { propertyReference, propertyReference2 });
             //act
-            bool validationResult = _classUnderTest.Validate(propertyReferences);
+            bool validationResult = _classUnderTest.Validate(propertiesUseCaseRequest).IsValid;
             //assert
             Assert.True(validationResult);
         }
@@ -36,9 +34,9 @@ namespace property_api.Tests.V1.Validation
         public void GivenAnInvalidListofPropertyRefs_TheValidatorShouldReturnFalse(string propertyReference, string propertyReference2)
         {
             //arrange
-            List<string> propertyReferences = new List<string> { propertyReference, propertyReference2 };
+            var propertiesUseCaseRequest = new GetMultiplePropertiesUseCaseRequest(new List<string> { propertyReference, propertyReference2 });
             //act
-            bool validationResult = _classUnderTest.Validate(propertyReferences);
+            bool validationResult = _classUnderTest.Validate(propertiesUseCaseRequest).IsValid;
             //assert
             Assert.False(validationResult);
         }
@@ -47,9 +45,10 @@ namespace property_api.Tests.V1.Validation
         public void GivenANullList_TheValidatorShouldReturnFalse()
         {
             //arrange
-            List<string> propertyReferences = null;
+            var propertiesUseCaseRequest = new GetMultiplePropertiesUseCaseRequest(null);
+
             //act
-            bool validationResult = _classUnderTest.Validate(propertyReferences);
+            bool validationResult = _classUnderTest.Validate(propertiesUseCaseRequest).IsValid;
             //assert
             Assert.False(validationResult);
         }

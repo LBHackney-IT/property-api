@@ -31,7 +31,7 @@ namespace property_api.Tests.V1.UseCase
         {
             //arrange
             var propertyReferences = new List<string> { propertyReference, propertyReference2 };
-            var request = new GetMultiplePropertiesUseCaseRequest { PropertyReferences = propertyReferences };
+            var request = new GetMultiplePropertiesUseCaseRequest(propertyReferences);
             //act
             _classUnderTest.Execute(request);
             //assert
@@ -44,7 +44,7 @@ namespace property_api.Tests.V1.UseCase
         {
             //arrange
             var propertyReferences = new List<string> { propertyReference, propertyReference2 };
-            var request = new GetMultiplePropertiesUseCaseRequest { PropertyReferences = propertyReferences };
+            var request = new GetMultiplePropertiesUseCaseRequest(propertyReferences);
 
             var listOfProperties = new List<Property> { new Property { PropRef = propertyReference }, new Property { PropRef = propertyReference2 } };
 
