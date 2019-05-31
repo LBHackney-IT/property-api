@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using UnitTests;
 using UnitTests.V1.Helpers;
 
-namespace property_api.Tests.V1.Gateways
+namespace UnitTests.V1.Gateways
 {
     public class PropertyGetMultipleGatewayTests : DbTest
     {

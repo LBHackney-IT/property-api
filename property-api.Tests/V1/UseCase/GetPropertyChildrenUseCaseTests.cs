@@ -11,7 +11,7 @@ using property_api.V1.UseCase.GetPropertyChildren.Impl;
 using property_api.V1.UseCase.GetPropertyChildren.Models;
 using FluentAssertions;
 
-namespace property_api.Tests.V1.UseCase
+namespace UnitTests.V1.UseCase
 {
     [TestFixture]
     public class GetPropertyChildrenUseCaseTests

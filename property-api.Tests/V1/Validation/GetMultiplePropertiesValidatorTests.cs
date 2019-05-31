@@ -4,7 +4,7 @@ using NUnit.Framework;
 using property_api.V1.UseCase.GetMultipleProperties.Boundaries;
 using property_api.V1.Validation;
 
-namespace property_api.Tests.V1.Validation
+namespace UnitTests.V1.Validation
 {
     public class GetMultiplePropertiesValidatorTests
     {
