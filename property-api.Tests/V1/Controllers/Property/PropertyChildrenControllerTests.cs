@@ -8,12 +8,12 @@ using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using property_api.V1.Controllers;
+using property_api.V1.Domain;
 using property_api.V1.UseCase.GetPropertyChildren;
 using property_api.V1.UseCase.GetPropertyChildren.Models;
 
-namespace UnitTests.V1.Controller.Controllers.Property.Children
+namespace UnitTests.V1.Controllers
 {
-    // Tests for deprecated endpoint
     [TestFixture]
     public class PropertyChildrenControllerTests
     {
@@ -34,9 +34,9 @@ namespace UnitTests.V1.Controller.Controllers.Property.Children
             //arrange
             var expectedResponse = new GetPropertyChildrenResponse
             {
-                Children = new List<property_api.V1.Domain.Property>
+                Children = new List<Property>
                     {
-                        new property_api.V1.Domain.Property
+                        new Property
                         {
                            MajorRef = propertyReference
                         }

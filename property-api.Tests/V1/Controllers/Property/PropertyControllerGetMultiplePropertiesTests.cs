@@ -29,7 +29,7 @@ namespace UnitTests.V1.Controllers
             _mockGetPropertyUseCase = new Mock<IGetPropertyUseCase>();
             _mockLogger = new Mock<ILogger<PropertyController>>();
             _mockGetMultiplePropertiesUseCase = new Mock<IGetMultiplePropertiesUseCase>();
-            _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object, _mockLogger.Object, _mockGetMultiplePropertiesUseCase.Object);
+            _classUnderTest = new PropertyController(_mockGetPropertyUseCase.Object, _mockLogger.Object, _mockGetMultiplePropertiesUseCase.Object, null);
         }
 
         [TestCase("1", "2")]

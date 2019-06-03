@@ -39,7 +39,7 @@ namespace UnitTests.V1.Controllers
 
             _getMultiplePropertiesGateway = new PropertyGateway(_uhContext, _factory);
             _getMultiplePropertiesUseCase = new GetMultiplePropertiesUseCase(_getMultiplePropertiesGateway);
-            _classUnderTest = new PropertyController(null, _mockLogger.Object, _getMultiplePropertiesUseCase);
+            _classUnderTest = new PropertyController(null, _mockLogger.Object, _getMultiplePropertiesUseCase, null);
         }
 
         [TestCase("1", "2")]

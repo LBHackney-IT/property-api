@@ -13,9 +13,8 @@ using property_api.V1.UseCase.GetPropertyChildren.Impl;
 using UnitTests.V1.Helpers;
 using property_api.V1.Helpers;
 
-namespace UnitTests.V1.Controller.AcceptanceTests 
+namespace UnitTests.V1.Controllers 
 { 
-    // Tests for deprecated endpoint
     [TestFixture]
     public class PropertyChildrenControllerAcceptanceTests : DbTest
     {
