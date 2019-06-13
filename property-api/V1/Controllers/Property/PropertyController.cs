@@ -92,7 +92,7 @@ namespace property_api.V1.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(GetPropertyChildrenResponse), 200)]
         [ProducesResponseType(typeof(NotFoundResult), 404)]
-        public IActionResult Get(string propertyReference)
+        public IActionResult GetChildenProperties(string propertyReference)
         {
             _logger.LogInformation("Childen properties requested for " + propertyReference);
 
