@@ -11,9 +11,9 @@ services:
     links:
       - stub-dev-db
     environment:
-      - UH_URL=Server=stub-dev-db;Database=uhsimulator;User Id='sa';Password='Rooty-Tooty';
+      - UH_URL=Server=stub-dev-db;Database=uht;User Id='sa';Password='UH-Simulator-Password-0';DB_MODE=uht;UH_ENV=dev;
   stub-dev-db:
-    image: 775052747630.dkr.ecr.eu-west-2.amazonaws.com/hackney/universal-housing-simulator-loaded:9855e4d527519516e8138a026e900ae26b4be5f3
+    image: 775052747630.dkr.ecr.eu-west-2.amazonaws.com/hackney/universal-housing-simulator-development-builds:5cebc18f6f7a3d020e8a3df866d4b49fe0b147c0b99664d796da53016b1cf6c8-loaded
     ports:
       - 1433:1433
 
@@ -23,10 +23,10 @@ services:
       context: .
       dockerfile: property-api.Tests/Dockerfile
     environment:
-      - TEST_UH_URL=Server=stub-test-db;Database=uhsimulator;User Id='sa';Password='Rooty-Tooty';
+      - TEST_UH_URL=Server=stub-test-db;Database=uht;User Id='sa';Password='UH-Simulator-Password-0';DB_MODE=uht;UH_ENV=test;
     links:
       - stub-test-db
   stub-test-db:
-    image: 775052747630.dkr.ecr.eu-west-2.amazonaws.com/hackney/universal-housing-simulator:9855e4d527519516e8138a026e900ae26b4be5f3
+    image: 775052747630.dkr.ecr.eu-west-2.amazonaws.com/hackney/universal-housing-simulator-development-builds:5cebc18f6f7a3d020e8a3df866d4b49fe0b147c0b99664d796da53016b1cf6c8
     ports:
       - 1433:1433
