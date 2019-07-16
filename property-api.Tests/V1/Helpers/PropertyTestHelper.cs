@@ -36,6 +36,6 @@ namespace UnitTests.V1.Helpers
         public UhPropertyEntity GenerateUhProperty()
         {
             return _propertyGenerator.Generate();
-        }
+        } 
     }
 }

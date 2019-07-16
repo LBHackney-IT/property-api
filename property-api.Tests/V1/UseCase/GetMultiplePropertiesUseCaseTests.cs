@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace property_api.Tests.V1.UseCase
+namespace UnitTests.V1.UseCase
 {
     public class GetMultiplePropertiesUseCaseTests
     {

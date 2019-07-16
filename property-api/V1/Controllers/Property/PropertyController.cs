@@ -5,6 +5,8 @@ using property_api.V1.UseCase.GetMultipleProperties;
 using property_api.V1.Validation;
 using System.Linq;
 using property_api.V1.UseCase.GetMultipleProperties.Boundaries;
+using property_api.V1.UseCase.GetPropertyChildren.Models;
+using property_api.V1.UseCase.GetPropertyChildren;
 
 namespace property_api.V1.Controllers
 {
@@ -17,11 +19,14 @@ namespace property_api.V1.Controllers
         private IGetPropertyUseCase _getPropertyUseCase;
         private ILogger<PropertyController> _logger;
         private IGetMultiplePropertiesUseCase _getMultiplePropertiesUseCase;
+        private IGetPropertyChildrenUseCase _getPropertyChildrenUseCase;
         private GetMultiplePropertiesValidator _getMultiplePropertiesValidator;
 
-        public PropertyController(IGetPropertyUseCase getPropertyUseCase, ILogger<PropertyController> logger, IGetMultiplePropertiesUseCase getMultiplePropertiesUseCase)
+        public PropertyController(IGetPropertyUseCase getPropertyUseCase, ILogger<PropertyController> logger, IGetMultiplePropertiesUseCase getMultiplePropertiesUseCase,
+                                IGetPropertyChildrenUseCase getPropertyChildrenUseCase)
         {
             _getPropertyUseCase = getPropertyUseCase;
+            _getPropertyChildrenUseCase = getPropertyChildrenUseCase;
             _logger = logger;
             _getMultiplePropertiesUseCase = getMultiplePropertiesUseCase;
             _getMultiplePropertiesValidator = new GetMultiplePropertiesValidator();
@@ -47,6 +52,7 @@ namespace property_api.V1.Controllers
             {
                 return Ok(result.Property);
             }
+
             return NotFound();
         }
 
@@ -71,9 +77,32 @@ namespace property_api.V1.Controllers
             {
                 return BadRequest(new GetMultiplePropertiesUseCaseResponse(validationResult));
             }
-            var useCaseResponse = _getMultiplePropertiesUseCase.Execute(propertyReferencesRequest);
 
+            var useCaseResponse = _getMultiplePropertiesUseCase.Execute(propertyReferencesRequest);
             return Ok(useCaseResponse);
+        }
+
+        /// <summary>
+        /// Returns a list of properties whose parent is the requested property
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="propertyReference">Property reference.</param>
+        [HttpGet]
+        [Route("{propertyReference}/children")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(GetPropertyChildrenResponse), 200)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
+        public IActionResult GetChildenProperties(string propertyReference)
+        {
+            _logger.LogInformation("Childen properties requested for " + propertyReference);
+
+            var getPropertyChildrenRequest = new GetPropertyChildrenRequest
+            {
+                PropertyReference = propertyReference
+            };
+
+            var response = _getPropertyChildrenUseCase.Execute(getPropertyChildrenRequest);
+            return Ok(response);
         }
     }
 }
