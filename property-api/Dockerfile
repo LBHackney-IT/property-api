@@ -1,4 +1,4 @@
-﻿FROM microsoft/dotnet:2.2-sdk as builder
+FROM microsoft/dotnet:2.2-sdk as builder
 
 WORKDIR /app
 
@@ -12,14 +12,6 @@ RUN dotnet publish -c Release -o out
 
 # Use a smaller image
 FROM microsoft/dotnet:2.2.0-aspnetcore-runtime-alpine
-
-# Set env variables requred for new relic
-ENV CORECLR_ENABLE_PROFILING=1 \
-CORECLR_PROFILER={36032161-FFC0-4B61-B559-F6C5D41BAE5A} \
-CORECLR_NEWRELIC_HOME=./out/newrelic \
-CORECLR_PROFILER_PATH=./out/newrelic/libNewRelicProfiler.so \
-NEW_RELIC_LICENSE_KEY="${NEW_RELIC_LICENSE_KEY}" \
-NEW_RELIC_APP_NAME="${NEW_RELIC_APP_NAME}"
 
 WORKDIR /app/
 # Copy over the compiled application from the build image
