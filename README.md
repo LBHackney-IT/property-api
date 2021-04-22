@@ -66,7 +66,6 @@ $ make test
 
 ### Active Maintainers
 
-- **Cormac Brady**, Developer at [Made Tech][made-tech] (cormac@madetech.com)
 - **Selwyn Preston**, Lead Developer at London Borough of Hackney (selwyn.preston@hackney.gov.uk)
 - **Mirela Georgieva**, Developer at London Borough of Hackney (mirela.georgieva@hackney.gov.uk)
 - **Miguel Saitz**, Junior Developer at London Borough of Hackney (miguel.saitz@hackney.gov.uk)
